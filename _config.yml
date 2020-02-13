@@ -1,0 +1,17 @@
+title: Design app
+description: "Outil de design permacole"
+lang: fr_FR
+logo: ""
+image: ""
+twitter:
+  card: summary_large_image
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+  - scope:
+      path: "assets/img"
+    values:
+      image: true
