@@ -1,3 +1,5 @@
-_site/*
-Gemfile.lock
 *.swp
+package-lock.json
+node_modules/
+dist/
+.cache

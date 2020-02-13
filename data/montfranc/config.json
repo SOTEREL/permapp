@@ -3,11 +3,9 @@
     "ign": "choisirgeoportail"
   },
   "map": {
-    "center": {
-      "x": 2.663316,
-      "y": 44.190317,
-      "projection": "CRS:84"
-    },
+    "lng": 2.663316,
+    "lat": 44.190317,
+    "projection": "CRS:84",
     "zoom": 19
   }
 }
