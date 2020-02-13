@@ -1,22 +1,10 @@
-var Config = {
-  apiKey: 'choisirgeoportail',
-  mapSetup: {
-    center: {
-      x: 2.663316,
-      y: 44.190317,
-      projection: 'CRS:84'
-    },
-    zoom: 19
-  }
-};
-
-(function() {
+function init(config) {
   var map = Gp.Map.load(
     'map',
     {           
-      apiKey: Config.apiKey,
-      center: Config.mapSetup.center,
-      zoom: Config.mapSetup.zoom,
+      apiKey: config.apiKeys.ign,
+      center: config.map.center,
+      zoom: config.map.zoom,
       layersOptions: {
         'ORTHOIMAGERY.ORTHOPHOTOS' : {},
         'CADASTRALPARCELS.PARCELS': {}
@@ -24,8 +12,19 @@ var Config = {
       controlsOptions: {
         'search': {
           maximised: true
+        },
+        'reversesearch': {
+          maximised: true
         }
       },
+      mapEventsOptions: {
+      },
     }    
-) ;
-})();
+  );
+}
+
+fetch('/data/montfranc/config.json')
+.then(function(resp) {
+  return resp.json();
+})
+.then(init);
