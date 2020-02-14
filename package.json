@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ignf-geoportal/sdk-2d": "^3.0.7",
+    "axios": "^0.19.2",
     "ol": "^6.2.0"
   },
   "devDependencies": {
