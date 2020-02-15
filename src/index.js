@@ -4,7 +4,7 @@ import L from 'leaflet';
 
 import Config from './config';
 import * as Layers from './layers';
-import * as Geo from './geo';
+import CadastralParcel from './models/cadastralParcel';
 
 const createMap = (cfg) => {
   Config.apiKeys = cfg.apiKeys;
@@ -15,8 +15,9 @@ const createMap = (cfg) => {
   let bordersLayer = L.geoJSON().addTo(map);
 
   map.on('click', e => {
-    Geo.getParcelShapeFromPos(e.latlng)
-    .then(features => bordersLayer.addData(features));
+    CadastralParcel.fromLatLng(e.latlng)
+    .then(parcel => parcel.shape())
+    .then(geojson => bordersLayer.addData(geojson));
   });
 };
 
