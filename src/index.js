@@ -6,6 +6,17 @@ import Config from './config';
 import * as Layers from './layers';
 import CadastralParcel from './models/cadastralParcel';
 
+const saveJson = (data, fname) => {
+  data = encodeURIComponent(JSON.stringify(data));
+  data = `data:text/json;charset=utf-8,${data}`;
+  let link = document.createElement('a');
+  link.setAttribute('href', data);
+  link.setAttribute('download', fname);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
 const createMap = (cfg) => {
   Config.apiKeys = cfg.apiKeys;
 
@@ -19,6 +30,10 @@ const createMap = (cfg) => {
     .then(parcel => parcel.shape())
     .then(geojson => bordersLayer.addData(geojson));
   });
+
+  document.querySelector('#export-borders').addEventListener(
+    'click', e => saveJson(bordersLayer.toGeoJSON(), 'borders.json')
+  );
 };
 
 const loadProject = id => fetch(`/data/${id}/config.json`)
