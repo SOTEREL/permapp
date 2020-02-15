@@ -12,9 +12,12 @@ const createMap = (cfg) => {
   let map = L.map('map').setView([cfg.map.lat, cfg.map.lng], cfg.map.zoom);
   Layers.addSatellite(map);
   Layers.addCadastralParcels(map);
+  let bordersLayer = L.geoJSON().addTo(map);
 
-  Geo.getParcelShapeFromPos([cfg.map.lng, cfg.map.lat])
-  .then(console.info);
+  map.on('click', e => {
+    Geo.getParcelShapeFromPos(e.latlng)
+    .then(features => bordersLayer.addData(features));
+  });
 };
 
 const loadProject = id => fetch(`/data/${id}/config.json`)

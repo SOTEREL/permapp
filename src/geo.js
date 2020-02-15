@@ -17,7 +17,7 @@ const getParcelShape = (inseeCode, section, number) =>
 export const getParcelShapeFromPos = position => new Promise((resolve, reject) => {
   Gp.Services.reverseGeocode({
     apiKey: Config.apiKeys.ign,
-    position: { x: position[0], y: position[1] },
+    position: { x: position.lng, y: position.lat },
     filterOptions: {
       type: ['CadastralParcel']
     },
