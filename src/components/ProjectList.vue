@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import ProjectApi from '@/api/project'
+import ProjectApi from '@/api/Project'
 
 export default {
   data() {

@@ -1,11 +1,21 @@
 <template>
-  <div class="map">
-    <Map
-      :apiKey="config.apiKeys.ign"
-      :initialZoom="config.map.zoom"
-      :initialLat="config.map.lat"
-      :initialLng="config.map.lng"
-    />
+  <div>
+    <div class="toolbar">
+      <router-link
+        :to="{ name: 'project/map/borders', params: { pid: project.id } }"
+      >
+        Bordures
+      </router-link>
+    </div>
+    <router-view :project="project"/>
+    <div class="map">
+      <Map
+        :apiKey="project.apiKeys.ign"
+        :initialZoom="project.map.zoom"
+        :initialLat="project.map.lat"
+        :initialLng="project.map.lng"
+      />
+    </div>
   </div>
 </template>
 
@@ -16,14 +26,11 @@ export default {
   components: {
     Map,
   },
-  props: [
-    'config',
-  ],
-  data() {
-    return {
-
+  computed: {
+    project() {
+      return this.$store.state.project
     }
-  }
+  },
 }
 </script>
 

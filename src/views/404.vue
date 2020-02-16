@@ -3,11 +3,11 @@
 </template>
 
 <script>
-import Error from '@/components/Error'
+import Error from './Error'
 
 export default {
   components: {
     Error 
   }
 }
-</script
+</script>

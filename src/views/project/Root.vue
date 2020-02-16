@@ -2,44 +2,51 @@
   <div>
     <div v-if="loading">Loading...</div>
     <div v-else>
-      <div v-if="!httpError.code">
+      <div v-if="!httpErr">
         <div class="menu">
-          <router-link :to="{ name: 'project', params: { pid: $route.params.pid }}">
-            Project
+          <router-link to="/">
+            Accueil
           </router-link>
-          <router-link :to="{ name: 'projectMap', params: { pid: $route.params.pid }}">
+          <router-link :to="{ name: 'project', params: { pid } }">
+            Projet
+          </router-link>
+          <router-link :to="{ name: 'project/map', params: { pid } }">
             Carte
           </router-link>
         </div>
 
-        <router-view :config="config"/>
+        <router-view :project="project"/>
       </div>
-      <Error v-else-if="httpError.code == 404">
-        Cannot find project {{ $route.params.pid }}
+      <Error v-else-if="httpErr.code == 404">
+        Cannot find project {{ pid }}
       </Error>
       <Error v-else>
-        Error: {{ httpError.message }} 
+        Error: {{ httpErr.message }} 
       </Error>
     </div>
   </div>
 </template>
 
 <script>
-import ProjectApi from '@/api/project'
-import Error from '@/components/Error'
+import ProjectApi from '@/api/Project'
+import Error from '@/views/Error'
 
 export default {
   components: {
     Error,
   },
+  computed: {
+    pid() {
+      return this.$route.params.pid
+    },
+    project() {
+      return this.$store.state.project
+    }
+  },
   data() {
     return {
-      httpError: {
-        code: null,
-        message: '',
-      },
+      httpErr: null,
       loading: true,
-      config: null,
     }
   },
   created() {
@@ -48,14 +55,13 @@ export default {
   methods: {
     fetchProject() {
       this.loading = true
-      this.httpError.code = null
-      return ProjectApi.load(this.$route.params.pid)
-        .then(config => {
-          this.config = config
-        })
+      this.httpErr = null
+      this.$store.dispatch('project/load', this.pid)
         .catch(err => {
-          this.httpError.message = err.response.statusText
-          this.httpError.code = err.response.status
+          this.httpErr = {
+            code: err.response.status,
+            message: err.response.statusText,
+          };
         })
         .finally(_ => {
           this.loading = false

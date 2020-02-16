@@ -6,6 +6,8 @@ import Project from '@/views/project/Root.vue';
 import ProjectMap from '@/views/project/Map.vue';
 import ProjectHome from '@/views/project/Home.vue';
 
+import BordersControl from '@/components/map/controls/Borders.vue';
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -25,8 +27,15 @@ const routes = [
       },
       {
         path: 'carte',
-        name: 'projectMap',
+        name: 'project/map',
         component: ProjectMap,
+        children: [
+          {
+            path: 'bordures',
+            name: 'project/map/borders',
+            component: BordersControl,
+          },
+        ],
       },
     ],
   },

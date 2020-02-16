@@ -1,6 +1,11 @@
 <template>
-  <div class="error">
-    <slot></slot>
+  <div>
+    <router-link to="/">
+      Accueil
+    </router-link>
+    <div class="error">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
