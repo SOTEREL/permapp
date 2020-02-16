@@ -1,16 +1,14 @@
 <template>
-  <div class="map">
-    <l-map
-      :zoom="zoom"
-      :center="center"
-      @update:zoom="zoomUpdated"
-      @update:center="centerUpdated"
-      @update:bounds="boundsUpdated"
-    >
-      <SatelliteLayer :apiKey="apiKey" />
-      <CadastralLayer :apiKey="apiKey" />
-    </l-map>
-  </div>
+  <l-map
+    :zoom="zoom"
+    :center="center"
+    @update:zoom="zoomUpdated"
+    @update:center="centerUpdated"
+    @update:bounds="boundsUpdated"
+  >
+    <SatelliteLayer :apiKey="apiKey" />
+    <CadastralLayer :apiKey="apiKey" />
+  </l-map>
 </template>
 
 <script>
@@ -54,9 +52,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.map {
-  height: 400px;
-}
-</style>
