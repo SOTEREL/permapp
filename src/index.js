@@ -2,25 +2,19 @@ import 'leaflet/dist/leaflet.css';
 
 import L from 'leaflet';
 
-import Config from './config';
+import Store from './store';
 import * as Layers from './layers';
-import CadastralParcel from './models/cadastralParcel';
+import * as Utils from './utils';
+import CadastralParcel from './models/CadastralParcel';
+import Project from './models/Project';
 
-const saveJson = (data, fname) => {
-  data = encodeURIComponent(JSON.stringify(data));
-  data = `data:text/json;charset=utf-8,${data}`;
-  let link = document.createElement('a');
-  link.setAttribute('href', data);
-  link.setAttribute('download', fname);
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
+const setup = (project) => {
+  Store.project = project;
 
-const createMap = (cfg) => {
-  Config.apiKeys = cfg.apiKeys;
-
-  let map = L.map('map').setView([cfg.map.lat, cfg.map.lng], cfg.map.zoom);
+  let map = L.map('map').setView(
+    [project.config.map.lat, project.config.map.lng],
+    project.config.map.zoom
+  );
   Layers.addSatellite(map);
   Layers.addCadastralParcels(map);
   let bordersLayer = L.geoJSON().addTo(map);
@@ -32,12 +26,8 @@ const createMap = (cfg) => {
   });
 
   document.querySelector('#export-borders').addEventListener(
-    'click', e => saveJson(bordersLayer.toGeoJSON(), 'borders.json')
+    'click', e => Utils.saveJson(bordersLayer.toGeoJSON(), 'borders.json')
   );
 };
 
-const loadProject = id => fetch(`/data/${id}/config.json`)
-  .then(resp => resp.json())
-  .then(createMap);
-
-loadProject('montfranc');
+Project.load('montfranc').then(setup);

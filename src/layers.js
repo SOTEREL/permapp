@@ -1,6 +1,6 @@
 import L from 'leaflet';
 
-import Config from './config';
+import Store from './store';
 
 const MAX_ZOOM = 19;
 
@@ -10,7 +10,7 @@ export const addSatellite = map => L.tileLayer(
   '&STYLE={style}&FORMAT={format}' +
   '&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}',
   {
-    apiKey: Config.apiKeys.ign,
+    apiKey: Store.project.config.apiKeys.ign,
     layer: 'ORTHOIMAGERY.ORTHOPHOTOS',
     style: 'normal',
     format: 'image/jpeg',
@@ -24,7 +24,7 @@ export const addCadastralParcels = map => L.tileLayer(
   '&STYLE={style}&FORMAT={format}' +
   '&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}',
   {
-    apiKey: Config.apiKeys.ign,
+    apiKey: Store.project.config.apiKeys.ign,
     layer: 'CADASTRALPARCELS.PARCELS',
     style: 'bdparcellaire',
     format: 'image/png',
