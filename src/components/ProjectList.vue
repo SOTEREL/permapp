@@ -1,7 +1,7 @@
 <template>
   <div class="projects">
     <div v-for="p in projects" class="project">
-      {{ p.name }}
+      <router-link :to="{ name: 'project', params: { id: p.id }}">{{ p.name }}</router-link>
     </div>
   </div>
 </template>
