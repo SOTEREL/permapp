@@ -1,8 +1,6 @@
 class Project {
-  static load(id) {
-    return fetch(`/data/${id}/config.json`)
-      .then(resp => resp.json())
-      .then(cfg => new Project(id, cfg));
+  static list() {
+
   }
 
   constructor(id, config) {
