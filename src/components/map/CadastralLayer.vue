@@ -1,6 +1,5 @@
 <template>
   <GeoportalLayer
-    :api-key="apiKey"
     layer="CADASTRALPARCELS.PARCELS"
     styl="bdparcellaire"
     format="image/png"
@@ -11,12 +10,7 @@
 import GeoportalLayer from "./GeoportalLayer";
 
 export default {
+  modelKey: "cadastral",
   components: { GeoportalLayer },
-  props: {
-    apiKey: {
-      type: String,
-      required: true,
-    },
-  },
 };
 </script>

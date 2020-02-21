@@ -10,7 +10,11 @@ export default {
       lat: 0,
       lng: 0,
     },
-    borders: [],
+    view: {
+      tiles: ["satellite"],
+      features: [],
+    },
+    interaction: null,
   },
   mutations: {
     setInitialZoom(state, zoom) {

@@ -8,15 +8,13 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 import { LTileLayer } from "vue2-leaflet";
 
 export default {
   components: { LTileLayer },
   props: {
-    apiKey: {
-      type: String,
-      required: true,
-    },
     layer: {
       type: String,
       required: true,
@@ -30,13 +28,11 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      options: {
-        maxZoom: 19,
-      },
-      url:
-        `https://wxs.ign.fr/${this.apiKey}/geoportail/wmts?` +
+  computed: mapState({
+    apiKey: state => state.project.apiKeys.ign,
+    url(state) {
+      return (
+        `https://wxs.ign.fr/${state.project.apiKeys.ign}/geoportail/wmts?` +
         `REQUEST=GetTile&` +
         `SERVICE=WMTS&` +
         `VERSION=1.0.0&` +
@@ -46,7 +42,15 @@ export default {
         `FORMAT=${this.format}&` +
         `TILECOL={x}&` +
         `TILEROW={y}&` +
-        `TILEMATRIX={z}`,
+        `TILEMATRIX={z}`
+      );
+    },
+  }),
+  data() {
+    return {
+      options: {
+        maxZoom: 19,
+      },
     };
   },
 };

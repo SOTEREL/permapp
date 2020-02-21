@@ -1,6 +1,5 @@
 <template>
   <GeoportalLayer
-    :api-key="apiKey"
     layer="ORTHOIMAGERY.ORTHOPHOTOS"
     styl="normal"
     format="image/jpeg"
@@ -11,12 +10,7 @@
 import GeoportalLayer from "./GeoportalLayer";
 
 export default {
+  modelKey: "satellite",
   components: { GeoportalLayer },
-  props: {
-    apiKey: {
-      type: String,
-      required: true,
-    },
-  },
 };
 </script>

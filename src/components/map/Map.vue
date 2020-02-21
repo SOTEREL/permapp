@@ -1,36 +1,42 @@
 <template>
-  <l-map
+  <LMap
     :zoom="zoom"
     :center="center"
     @update:zoom="zoomUpdated"
     @update:center="centerUpdated"
     @update:bounds="boundsUpdated"
   >
-    <SatelliteLayer :api-key="apiKey" />
-    <CadastralLayer :api-key="apiKey" />
-  </l-map>
+    <component
+      :is="layer.component"
+      v-for="layer in tiles"
+      :key="layer.component"
+      v-bind="layer.props"
+    />
+  </LMap>
 </template>
 
 <script>
 import "leaflet/dist/leaflet.css";
+
+import { mapState } from "vuex";
 
 import { LMap } from "vue2-leaflet";
 
 import SatelliteLayer from "./SatelliteLayer";
 import CadastralLayer from "./CadastralLayer";
 
+const mapLayers = layers =>
+  layers.reduce(
+    (acc, layer) => ({ ...acc, [layer.modelKey + "-layer"]: layer }),
+    {}
+  );
+
 export default {
-  name: "Map",
   components: {
     LMap,
-    SatelliteLayer,
-    CadastralLayer,
+    ...mapLayers([SatelliteLayer, CadastralLayer]),
   },
   props: {
-    apiKey: {
-      type: String,
-      required: true,
-    },
     initialZoom: {
       type: Number,
       required: true,
@@ -44,6 +50,19 @@ export default {
       required: true,
     },
   },
+  computed: mapState({
+    tiles: state =>
+      state.map.view.tiles.map(x => {
+        const component = typeof x === "string" ? x : x.key;
+        const props = typeof x === "string" ? {} : x.props;
+        return {
+          component: component + "-layer",
+          props,
+        };
+      }),
+    features: state => state.map.view.features,
+    interaction: state => state.map.interaction,
+  }),
   data() {
     return {
       zoom: this.initialZoom,
