@@ -22,9 +22,7 @@
       <Error v-else-if="httpErr.code == 404">
         Cannot find project {{ pid }}
       </Error>
-      <Error v-else>
-        Error: {{ httpErr.message }}
-      </Error>
+      <Error v-else> Error: {{ httpErr.message }} </Error>
     </div>
   </div>
 </template>
@@ -34,12 +32,12 @@ import Error from "@/views/Error";
 
 export default {
   components: {
-    Error
+    Error,
   },
   data() {
     return {
       httpErr: null,
-      loading: true
+      loading: true,
     };
   },
   computed: {
@@ -48,7 +46,7 @@ export default {
     },
     project() {
       return this.$store.state.project;
-    }
+    },
   },
   created() {
     this.fetchProject();
@@ -62,13 +60,13 @@ export default {
         .catch(err => {
           this.httpErr = {
             code: err.response.status,
-            message: err.response.statusText
+            message: err.response.statusText,
           };
         })
         .finally(() => {
           this.loading = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>

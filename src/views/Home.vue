@@ -18,7 +18,7 @@ import ProjectList from "@/components/ProjectList";
 export default {
   name: "Home",
   components: {
-    ProjectList
-  }
+    ProjectList,
+  },
 };
 </script>

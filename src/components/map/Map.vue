@@ -24,7 +24,7 @@ export default {
   components: {
     LMap,
     SatelliteLayer,
-    CadastralLayer
+    CadastralLayer,
   },
   props: {
     apiKey: {
@@ -48,7 +48,7 @@ export default {
     return {
       zoom: this.initialZoom,
       center: [this.initialLat, this.initialLng],
-      bounds: null
+      bounds: null,
     };
   },
   methods: {
@@ -60,7 +60,7 @@ export default {
     },
     boundsUpdated(bounds) {
       this.bounds = bounds;
-    }
-  }
+    },
+  },
 };
 </script>

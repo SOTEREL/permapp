@@ -2,7 +2,7 @@
   <l-tile-layer
     v-if="apiKey"
     :url="url"
-    attribution="<a href=&quot;https://www.geoportail.gouv.fr/&quot;>geoportail.gouv.fr</a>"
+    attribution='<a href="https://www.geoportail.gouv.fr/">geoportail.gouv.fr</a>'
     :options="options"
   />
 </template>
@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       options: {
-        maxZoom: 19
+        maxZoom: 19,
       },
       url:
         `https://wxs.ign.fr/${this.apiKey}/geoportail/wmts?` +
@@ -46,8 +46,8 @@ export default {
         `FORMAT=${this.format}&` +
         `TILECOL={x}&` +
         `TILEROW={y}&` +
-        `TILEMATRIX={z}`
+        `TILEMATRIX={z}`,
     };
-  }
+  },
 };
 </script>

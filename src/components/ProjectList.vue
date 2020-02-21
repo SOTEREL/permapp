@@ -1,10 +1,6 @@
 <template>
   <div class="projects">
-    <div
-      v-for="p in projects"
-      :key="p.id"
-      class="project"
-    >
+    <div v-for="p in projects" :key="p.id" class="project">
       <router-link :to="{ name: 'project', params: { pid: p.id } }">
         {{ p.name }}
       </router-link>
@@ -18,7 +14,7 @@ import ProjectApi from "@/api/Project";
 export default {
   data() {
     return {
-      projects: []
+      projects: [],
     };
   },
   created() {
@@ -29,8 +25,8 @@ export default {
       return ProjectApi.list().then(projects => {
         this.projects = projects;
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

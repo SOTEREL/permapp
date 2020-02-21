@@ -31,17 +31,17 @@ import Map from "@/components/map/Map";
 
 export default {
   components: {
-    Map
+    Map,
   },
   data() {
     return {
       httpErr: null,
-      loading: true
+      loading: true,
     };
   },
   computed: mapState({
     map: state => state.map,
-    project: state => state.project
+    project: state => state.project,
   }),
   created() {
     this.fetchMap();
@@ -51,18 +51,18 @@ export default {
       this.loading = true;
       this.httpErr = null;
       this.$store
-        .dispatch("map/load", this.project.id)
+        .dispatch("map/load")
         .catch(err => {
           this.httpErr = {
             code: err.response.status,
-            message: err.response.statusText
+            message: err.response.statusText,
           };
         })
         .finally(() => {
           this.loading = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

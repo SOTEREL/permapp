@@ -8,9 +8,9 @@ export default {
     setup: {
       zoom: 13,
       lat: 0,
-      lng: 0
+      lng: 0,
     },
-    borders: []
+    borders: [],
   },
   mutations: {
     setInitialZoom(state, zoom) {
@@ -19,17 +19,24 @@ export default {
     setInitialCenter(state, { lat, lng }) {
       Vue.set(state.setup, "lat", lat);
       Vue.set(state.setup, "lng", lng);
-    }
+    },
+    setBorders(state, borders) {
+      state.borders = borders;
+    },
   },
   actions: {
-    async load({ commit }, pid) {
-      const cfg = await MapApi.load(pid);
+    async load({ commit, rootState }) {
+      const cfg = await MapApi.load(rootState.project.id);
       commit("setInitialZoom", cfg.setup.zoom);
       commit("setInitialCenter", {
         lat: cfg.setup.lat,
-        lng: cfg.setup.lng
+        lng: cfg.setup.lng,
       });
-    }
+    },
+    async loadBorders({ commit, rootState }) {
+      const borders = await MapApi.loadBorders(rootState.project.id);
+      commit("setBorders", borders.borders);
+    },
   },
-  getters: {}
+  getters: {},
 };

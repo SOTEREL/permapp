@@ -7,5 +7,5 @@ export default {
 
   load(pid) {
     return axios.get(`/data/${pid}/config.json`).then(resp => resp.data);
-  }
+  },
 };

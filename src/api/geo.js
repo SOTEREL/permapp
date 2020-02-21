@@ -12,8 +12,8 @@ export const getCadastralParcelShape = (insee, section, number) => {
         apikey: Store.project.config.apiKeys.ign,
         code_insee: insee,
         section: section,
-        numero: number
-      }
+        numero: number,
+      },
     })
     .then(resp => resp.data);
 };
@@ -24,7 +24,7 @@ export const getCadastralParcelFromPos = position =>
       apiKey: Store.project.config.apiKeys.ign,
       position: { x: position.lng, y: position.lat },
       filterOptions: {
-        type: ["CadastralParcel"]
+        type: ["CadastralParcel"],
       },
       onSuccess: resp => {
         const parcel = resp.locations[0];
@@ -34,9 +34,9 @@ export const getCadastralParcelFromPos = position =>
         resolve({
           insee: parcel.placeAttributes.insee,
           section: parcel.placeAttributes.section,
-          number: parcel.placeAttributes.number
+          number: parcel.placeAttributes.number,
         });
       },
-      onFailure: reject
+      onFailure: reject,
     });
   });

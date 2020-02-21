@@ -14,7 +14,7 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: Home
+    component: Home,
   },
   {
     path: "/p/:pid",
@@ -23,7 +23,7 @@ const routes = [
       {
         path: "",
         name: "project",
-        component: ProjectHome
+        component: ProjectHome,
       },
       {
         path: "carte",
@@ -33,22 +33,22 @@ const routes = [
           {
             path: "bordures",
             name: "project/map/borders",
-            component: BordersControl
-          }
-        ]
-      }
-    ]
+            component: BordersControl,
+          },
+        ],
+      },
+    ],
   },
   {
     path: "*",
-    component: Error404
-  }
+    component: Error404,
+  },
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes
+  routes,
 });
 
 export default router;

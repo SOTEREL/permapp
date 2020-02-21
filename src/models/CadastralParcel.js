@@ -22,7 +22,7 @@ class CadastralParcel {
     return {
       insee: this.insee,
       section: this.section,
-      number: this.number
+      number: this.number,
     };
   }
 

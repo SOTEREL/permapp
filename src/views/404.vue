@@ -7,7 +7,7 @@ import Error from "./Error";
 
 export default {
   components: {
-    Error
-  }
+    Error,
+  },
 };
 </script>

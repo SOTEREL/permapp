@@ -1,22 +1,41 @@
 <template>
-  <div>todo {{ project.name }}</div>
+  <div>todo {{ borders }}</div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
+import L from "leaflet";
+
 export default {
   data() {
-    return {};
+    return {
+      httpErr: null,
+      loading: true,
+    };
   },
-  computed: {
-    project() {
-      return this.$store.state.project;
-    }
-  },
+  computed: mapState({
+    borders: state => state.map.borders,
+  }),
   created() {
     this.fetchBorders();
   },
   methods: {
-    fetchBorders() {}
-  }
+    fetchBorders() {
+      this.loading = true;
+      this.httpErr = null;
+      this.$store
+        .dispatch("map/loadBorders")
+        .catch(err => {
+          this.httpErr = {
+            code: err.response.status,
+            message: err.response.statusText,
+          };
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+  },
 };
 </script>

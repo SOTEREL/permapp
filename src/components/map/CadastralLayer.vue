@@ -15,7 +15,7 @@ export default {
   props: {
     apiKey: {
       type: String,
-      required: true
+      required: true,
     },
   },
 };

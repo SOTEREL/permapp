@@ -8,8 +8,8 @@ export default {
     id: null,
     name: "",
     apiKeys: {
-      ign: null
-    }
+      ign: null,
+    },
   },
   mutations: {
     setId(state, id) {
@@ -22,7 +22,7 @@ export default {
       for (let k in keys) {
         Vue.set(state.apiKeys, k, keys[k]);
       }
-    }
+    },
   },
   actions: {
     async load({ commit }, pid) {
@@ -30,7 +30,7 @@ export default {
       commit("setId", pid);
       commit("setName", cfg.name);
       commit("setApiKeys", cfg.apiKeys);
-    }
+    },
   },
-  getters: {}
+  getters: {},
 };

@@ -18,6 +18,7 @@ module.exports = {
 
   // required to lint *.vue files
   plugins: [
+    "prettier",
     "vue",
   ],
 
@@ -29,4 +30,8 @@ module.exports = {
     "Capacitor": true,
     "chrome": true,
   },
+
+  "rules": {
+    "prettier/prettier": "error"
+  }
 }
