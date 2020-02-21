@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import MapModule from "./map";
-import ProjectModule from "./project";
+import MapModule from "./modules/map";
+import ProjectModule from "./modules/project";
 
 Vue.use(Vuex);
 

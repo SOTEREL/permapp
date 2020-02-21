@@ -7,9 +7,9 @@
     @update:bounds="boundsUpdated"
   >
     <component
-      :is="layer.component"
+      :is="layer.key + '-layer'"
       v-for="layer in tiles"
-      :key="layer.component"
+      :key="layer.key"
       v-bind="layer.props"
     />
   </LMap>
@@ -18,7 +18,7 @@
 <script>
 import "leaflet/dist/leaflet.css";
 
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 import { LMap } from "vue2-leaflet";
 
@@ -50,19 +50,15 @@ export default {
       required: true,
     },
   },
-  computed: mapState({
-    tiles: state =>
-      state.map.view.tiles.map(x => {
-        const component = typeof x === "string" ? x : x.key;
-        const props = typeof x === "string" ? {} : x.props;
-        return {
-          component: component + "-layer",
-          props,
-        };
-      }),
-    features: state => state.map.view.features,
-    interaction: state => state.map.interaction,
-  }),
+  computed: {
+    ...mapGetters("map", {
+      tiles: "tilesAsObjects",
+    }),
+    ...mapState({
+      features: state => state.map.view.features,
+      interaction: state => state.map.interaction,
+    }),
+  },
   data() {
     return {
       zoom: this.initialZoom,

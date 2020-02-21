@@ -19,6 +19,7 @@ export default {
   }),
   created() {
     this.fetchBorders();
+    this.$store.dispatch("map/addTiles", ["cadastral"]);
   },
   methods: {
     fetchBorders() {
