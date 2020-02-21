@@ -6,38 +6,50 @@
     @update:center="centerUpdated"
     @update:bounds="boundsUpdated"
   >
-    <SatelliteLayer :apiKey="apiKey" />
-    <CadastralLayer :apiKey="apiKey" />
+    <SatelliteLayer :api-key="apiKey" />
+    <CadastralLayer :api-key="apiKey" />
   </l-map>
 </template>
 
 <script>
-import 'leaflet/dist/leaflet.css'
+import "leaflet/dist/leaflet.css";
 
-import { LMap } from 'vue2-leaflet'
+import { LMap } from "vue2-leaflet";
 
-import SatelliteLayer from './SatelliteLayer'
-import CadastralLayer from './CadastralLayer'
+import SatelliteLayer from "./SatelliteLayer";
+import CadastralLayer from "./CadastralLayer";
 
 export default {
-  name: 'Map',
+  name: "Map",
   components: {
     LMap,
     SatelliteLayer,
-    CadastralLayer,
+    CadastralLayer
   },
-  props: [
-    'apiKey',
-    'initialZoom',
-    'initialLat',
-    'initialLng',
-  ],
+  props: {
+    apiKey: {
+      type: String,
+      required: true,
+    },
+    initialZoom: {
+      type: Number,
+      required: true,
+    },
+    initialLat: {
+      type: Number,
+      required: true,
+    },
+    initialLng: {
+      type: Number,
+      required: true,
+    },
+  },
   data() {
     return {
       zoom: this.initialZoom,
       center: [this.initialLat, this.initialLng],
-      bounds: null,
-    }
+      bounds: null
+    };
   },
   methods: {
     zoomUpdated(zoom) {
@@ -50,5 +62,5 @@ export default {
       this.bounds = bounds;
     }
   }
-}
+};
 </script>

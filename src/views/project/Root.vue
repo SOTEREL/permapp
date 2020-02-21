@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div v-if="loading">Loading...</div>
+    <div v-if="loading">
+      Loading...
+    </div>
     <div v-else>
       <div v-if="!httpErr">
         <div class="menu">
@@ -15,58 +17,58 @@
           </router-link>
         </div>
 
-        <router-view :project="project"/>
+        <router-view :project="project" />
       </div>
       <Error v-else-if="httpErr.code == 404">
         Cannot find project {{ pid }}
       </Error>
       <Error v-else>
-        Error: {{ httpErr.message }} 
+        Error: {{ httpErr.message }}
       </Error>
     </div>
   </div>
 </template>
 
 <script>
-import ProjectApi from '@/api/Project'
-import Error from '@/views/Error'
+import Error from "@/views/Error";
 
 export default {
   components: {
-    Error,
-  },
-  computed: {
-    pid() {
-      return this.$route.params.pid
-    },
-    project() {
-      return this.$store.state.project
-    }
+    Error
   },
   data() {
     return {
       httpErr: null,
-      loading: true,
+      loading: true
+    };
+  },
+  computed: {
+    pid() {
+      return this.$route.params.pid;
+    },
+    project() {
+      return this.$store.state.project;
     }
   },
   created() {
-    this.fetchProject()
+    this.fetchProject();
   },
   methods: {
     fetchProject() {
-      this.loading = true
-      this.httpErr = null
-      this.$store.dispatch('project/load', this.pid)
+      this.loading = true;
+      this.httpErr = null;
+      this.$store
+        .dispatch("project/load", this.pid)
         .catch(err => {
           this.httpErr = {
             code: err.response.status,
-            message: err.response.statusText,
+            message: err.response.statusText
           };
         })
-        .finally(_ => {
-          this.loading = false
-        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
   }
-}
+};
 </script>

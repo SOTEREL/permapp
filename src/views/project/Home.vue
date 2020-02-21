@@ -8,8 +8,8 @@
 export default {
   computed: {
     project() {
-      return this.$store.state.project
+      return this.$store.state.project;
     }
-  },
-}
+  }
+};
 </script>

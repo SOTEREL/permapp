@@ -1,7 +1,11 @@
 <template>
   <div class="projects">
-    <div v-for="p in projects" class="project">
-      <router-link :to="{ name: 'project', params: { pid: p.id }}">
+    <div
+      v-for="p in projects"
+      :key="p.id"
+      class="project"
+    >
+      <router-link :to="{ name: 'project', params: { pid: p.id } }">
         {{ p.name }}
       </router-link>
     </div>
@@ -9,26 +13,25 @@
 </template>
 
 <script>
-import ProjectApi from '@/api/Project'
+import ProjectApi from "@/api/Project";
 
 export default {
   data() {
     return {
       projects: []
-    }
+    };
   },
   created() {
-    this.fetchProjects()
+    this.fetchProjects();
   },
   methods: {
     fetchProjects() {
-      return ProjectApi.list()
-        .then(projects => {
-          this.projects = projects
-        })
+      return ProjectApi.list().then(projects => {
+        this.projects = projects;
+      });
     }
   }
-}
+};
 </script>
 
 <style scoped>

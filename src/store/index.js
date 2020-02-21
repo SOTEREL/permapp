@@ -1,7 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import ProjectModule from './project';
+import MapModule from "./map";
+import ProjectModule from "./project";
 
 Vue.use(Vuex);
 
@@ -10,6 +11,7 @@ export default new Vuex.Store({
   mutations: {},
   actions: {},
   modules: {
+    map: MapModule,
     project: ProjectModule
   }
 });

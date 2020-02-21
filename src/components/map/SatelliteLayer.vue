@@ -1,19 +1,22 @@
 <template>
   <GeoportalLayer
-    :apiKey="apiKey"
+    :api-key="apiKey"
     layer="ORTHOIMAGERY.ORTHOPHOTOS"
-    style_="normal"
+    styl="normal"
     format="image/jpeg"
   />
 </template>
 
 <script>
-import GeoportalLayer from './GeoportalLayer'
+import GeoportalLayer from "./GeoportalLayer";
 
 export default {
   components: { GeoportalLayer },
-  props: [
-    'apiKey'
-  ]
-}
+  props: {
+    apiKey: {
+      type: String,
+      required: true,
+    },
+  },
+};
 </script>

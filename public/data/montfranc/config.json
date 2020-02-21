@@ -2,11 +2,5 @@
   "name": "Château d'Arvieu",
   "apiKeys": {
     "ign": "choisirgeoportail"
-  },
-  "map": {
-    "lng": 2.663316,
-    "lat": 44.190317,
-    "projection": "CRS:84",
-    "zoom": 19
   }
 }

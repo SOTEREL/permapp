@@ -4,15 +4,14 @@
       Accueil
     </router-link>
     <div class="error">
-      <slot></slot>
+      <slot />
     </div>
   </div>
 </template>
 
 <script>
-export default {
-}
-</script
+export default {};
+</script>
 
 <style scoped>
 .error {
