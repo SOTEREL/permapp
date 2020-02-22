@@ -13,11 +13,18 @@ export default {
     commit("setBorders", borders.borders);
   },
 
-  addTiles({ getters, commit }, tiles) {
-    const uniqueTiles = tiles.filter(tile => {
-      const key = getters.getTileKey(tile);
-      return !getters.hasTile(key);
-    });
-    commit("_addTiles", uniqueTiles);
+  showBackground({ state, commit }, id) {
+    const bg = [...state.view.backgrounds, id];
+    commit("_setBackgrounds", [...new Set(bg)]);
+  },
+
+  hideBackground({ state, commit }, id) {
+    let bg = new Set(state.view.backgrounds);
+    bg.delete(id);
+    commit("_setBackgrounds", [...bg]);
+  },
+
+  setBackgrounds({ commit }, bg) {
+    commit("_setBackgrounds", [...new Set(bg)]);
   },
 };

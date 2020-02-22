@@ -10,7 +10,7 @@
 import GeoportalLayer from "./GeoportalLayer";
 
 export default {
-  modelKey: "cadastral",
+  modelKey: "cadastral-geoportal",
   components: { GeoportalLayer },
 };
 </script>

@@ -19,7 +19,7 @@ export default {
   }),
   created() {
     this.fetchBorders();
-    this.$store.dispatch("map/addTiles", ["cadastral"]);
+    this.$store.dispatch("map/showBackground", "cadastral-geoportal");
   },
   methods: {
     fetchBorders() {

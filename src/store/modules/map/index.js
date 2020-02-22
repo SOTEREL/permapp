@@ -11,8 +11,13 @@ export default {
       lng: 0,
     },
     view: {
-      tiles: ["satellite"],
+      backgrounds: ["satellite-geoportal"],
       features: [],
+    },
+    features: {
+      background: {
+        "satellite-geoportal": {},
+      },
     },
     interaction: null,
   },

@@ -7,10 +7,16 @@
     @update:bounds="boundsUpdated"
   >
     <component
-      :is="layer.key + '-layer'"
-      v-for="layer in tiles"
-      :key="layer.key"
-      v-bind="layer.props"
+      :is="id + '-background'"
+      v-for="id in view.backgrounds"
+      :key="'background/' + id"
+      v-bind="features.background[id]"
+    />
+    <component
+      :is="feature.type"
+      v-for="feature in view.features"
+      :key="feature.type + '/' + feature.id"
+      v-bind="features[feature.type][feature.id]"
     />
   </LMap>
 </template>
@@ -25,16 +31,16 @@ import { LMap } from "vue2-leaflet";
 import SatelliteLayer from "./SatelliteLayer";
 import CadastralLayer from "./CadastralLayer";
 
-const mapLayers = layers =>
+const mapBackgrounds = layers =>
   layers.reduce(
-    (acc, layer) => ({ ...acc, [layer.modelKey + "-layer"]: layer }),
+    (acc, layer) => ({ ...acc, [layer.modelKey + "-background"]: layer }),
     {}
   );
 
 export default {
   components: {
     LMap,
-    ...mapLayers([SatelliteLayer, CadastralLayer]),
+    ...mapBackgrounds([SatelliteLayer, CadastralLayer]),
   },
   props: {
     initialZoom: {
@@ -50,15 +56,11 @@ export default {
       required: true,
     },
   },
-  computed: {
-    ...mapGetters("map", {
-      tiles: "tilesAsObjects",
-    }),
-    ...mapState({
-      features: state => state.map.view.features,
-      interaction: state => state.map.interaction,
-    }),
-  },
+  computed: mapState({
+    features: state => state.map.features,
+    interaction: state => state.map.interaction,
+    view: state => state.map.view,
+  }),
   data() {
     return {
       zoom: this.initialZoom,
