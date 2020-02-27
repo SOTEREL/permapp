@@ -8,7 +8,7 @@ export default {
     id: null,
     name: "",
     apiKeys: {
-      ign: null,
+      geoportal: process.env.VUE_APP_GEOPORTAL_API_KEY,
     },
   },
   mutations: {
@@ -18,18 +18,12 @@ export default {
     setName(state, name) {
       state.name = name;
     },
-    setApiKeys(state, keys) {
-      for (let k in keys) {
-        Vue.set(state.apiKeys, k, keys[k]);
-      }
-    },
   },
   actions: {
     async load({ commit }, pid) {
       const cfg = await ProjectApi.load(pid);
       commit("setId", pid);
       commit("setName", cfg.name);
-      commit("setApiKeys", cfg.apiKeys);
     },
   },
   getters: {},

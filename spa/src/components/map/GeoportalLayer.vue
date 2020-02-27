@@ -1,6 +1,5 @@
 <template>
   <l-tile-layer
-    v-if="apiKey"
     :url="url"
     attribution='<a href="https://www.geoportail.gouv.fr/">geoportail.gouv.fr</a>'
     :options="options"
@@ -29,10 +28,10 @@ export default {
     },
   },
   computed: mapState({
-    apiKey: state => state.project.apiKeys.ign,
+    apiKey: state => state.project.apiKeys.geoportal,
     url(state) {
       return (
-        `https://wxs.ign.fr/${state.project.apiKeys.ign}/geoportail/wmts?` +
+        `https://wxs.ign.fr/${this.apiKey}/geoportail/wmts?` +
         `REQUEST=GetTile&` +
         `SERVICE=WMTS&` +
         `VERSION=1.0.0&` +

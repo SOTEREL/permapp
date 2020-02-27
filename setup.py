@@ -31,7 +31,11 @@ setup(
     python_requires=REQUIRES_PYTHON,
     url=URL,
     packages=find_packages(exclude=("tests",)),
-    install_requires=["django>=3.0.3", "djangorestframework>=3.11.0",],
+    install_requires=[
+        "django>=3.0.3",
+        "djangorestframework>=3.11.0",
+        "django-cors-headers>=3.2.1",
+    ],
     include_package_data=True,
     classifiers=[
         # Trove classifiers

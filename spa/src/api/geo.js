@@ -1,15 +1,13 @@
 import axios from "axios";
 import Gp from "geoportal-access-lib";
 
-import Store from "../store";
-
 export const getCadastralParcelShape = (insee, section, number) => {
   // 12 -> 0012
   number = `000${number}`.slice(-4);
   return axios
     .get("https://apicarto.ign.fr/api/cadastre/parcelle", {
       params: {
-        apikey: Store.project.config.apiKeys.ign,
+        apikey: process.env.VUE_APP_GEOPORTAL_API_KEY,
         code_insee: insee,
         section: section,
         numero: number,
@@ -21,7 +19,7 @@ export const getCadastralParcelShape = (insee, section, number) => {
 export const getCadastralParcelFromPos = position =>
   new Promise((resolve, reject) => {
     Gp.Services.reverseGeocode({
-      apiKey: Store.project.config.apiKeys.ign,
+      apiKey: process.env.VUE_APP_GEOPORTAL_API_KEY,
       position: { x: position.lng, y: position.lat },
       filterOptions: {
         type: ["CadastralParcel"],

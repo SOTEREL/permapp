@@ -5,7 +5,7 @@ import MapApi from "@/api/Map";
 export default {
   async load({ commit, rootState }) {
     const cfg = await MapApi.load(rootState.project.id);
-    commit("setup", cfg.setup);
+    commit("setup", cfg);
   },
 
   async loadBorders({ commit, rootState }) {

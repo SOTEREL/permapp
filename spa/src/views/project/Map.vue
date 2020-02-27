@@ -14,7 +14,6 @@
       <router-view :project="project" />
       <div class="map">
         <Map
-          :api-key="project.apiKeys.ign"
           :initial-zoom="map.setup.zoom"
           :initial-lat="map.setup.lat"
           :initial-lng="map.setup.lng"

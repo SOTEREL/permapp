@@ -18,6 +18,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/", include("api.urls")),
     # Must be at the end as it catches all urls (for vue-router)
     path("", include("spa.urls")),
 ]

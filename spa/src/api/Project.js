@@ -1,11 +1,11 @@
-import axios from "axios";
+import Api from "./api";
 
 export default {
   list() {
-    return axios.get("/data/projects.json").then(resp => resp.data);
+    return Api.get("/projects/").then(resp => resp.data);
   },
 
   load(pid) {
-    return axios.get(`/data/${pid}/config.json`).then(resp => resp.data);
+    return Api.get(`/projects/${pid}/`).then(resp => resp.data);
   },
 };

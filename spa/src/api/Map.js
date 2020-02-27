@@ -1,8 +1,13 @@
-import axios from "axios";
+import Api from "./api";
+import ProjectApi from "./Project";
 
 export default {
   load(pid) {
-    return axios.get(`/data/${pid}/map.json`).then(resp => resp.data);
+    return ProjectApi.load(pid).then(data => ({
+      lat: data.map_lat,
+      lng: data.map_lng,
+      zoom: data.map_zoom,
+    }));
   },
 
   loadBorders(pid) {
