@@ -5,6 +5,7 @@ from . import views
 
 router = DefaultRouter()
 router.register(r"projects", views.ProjectViewSet)
+router.register(r"parcels", views.map.ParcelViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),

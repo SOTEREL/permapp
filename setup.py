@@ -35,6 +35,7 @@ setup(
         "django>=3.0.3",
         "djangorestframework>=3.11.0",
         "django-cors-headers>=3.2.1",
+        "django-filter>=2.2.0",
     ],
     include_package_data=True,
     classifiers=[

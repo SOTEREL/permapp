@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "corsheaders",
     "rest_framework",
+    "django_filters",
     "spa",
     "api",
 ]
@@ -119,3 +120,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 CORS_ORIGIN_WHITELIST = ["http://localhost:8080"]
+
+REST_FRAMEWORK = {
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"]
+}
