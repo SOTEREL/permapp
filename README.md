@@ -1,24 +1,13 @@
 # Outil de design permacole
 
-## Project setup
+## Installation
+
 ```
-npm install
+make install
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Usage
 
-### Compiles and minifies for production
 ```
-npm run build
+make -j 2
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
