@@ -36,6 +36,8 @@ setup(
         "djangorestframework>=3.11.0",
         "django-cors-headers>=3.2.1",
         "django-filter>=2.2.0",
+        "shapely>=1.7.0",
+        "jsonfield>=3.1.0",
     ],
     include_package_data=True,
     classifiers=[
