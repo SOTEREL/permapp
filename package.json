@@ -5,8 +5,9 @@
   "description": "",
   "author": "Vincent Lefoulon",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "dev": "cd spa; vue-cli-service build --mode development --watch",
+    "serve": "cd spa; vue-cli-service serve",
+    "build": "cd spa; vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

@@ -1,11 +1,14 @@
-serve: serve_back serve_front
+dev: back_dev front_dev
 
-serve_back:
-	cd backend; python manage.py runserver
+back_dev:
+	python manage.py runserver
 
-serve_front:
-	cd frontend; npm run serve
+front_dev:
+	npm run dev
 
 install:
-	cd frontend; npm install
-	cd backend; python setup.py develop && pip install -r requirements-dev.txt
+	mkdir -p spa/static/spa/build
+	mkdir -p spa/templates/spa
+	npm install
+	python setup.py develop && pip install -r requirements-dev.txt
+	pre-commit install

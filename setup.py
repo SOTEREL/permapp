@@ -17,7 +17,7 @@ VERSION = "0.0.1"
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-with io.open(os.path.join(here, "..", "README.md"), encoding="utf-8") as f:
+with io.open(os.path.join(here, "README.md"), encoding="utf-8") as f:
     long_description = "\n" + f.read()
 
 setup(
@@ -31,10 +31,7 @@ setup(
     python_requires=REQUIRES_PYTHON,
     url=URL,
     packages=find_packages(exclude=("tests",)),
-    install_requires=[
-        "django>=3.0.3",
-        "djangorestframework>=3.11.0",
-    ],
+    install_requires=["django>=3.0.3", "djangorestframework>=3.11.0",],
     include_package_data=True,
     classifiers=[
         # Trove classifiers
