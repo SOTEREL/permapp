@@ -38,6 +38,8 @@ setup(
         "django-filter>=2.2.0",
         "shapely>=1.7.0",
         "jsonfield>=3.1.0",
+        "django-categories>=1.7",
+        "djangorestframework-recursive>=0.1.2",
     ],
     include_package_data=True,
     classifiers=[

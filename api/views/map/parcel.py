@@ -2,7 +2,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import viewsets
 
-from shapely.geometry import mapping, shape, MultiPoint
+from shapely.geometry import mapping, shape
 from shapely.ops import unary_union
 
 from ...models.map import Parcel
