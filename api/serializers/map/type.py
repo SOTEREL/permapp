@@ -9,4 +9,4 @@ class TypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Type
-        fields = ("slug", "name", "category")
+        fields = ("id", "name", "category")

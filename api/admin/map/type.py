@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from ..mixins import LinkToProject
 from ...models.map import CustomType, Type
 
 
@@ -7,17 +8,16 @@ from ...models.map import CustomType, Type
 class TypeAdmin(admin.ModelAdmin):
     fields = (
         "name",
-        "slug",
         "category",
     )
-    prepopulated_fields = {"slug": ("name",)}
+    list_display = ("name", "category")
 
 
 @admin.register(CustomType)
-class CustomTypeAdmin(TypeAdmin):
+class CustomTypeAdmin(admin.ModelAdmin, LinkToProject):
     fields = (
         "project",
         "name",
-        "slug",
         "category",
     )
+    list_display = ("name", "link_to_project", "category")

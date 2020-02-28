@@ -11,7 +11,7 @@ from ...serializers.map import TypeSerializer
 
 
 class TypeViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Type.objects.all()
+    queryset = Type.objects.filter(customtype__isnull=True)
     serializer_class = TypeSerializer
 
     def get_queryset(self):
@@ -22,22 +22,3 @@ class TypeViewSet(viewsets.ReadOnlyModelViewSet):
 
         project = get_object_or_404(Project, pk=project)
         return chain(self.queryset, project.custom_map_types.all())
-
-    """
-    def list(self, request):
-        serializer = TypeSerializer(self.get_queryset())
-        cat = next(qs).category
-        categories = [
-            CategoryRecursiveSerializer(root).data
-            for root in Category.tree.root_nodes()
-        ]
-        return Response(categories)
-        try:
-            project = request.query_params["project"]
-        except KeyError:
-            return super().list(request)
-
-        queryset = chain(Type.objects.all(), project.custom_map_types.all())
-        serializer = TypeSerializer(queryset, many=True)
-        return Response(serializer.data)
-    """

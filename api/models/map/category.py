@@ -2,4 +2,5 @@ from categories.base import CategoryBase
 
 
 class Category(CategoryBase):
-    pass
+    class Meta:
+        verbose_name_plural = "categories"
