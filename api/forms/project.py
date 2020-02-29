@@ -6,8 +6,6 @@ from ..models import Project
 
 
 class ProjectMapWidget(MapWidget):
-    js_func = "ProjectMapWidget"
-
     class Media:
         js = ("api/js/widgets/project-map.js",)
 

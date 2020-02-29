@@ -31,12 +31,10 @@ function ProjectMapWidget(mapId, field) {
     center = L.marker([data.lat, data.lng]).addTo(map);
   }
 
+  LeafletTools.layers.satellite.addTo(map);
+
   var originalData = readData();
   updateData(readData());
-
-  LeafletTools.geoportal
-    .SatelliteLayer("ORTHOIMAGERY.ORTHOPHOTOS", "normal", "image/jpeg")
-    .addTo(map);
 
   map.on("move", updateData);
   map.on("zoomend", updateData);
