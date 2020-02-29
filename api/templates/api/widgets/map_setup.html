@@ -20,7 +20,12 @@ django.jQuery(document).ready(function() {
   var field = document.getElementById('{{ widget.attrs.id }}');
 
   function readData() {
-    return JSON.parse(field.value);
+    var data = JSON.parse(field.value);
+    return {
+      lat: data.map_lat,
+      lng: data.map_lng,
+      zoom: data.map_zoom,
+    };
   }
 
   function updateData(data) {
@@ -30,7 +35,11 @@ django.jQuery(document).ready(function() {
     } else {
       map.setView([data.lat, data.lng], data.zoom);
     }
-    field.value = JSON.stringify(data);
+    field.value = JSON.stringify({
+      map_lat: data.lat,
+      map_lng: data.lng,
+      map_zoom: data.zoom,
+    });
     if (center) map.removeLayer(center);
     center = L.marker([data.lat, data.lng]).addTo(map);
   }
