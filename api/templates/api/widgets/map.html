@@ -1,0 +1,23 @@
+{% load static %}
+
+<style type="text/css">
+{% block map_css %}
+  #{{ widget.attrs.map_id }} {
+    max-width: 800px;
+    height: 400px;
+  }
+{% endblock map_css %}
+</style>
+
+<div id="{{ widget.attrs.map_id }}"></div>
+
+{% include widget.attrs.field_template_name with widget=widget %}
+
+<script>
+django.jQuery(document).ready(function() {
+  mapSetupWidget(
+    '{{ widget.attrs.map_id }}',
+    document.getElementById('{{ widget.attrs.id }}')
+  );
+});
+</script>

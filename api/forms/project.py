@@ -7,7 +7,7 @@ from ..models import Project
 
 
 class MapSetupWidget(HiddenInput):
-    template_name = "api/widgets/map_setup.html"
+    template_name = "api/widgets/map.html"
 
     class Media:
         css = {
@@ -16,6 +16,7 @@ class MapSetupWidget(HiddenInput):
         js = (
             "https://unpkg.com/leaflet@1.6.0/dist/leaflet.js",
             "api/js/leaflet-tools.js",
+            "api/js/widgets/map-setup.js",
         )
 
     @property
