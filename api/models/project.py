@@ -11,7 +11,9 @@ class Project(models.Model):
     map_lat = models.FloatField(
         validators=[MinValueValidator(0), MaxValueValidator(90)]
     )
-    map_zoom = models.PositiveSmallIntegerField(default=19)
+    map_zoom = models.PositiveSmallIntegerField(
+        default=19, validators=[MinValueValidator(0)]
+    )
 
     def __str__(self):
         return f"{self.name} (id: {self.id})"

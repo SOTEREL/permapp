@@ -1,5 +1,6 @@
 from django.contrib import admin
 
+from ..forms import ProjectForm
 from ..models import Project
 from ..models.map import Parcel
 
@@ -10,6 +11,5 @@ class ParcelInline(admin.TabularInline):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    inlines = [
-        ParcelInline,
-    ]
+    form = ProjectForm
+    inlines = [ParcelInline]
