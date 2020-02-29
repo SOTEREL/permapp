@@ -15,7 +15,7 @@
 
 <script>
 django.jQuery(document).ready(function() {
-  mapSetupWidget(
+  {{ widget.attrs.js_func }}(
     '{{ widget.attrs.map_id }}',
     document.getElementById('{{ widget.attrs.id }}')
   );

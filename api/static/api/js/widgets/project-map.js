@@ -1,4 +1,4 @@
-function mapSetupWidget(mapId, field) {
+function ProjectMapWidget(mapId, field) {
   var map = L.map(mapId);
   var center;
 
