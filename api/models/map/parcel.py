@@ -16,5 +16,8 @@ class Parcel(models.Model):
     number = models.CharField(max_length=4, validators=[MinLengthValidator(4)])
     geom = JSONField(null=True, blank=True)
 
+    class Meta:
+        unique_together = ("project", "insee", "section", "number")
+
     def __str__(self):
         return f"{self.number}-{self.section}-{self.insee}"
