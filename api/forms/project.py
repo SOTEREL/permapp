@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 
-from .aggregation import AggregationField, AggregationFormMixin
+from .fields import AggregationField
+from .mixins import AggregationFormMixin
 from .widgets import MapWidget
 from ..models import Project
 

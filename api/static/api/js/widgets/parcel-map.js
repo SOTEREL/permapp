@@ -1,4 +1,5 @@
-function ParcelMapWidget(mapId, field) {
+function ParcelMapWidget(mapId, field, kwargs) {
+  var projectField = document.getElementById(kwargs.project_field_id);
   var map = L.map(mapId);
   var parcel;
 
@@ -21,6 +22,12 @@ function ParcelMapWidget(mapId, field) {
         },
       },
       {
+        style: {
+          fillColor: "white",
+          fillOpacity: 0.5,
+          color: "#000",
+          weight: 1,
+        },
         onEachFeature: function(feature, layer) {
           var html = "";
           for (var k in feature.properties) {
@@ -37,9 +44,49 @@ function ParcelMapWidget(mapId, field) {
     ).addTo(map);
   }
 
-  map.setView([44.19040294, 2.66266848], 18); // TODO: get from project
-  LeafletTools.layers.satellite.addTo(map);
-  LeafletTools.layers.cadastral.addTo(map);
+  function setMapCenterFromProject() {
+    if (projectField) {
+      var projectId = projectField.value;
+      fetch("/api/projects/1/") // TODO
+        .then(function(resp) {
+          return resp.json();
+        })
+        .then(function(project) {
+          map.setView([project.map_lat, project.map_lng], project.map_zoom);
+        });
+    }
+  }
+
+  function getPointsCenter(points) {
+    var sumLat = 0;
+    var sumLng = 0;
+    var n = 0;
+
+    for (var p of points) {
+      sumLat += p[1];
+      sumLng += p[0];
+      n++;
+    }
+
+    return {
+      lat: sumLat / n,
+      lng: sumLng / n,
+    };
+  }
+
+  function initMapCenter() {
+    var geom = readData().geom;
+    if (geom) {
+      var center = getPointsCenter(geom.coordinates[0][0]);
+      map.setView([center.lat, center.lng], 18);
+    } else if (!setMapCenterFromProject()) {
+      map.setView([46.55886030311719, 2.0654296875000004], 5);
+    }
+  }
+
+  initMapCenter();
+  MapTools.layers.satellite.addTo(map);
+  MapTools.layers.cadastral.addTo(map);
 
   updateData(readData());
 
@@ -48,11 +95,15 @@ function ParcelMapWidget(mapId, field) {
     // TODO:
     // * Loader
     // * HTTP errors
-    LeafletTools.api.parcelFromPos(e.latlng).then(function(parcel) {
-      LeafletTools.api.parcelShape(parcel).then(function(geom) {
+    MapTools.geo.parcelFromPos(e.latlng).then(function(parcel) {
+      MapTools.geo.parcelShape(parcel).then(function(geom) {
         parcel.geom = geom;
         updateData(parcel);
       });
     });
   });
+
+  if (projectField) {
+    projectField.addEventListener("change", setMapCenterFromProject);
+  }
 }

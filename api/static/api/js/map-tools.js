@@ -1,4 +1,4 @@
-var LeafletTools = (function() {
+var MapTools = (function() {
   var GEOPORTAL_API_KEY = "choisirgeoportail";
 
   function makeLayer(name, style, format) {
@@ -27,7 +27,7 @@ var LeafletTools = (function() {
   }
 
   return {
-    api: {
+    geo: {
       parcelFromPos: function(pos) {
         return new Promise((resolve, reject) => {
           Gp.Services.reverseGeocode({

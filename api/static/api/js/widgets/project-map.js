@@ -31,7 +31,7 @@ function ProjectMapWidget(mapId, field) {
     center = L.marker([data.lat, data.lng]).addTo(map);
   }
 
-  LeafletTools.layers.satellite.addTo(map);
+  MapTools.layers.satellite.addTo(map);
 
   var originalData = readData();
   updateData(readData());
