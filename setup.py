@@ -40,6 +40,7 @@ setup(
         "jsonfield>=3.1.0",
         "django-categories>=1.7",
         "djangorestframework-recursive>=0.1.2",
+        "django-inline-actions>=2.3.0",
     ],
     include_package_data=True,
     classifiers=[
