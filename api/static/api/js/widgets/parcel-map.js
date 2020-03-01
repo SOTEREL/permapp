@@ -2,6 +2,25 @@ function ParcelMapWidget(mapId, field, kwargs) {
   var projectField = document.getElementById(kwargs.project_field_id);
   var map = L.map(mapId);
   var parcel;
+  var loading = false;
+  var formRow = django.jQuery("#" + mapId).closest(".form-row");
+  var errorUl = django.jQuery('<ul class="errorlist"></ul>');
+  formRow.prepend(errorUl);
+
+  function setLoading(isLoading) {
+    loading = isLoading;
+    if (loading) {
+      map.getContainer().style.opacity = 0.1;
+      map.getContainer().style.cursor = "progress";
+    } else {
+      map.getContainer().style.opacity = 1;
+      map.getContainer().style.cursor = "pointer";
+    }
+  }
+
+  function displayError(err) {
+    errorUl.html("<li>" + err + "</li>");
+  }
 
   function readData() {
     return JSON.parse(field.value);
@@ -10,7 +29,6 @@ function ParcelMapWidget(mapId, field, kwargs) {
   function updateData(data) {
     field.value = JSON.stringify(data);
     if (parcel) map.removeLayer(parcel);
-    // TODO: better style
     parcel = L.geoJSON(
       {
         type: "Feature",
@@ -42,18 +60,23 @@ function ParcelMapWidget(mapId, field, kwargs) {
         },
       }
     ).addTo(map);
+    setLoading(false);
   }
 
   function setMapCenterFromProject() {
     if (projectField) {
       var projectId = projectField.value;
-      fetch("/api/projects/1/") // TODO
+      if (projectId === "") {
+        return;
+      }
+      fetch("/api/projects/" + projectId + "/") // TODO
         .then(function(resp) {
           return resp.json();
         })
         .then(function(project) {
           map.setView([project.map_lat, project.map_lng], project.map_zoom);
-        });
+        })
+        .catch(displayError);
     }
   }
 
@@ -84,23 +107,34 @@ function ParcelMapWidget(mapId, field, kwargs) {
     }
   }
 
+  setLoading(false);
   initMapCenter();
   MapTools.layers.satellite.addTo(map);
   MapTools.layers.cadastral.addTo(map);
 
   updateData(readData());
 
-  // TODO: cursor pointer
   map.on("click", function(e) {
-    // TODO:
-    // * Loader
-    // * HTTP errors
-    MapTools.geo.parcelFromPos(e.latlng).then(function(parcel) {
-      MapTools.geo.parcelShape(parcel).then(function(geom) {
-        parcel.geom = geom;
-        updateData(parcel);
+    if (loading) return;
+    setLoading(true);
+    MapTools.geo
+      .parcelFromPos(e.latlng)
+      .then(function(parcel) {
+        MapTools.geo
+          .parcelShape(parcel)
+          .then(function(geom) {
+            parcel.geom = geom;
+            updateData(parcel);
+          })
+          .catch(function(err) {
+            displayError(err);
+            setLoading(false);
+          });
+      })
+      .catch(function(err) {
+        displayError(err);
+        setLoading(false);
       });
-    });
   });
 
   if (projectField) {
