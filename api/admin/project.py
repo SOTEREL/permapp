@@ -26,6 +26,7 @@ class ProjectAdmin(InlineActionsModelAdminMixin, admin.ModelAdmin):
             return actions
 
         actions.append("add_parcel")
+        actions.append("add_feature")
 
         return actions
 
@@ -34,3 +35,9 @@ class ProjectAdmin(InlineActionsModelAdminMixin, admin.ModelAdmin):
 
     def add_parcel(self, request, obj, parent_obj=None):
         return redirect(reverse("admin:api_parcel_add") + f"?project={obj.id}")
+
+    def get_add_feature_label(self, obj):
+        return "Add feature"
+
+    def add_feature(self, request, obj, parent_obj=None):
+        return redirect(reverse("admin:api_feature_add") + f"?project={obj.id}")

@@ -13,11 +13,7 @@ function ProjectMapWidget(mapId, field) {
     field.value = JSON.stringify(data);
     widget.map.setView([data.map_lat, data.map_lng], data.map_zoom);
     if (center) widget.map.removeLayer(center);
-    center = L.marker([data.map_lat, data.map_lng], {
-      icon: L.icon({
-        iconUrl: "/static/api/img/marker-icon.png",
-      }),
-    }).addTo(widget.map);
+    center = L.marker([data.map_lat, data.map_lng]).addTo(widget.map);
   };
 
   function updateFromPos() {

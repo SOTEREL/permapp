@@ -1,2 +1,2 @@
 from . import project
-from .map import category, parcel, type
+from .map import category, feature, parcel, type
