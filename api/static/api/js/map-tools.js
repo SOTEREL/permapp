@@ -28,6 +28,22 @@ var MapTools = (function() {
 
   return {
     geo: {
+      getPointsCenter: function(points) {
+        var sumLat = 0;
+        var sumLng = 0;
+        var n = 0;
+
+        for (var p of points) {
+          sumLat += p[1];
+          sumLng += p[0];
+          n++;
+        }
+
+        return {
+          lat: sumLat / n,
+          lng: sumLng / n,
+        };
+      },
       parcelFromPos: function(pos) {
         return new Promise((resolve, reject) => {
           Gp.Services.reverseGeocode({

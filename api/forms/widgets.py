@@ -9,8 +9,8 @@ class MapWidget(HiddenInput):
     js_args = None
 
     class Media:
-        css = {"all": ("https://unpkg.com/leaflet@1.6.0/dist/leaflet.css",)}
-        js = ("https://unpkg.com/leaflet@1.6.0/dist/leaflet.js", "api/js/map-tools.js")
+        css = {"all": ("api/css/leaflet.css",)}
+        js = ("api/js/lib/leaflet.js", "api/js/map-tools.js", "api/js/widgets/map.js")
 
     @property
     def is_hidden(self):
@@ -22,6 +22,6 @@ class MapWidget(HiddenInput):
             field_template_name=super().template_name,
             map_id=widget_id + "_map",
             js_func=self.js_func or self.__class__.__name__,
-            js_args=self.js_args,
+            js_args=self.js_args or {},
         )
         return super().get_context(name, value, attrs)

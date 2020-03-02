@@ -10,10 +10,7 @@ class ParcelMapWidget(MapWidget):
     js_args = dict(project_field_id="id_project")
 
     class Media:
-        js = (
-            "https://ignf.github.io/geoportal-access-lib/latest/dist/GpServices.js",
-            "api/js/widgets/parcel-map.js",
-        )
+        js = ("api/js/lib/geoportal-access-lib.js", "api/js/widgets/parcel-map.js")
 
 
 class ParcelForm(ModelForm, AggregationFormMixin, ProjectMapFormMixin):

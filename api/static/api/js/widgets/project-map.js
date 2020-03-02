@@ -1,44 +1,36 @@
 function ProjectMapWidget(mapId, field) {
-  var map = L.map(mapId);
+  var widget = MapWidget(mapId, field);
   var center;
 
-  function readData() {
-    var data = JSON.parse(field.value);
-    return {
-      lat: data.map_lat,
-      lng: data.map_lng,
-      zoom: data.map_zoom,
-    };
-  }
-
-  function updateData(data) {
+  widget.update = function(data) {
     if (
-      data.lat === undefined ||
-      data.lng === undefined ||
-      data.zoom === undefined
+      data.map_lat === null ||
+      data.map_lng === null ||
+      data.map_zoom === null
     ) {
-      data = map.getCenter();
-      data.zoom = map.getZoom();
-    } else {
-      map.setView([data.lat, data.lng], data.zoom);
+      return;
     }
-    field.value = JSON.stringify({
-      map_lat: data.lat,
-      map_lng: data.lng,
-      map_zoom: data.zoom,
-    });
-    if (center) map.removeLayer(center);
-    center = L.marker([data.lat, data.lng]).addTo(map);
+    field.value = JSON.stringify(data);
+    widget.map.setView([data.map_lat, data.map_lng], data.map_zoom);
+    if (center) widget.map.removeLayer(center);
+    center = L.marker([data.map_lat, data.map_lng], {
+      icon: L.icon({
+        iconUrl: "/static/api/img/marker-icon.png",
+      }),
+    }).addTo(widget.map);
+  };
+
+  function updateFromPos() {
+    var c = widget.map.getCenter();
+    data = {
+      map_lat: c.lat,
+      map_lng: c.lng,
+      map_zoom: widget.map.getZoom(),
+    };
+    widget.update(data);
   }
 
-  MapTools.layers.satellite.addTo(map);
-
-  var originalData = readData();
-  updateData(readData());
-
-  map.on("move", updateData);
-  map.on("zoomend", updateData);
-
+  var originalData = widget.read();
   var resetControl = L.Control.extend({
     options: {
       position: "topleft",
@@ -57,11 +49,17 @@ function ProjectMapWidget(mapId, field) {
       container.title = "Revenir au départ";
 
       container.onclick = function() {
-        updateData(originalData);
+        widget.update(originalData);
       };
 
       return container;
     },
   });
-  map.addControl(new resetControl());
+  widget.map.addControl(new resetControl());
+
+  widget.init([MapTools.layers.satellite]);
+
+  updateFromPos(); // Call it to show marker
+  widget.map.on("move", updateFromPos);
+  widget.map.on("zoomend", updateFromPos);
 }
