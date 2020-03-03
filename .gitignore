@@ -121,4 +121,4 @@ db.sqlite3
 # Custom
 #########################################
 
-*.swp
+!api/static/api/js/lib/
