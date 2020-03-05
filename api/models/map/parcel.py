@@ -6,6 +6,7 @@ from jsonfield import JSONField
 from ..project import Project
 
 
+# TODO: inherit from PolygonField
 class Parcel(models.Model):
     # https://apicarto.ign.fr/api/doc/cadastre#/Parcelle/get_cadastre_parcelle
     project = models.ForeignKey(

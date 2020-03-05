@@ -1,10 +1,32 @@
-function ParcelMapWidget(mapId, field, kwargs) {
-  var widget = MapWidget(mapId, field, kwargs);
+function ParcelMapWidget(config, kwargs) {
+  var widget = MapWidget(config, kwargs);
   var parcel;
 
-  widget.update = function(data) {
-    field.value = JSON.stringify(data);
-    if (parcel) widget.map.removeLayer(parcel);
+  widget.isDataValid = function(data) {
+    return (
+      data.insee !== "" &&
+      data.section !== "" &&
+      data.number !== "" &&
+      data.geom !== "null"
+    );
+  };
+
+  widget.readers = {
+    geom: function(field) {
+      return JSON.parse(field.value);
+    },
+  };
+
+  widget.writers = {
+    geom: function(field, value) {
+      field.value = JSON.stringify(value);
+    },
+  };
+
+  widget.postUpdate = function(data) {
+    if (parcel) {
+      widget.map.removeLayer(parcel);
+    }
     parcel = L.geoJSON(
       {
         type: "Feature",

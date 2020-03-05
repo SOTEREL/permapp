@@ -1,34 +1,30 @@
-function ProjectMapWidget(mapId, field, subfields) {
-  var widget = MapWidget(mapId, field, subfields);
+function ProjectMapWidget(config) {
+  var widget = MapWidget(config);
   var center;
 
-  widget.update = function(data) {
-    if (data.map_lat === "" || data.map_lng === "" || data.map_zoom === "") {
-      return;
-    }
-    document.getElementById(subfields.map_lat).value = data.map_lat;
-    document.getElementById(subfields.map_lng).value = data.map_lng;
-    document.getElementById(subfields.map_zoom).value = data.map_zoom;
-
-    // Avoid infinite recursion
-    widget.map.setView([data.map_lat, data.map_lng], data.map_zoom);
-
-    if (center) widget.map.removeLayer(center);
-    center = L.marker([data.map_lat, data.map_lng]).addTo(widget.map);
-  };
-
-  function updateFromPos(e) {
-    if (e.type === "move" && e.originalEvent === undefined) {
-      // Triggered bt map.setView()
-      return;
-    }
+  function readPos() {
     var c = widget.map.getCenter();
-    data = {
+    return {
       map_lat: c.lat,
       map_lng: c.lng,
       map_zoom: widget.map.getZoom(),
     };
-    widget.update(data);
+  }
+
+  widget.postUpdate = function(data) {
+    widget.map.setView([data.map_lat, data.map_lng], data.map_zoom);
+    if (center) {
+      widget.map.removeLayer(center);
+    }
+    center = L.marker([data.map_lat, data.map_lng]).addTo(widget.map);
+  };
+
+  function updateFromPos(e) {
+    // Triggered by map.setView()
+    if (e.type === "move" && e.originalEvent === undefined) {
+      return;
+    }
+    widget.update(readPos());
   }
 
   var originalData = widget.read();
@@ -60,6 +56,11 @@ function ProjectMapWidget(mapId, field, subfields) {
 
   widget.init([MapTools.layers.satellite]);
 
+  // If the center is not specified in data (probably because we are creating
+  // a new project), we use the default center;
+  if (!widget.isDataValid(widget.read())) {
+    widget.postUpdate(readPos());
+  }
   widget.map.on("move", updateFromPos);
   widget.map.on("zoomend", updateFromPos);
 }

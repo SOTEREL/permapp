@@ -3,6 +3,9 @@ from django.db import models
 from ..project import Project
 
 
+# TODO:
+# * add projection field
+# * add properties for area and length
 class Feature(models.Model):
     project = models.ForeignKey(
         Project, related_name="features", on_delete=models.CASCADE

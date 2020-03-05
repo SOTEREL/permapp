@@ -16,9 +16,11 @@
 <script>
 django.jQuery(document).ready(function() {
   {{ widget.attrs.js_func }}(
-    "{{ widget.attrs.map_id }}",
-    document.getElementById("{{ widget.attrs.id }}"),
-    {{ widget.attrs.subfields|safe }},
+    {
+      mapId: "{{ widget.attrs.map_id }}",
+      mapField: document.getElementById("{{ widget.attrs.id }}"),
+      subfields: {{ widget.attrs.subfields|safe }},
+    },
     {{ widget.attrs.js_args|safe }}
   );
 });

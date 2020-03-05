@@ -1,13 +1,13 @@
-function MapWidget(mapId, field, subfields, kwargs) {
+function MapWidget(config, kwargs) {
   var self = {};
   kwargs = kwargs || {};
 
   var _projectField = document.getElementById(kwargs.project_field_id);
   var _loading = false;
-  var _formRow = django.jQuery("#" + mapId).closest(".form-row");
+  var _formRow = django.jQuery("#" + config.mapId).closest(".form-row");
   var _errorUl = django.jQuery('<ul class="errorlist"></ul>');
 
-  self.map = L.map(mapId);
+  self.map = L.map(config.mapId);
 
   self.loading = function(val) {
     if (val === undefined) {
@@ -32,15 +32,49 @@ function MapWidget(mapId, field, subfields, kwargs) {
     self.loading(false);
   };
 
+  self.readers = {};
+  self.writers = {};
+
   self.read = function() {
     var data = {};
-    for (var name in subfields) {
-      data[name] = document.getElementById(subfields[name]).value;
+    for (var name in config.subfields) {
+      if (self.readers[name]) {
+        data[name] = self.readers[name](
+          document.getElementById(config.subfields[name])
+        );
+      } else {
+        data[name] = document.getElementById(config.subfields[name]).value;
+      }
     }
     return data;
   };
 
+  self.isDataValid = function(data) {
+    for (var k in data) {
+      if (data[k] === "") return false;
+    }
+    return true;
+  };
+
   self.update = function(data) {
+    if (!self.isDataValid(data)) {
+      return;
+    }
+    for (var name in config.subfields) {
+      if (self.writers[name]) {
+        self.writers[name](
+          document.getElementById(config.subfields[name]),
+          data[name]
+        );
+      } else {
+        document.getElementById(config.subfields[name]).value = data[name];
+      }
+    }
+    config.mapField.value = JSON.stringify(data);
+    self.postUpdate(data);
+  };
+
+  self.postUpdate = function(data) {
     throw "Not implemented";
   };
 
@@ -66,7 +100,7 @@ function MapWidget(mapId, field, subfields, kwargs) {
 
   function _initMapCenter() {
     var geom = self.read().geom;
-    if (geom) {
+    if (geom && geom.coordinates) {
       var center = MapTools.geo.getPointsCenter(geom.coordinates[0][0]);
       self.map.setView([center.lat, center.lng], 18);
     } else if (!_setMapCenterFromProject()) {
