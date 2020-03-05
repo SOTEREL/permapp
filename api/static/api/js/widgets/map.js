@@ -37,7 +37,6 @@ function MapWidget(mapId, field, subfields, kwargs) {
     for (var name in subfields) {
       data[name] = document.getElementById(subfields[name]).value;
     }
-    console.info(data);
     return data;
   };
 

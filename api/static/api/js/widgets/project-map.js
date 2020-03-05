@@ -9,12 +9,19 @@ function ProjectMapWidget(mapId, field, subfields) {
     document.getElementById(subfields.map_lat).value = data.map_lat;
     document.getElementById(subfields.map_lng).value = data.map_lng;
     document.getElementById(subfields.map_zoom).value = data.map_zoom;
+
+    // Avoid infinite recursion
     widget.map.setView([data.map_lat, data.map_lng], data.map_zoom);
+
     if (center) widget.map.removeLayer(center);
     center = L.marker([data.map_lat, data.map_lng]).addTo(widget.map);
   };
 
-  function updateFromPos() {
+  function updateFromPos(e) {
+    if (e.type === "move" && e.originalEvent === undefined) {
+      // Triggered bt map.setView()
+      return;
+    }
     var c = widget.map.getCenter();
     data = {
       map_lat: c.lat,
@@ -53,7 +60,6 @@ function ProjectMapWidget(mapId, field, subfields) {
 
   widget.init([MapTools.layers.satellite]);
 
-  updateFromPos(); // Call it to show marker
   widget.map.on("move", updateFromPos);
   widget.map.on("zoomend", updateFromPos);
 }
