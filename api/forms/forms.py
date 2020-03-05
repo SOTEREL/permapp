@@ -55,7 +55,11 @@ class ProjectMapForm(AggregationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        project_field_id = self[self.project_field_name].auto_id
+        try:
+            project_field_id = self[self.project_field_name].auto_id
+        except KeyError:  # The field is probably read-only
+            project_field_id = None
+
         for field in self.fields.values():
             if isinstance(field.widget, MapWidget):
                 field.widget.add_js_arg("project_field_id", project_field_id)

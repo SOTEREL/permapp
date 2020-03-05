@@ -34,5 +34,6 @@ class MapWidget(HiddenInput):
             map_id=widget_id + "_map",
             subfields=self.subfields or {},
             js_func=self.js_func or self.__class__.__name__,
+            js_args=json.dumps(self.js_args),
         )
         return super().get_context(name, value, attrs)
