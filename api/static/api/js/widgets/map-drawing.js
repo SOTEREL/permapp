@@ -4,11 +4,11 @@ function MapDrawingWidget(config, kwargs) {
   var drawnItems = new L.FeatureGroup();
 
   self.draw = function(data) {
-    throw "Not implementedaaaa";
+    throw "MapDrawingWidget.draw() must be implemented";
   };
 
   self.updateFromDrawing = function() {
-    throw "Not implementedsssss";
+    throw "MapDrawingWidget.updateFromDrawing() must be implemented";
   };
 
   self.drawStart = function(e) {
@@ -33,10 +33,11 @@ function MapDrawingWidget(config, kwargs) {
   self.init = function(mapWidget, drawControlOptions) {
     self.mapWidget = mapWidget;
     self.mapWidget.map.addLayer(drawnItems);
-    self.draw(self.mapWidget.read(), drawnItems);
+    var data = self.mapWidget.read();
+    if (self.mapWidget.isDataValid(data)) {
+      self.draw(data, drawnItems);
+    }
     self.mapWidget.map.addControl(new L.Control.Draw(drawControlOptions));
-
-    // TODO: draw when editing feature
 
     mapWidget.map.on(L.Draw.Event.DRAWSTART, self.drawStart);
     mapWidget.map.on(L.Draw.Event.DRAWSTOP, self.drawStop);

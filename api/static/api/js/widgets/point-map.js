@@ -15,10 +15,11 @@ function PointMapWidget(config, kwargs) {
     return data;
   };
 
+  mapWidget.isDataValid = function(data) {
+    return !isNaN(data.lat) && !isNaN(data.lng);
+  };
+
   drawingWidget.draw = function(data, drawingLayer) {
-    if (isNaN(data.lat) || isNaN(data.lng)) {
-      return;
-    }
     drawingLayer.clearLayers();
     L.marker(data).addTo(drawingLayer);
   };
@@ -35,13 +36,8 @@ function PointMapWidget(config, kwargs) {
     });
   };
 
-  // TODO:
-  // TypeError: points is undefined
-  // getPointsCenter http://127.0.0.1:8000/static/api/js/map-tools.js:36
-  // _initMapCenter http://127.0.0.1:8000/static/api/js/widgets/map.js:66
-  // init http://127.0.0.1:8000/static/api/js/widgets/map.js:78
-  // FeatureMapWidget http://127.0.0.1:8000/static/api/js/widgets/feature-map.js:15
   mapWidget.init([MapTools.layers.satellite]);
+
   drawingWidget.init(mapWidget, {
     edit: false,
     draw: {

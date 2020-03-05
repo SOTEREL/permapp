@@ -11,6 +11,10 @@ function ProjectMapWidget(config) {
     };
   }
 
+  widget.isDataValid = function(data) {
+    return data.map_lat !== "" && data.map_lng !== "" && data.map_zoom !== "";
+  };
+
   widget.postUpdate = function(data) {
     widget.map.setView([data.map_lat, data.map_lng], data.map_zoom);
     if (center) {

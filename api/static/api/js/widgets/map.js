@@ -50,10 +50,7 @@ function MapWidget(config, kwargs) {
   };
 
   self.isDataValid = function(data) {
-    for (var k in data) {
-      if (data[k] === "") return false;
-    }
-    return true;
+    throw "MapWidget.isDataValid() must be implemented";
   };
 
   self.update = function(data) {
@@ -95,7 +92,7 @@ function MapWidget(config, kwargs) {
 
   function _initMapCenter() {
     var dataCenter = self.centerFromData(self.read());
-    if (dataCenter !== undefined) {
+    if (self.isDataValid(self.read()) && dataCenter !== undefined) {
       return self.map.setView(
         [dataCenter.lat, dataCenter.lng],
         dataCenter.zoom || 18
