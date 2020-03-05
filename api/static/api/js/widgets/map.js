@@ -78,37 +78,38 @@ function MapWidget(config, kwargs) {
     throw "Not implemented";
   };
 
+  self.centerFromData = function(data) {};
+
   function _setMapCenterFromProject() {
-    if (_projectField) {
-      var projectId = _projectField.value;
-      if (projectId === "") {
-        return;
-      }
-      fetch("/_api/projects/" + projectId + "/") // TODO: store url in var
-        .then(function(resp) {
-          return resp.json();
-        })
-        .then(function(project) {
-          self.map.setView(
-            [project.map_lat, project.map_lng],
-            project.map_zoom
-          );
-        })
-        .catch(self.error);
+    var projectId = _projectField.value;
+    if (projectId === "") {
+      return;
     }
+    fetch("/_api/projects/" + projectId + "/") // TODO: store url in var
+      .then(function(resp) {
+        return resp.json();
+      })
+      .then(function(project) {
+        self.map.setView([project.map_lat, project.map_lng], project.map_zoom);
+      })
+      .catch(self.error);
   }
 
   function _initMapCenter() {
-    var geom = self.read().geom;
-    if (geom && geom.coordinates) {
-      var center = MapTools.geo.getPointsCenter(geom.coordinates[0][0]);
-      self.map.setView([center.lat, center.lng], 18);
-    } else if (!_setMapCenterFromProject()) {
-      self.map.setView(
-        kwargs.defaultView || [46.55886030311719, 2.0654296875000004],
-        kwargs.defaultZoom || 5
+    var dataCenter = self.centerFromData(self.read());
+    if (dataCenter !== undefined) {
+      return self.map.setView(
+        [dataCenter.lat, dataCenter.lng],
+        dataCenter.zoom || 18
       );
     }
+    if (_projectField && _projectField.value !== "") {
+      return _setMapCenterFromProject();
+    }
+    self.map.setView(
+      kwargs.defaultView || [46.55886030311719, 2.0654296875000004],
+      kwargs.defaultZoom || 5
+    );
   }
 
   self.init = function(layers) {

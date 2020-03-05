@@ -6,12 +6,14 @@ from ..project import Project
 # TODO:
 # * add projection field
 # * add properties for area and length
+# * add style field
 class Feature(models.Model):
-    project = models.ForeignKey(
-        Project, related_name="features", on_delete=models.CASCADE
-    )
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     name = models.CharField(max_length=50, default="", blank=True)
     description = models.TextField(default="", blank=True)
+
+    class Meta:
+        abstract = True
 
     def __str__(self):
         return self.name or self.id

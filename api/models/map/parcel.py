@@ -3,19 +3,15 @@ from django.db import models
 
 from jsonfield import JSONField
 
+from .polygon import MultiPolygonBase
 from ..project import Project
 
 
-# TODO: inherit from PolygonField
-class Parcel(models.Model):
+class Parcel(MultiPolygonBase):
     # https://apicarto.ign.fr/api/doc/cadastre#/Parcelle/get_cadastre_parcelle
-    project = models.ForeignKey(
-        Project, related_name="parcels", on_delete=models.CASCADE
-    )
     insee = models.CharField(max_length=5, validators=[MinLengthValidator(5)])
     section = models.CharField(max_length=2, validators=[MinLengthValidator(2)])
     number = models.CharField(max_length=4, validators=[MinLengthValidator(4)])
-    geom = JSONField(null=True, blank=True)
 
     class Meta:
         unique_together = ("project", "insee", "section", "number")

@@ -1,11 +1,18 @@
 from django.db import models
 
-from .point import Point
+from .point import PointBase
 
 
-class Circle(Point):
+class CircleBase(PointBase):
     radius = models.PositiveSmallIntegerField()
+
+    class Meta:
+        abstract = True
 
     @property
     def geojson_props(self):
         return {"radius": self.radius}
+
+
+class Circle(CircleBase):
+    pass

@@ -13,8 +13,11 @@ def validate_coordinates(value):
         raise ValidationError("Coordinates must contain at least two points.")
 
 
-class Line(Feature):
+class LineBase(Feature):
     coordinates = JSONField(validators=[validate_coordinates])
+
+    class Meta:
+        abstract = True
 
     @property
     def center(self):
@@ -23,3 +26,7 @@ class Line(Feature):
     @property
     def geojson_geom(self):
         return {"type": "LineString", "coordinates": self.coordinates}
+
+
+class Line(LineBase):
+    pass

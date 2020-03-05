@@ -11,7 +11,7 @@ class ParcelMapWidget(MapWidget):
 
 class ParcelForm(ProjectMapForm):
     map = AggregationField(
-        ["insee", "section", "number", "geom"], widget=ParcelMapWidget
+        ["insee", "section", "number", "coordinates"], widget=ParcelMapWidget
     )
 
     class Meta:

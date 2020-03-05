@@ -11,14 +11,19 @@ function ParcelMapWidget(config, kwargs) {
     );
   };
 
+  widget.centerFromData = function(data) {
+    if (!data.coordinates) return;
+    return MapTools.geo.center.fromMultiPolygon(data.coordinates);
+  };
+
   widget.readers = {
-    geom: function(field) {
+    coordinates: function(field) {
       return JSON.parse(field.value);
     },
   };
 
   widget.writers = {
-    geom: function(field, value) {
+    coordinates: function(field, value) {
       field.value = JSON.stringify(value);
     },
   };
@@ -30,7 +35,10 @@ function ParcelMapWidget(config, kwargs) {
     parcel = L.geoJSON(
       {
         type: "Feature",
-        geometry: data.geom,
+        geometry: {
+          type: "MultiPolygon",
+          coordinates: data.coordinates,
+        },
         properties: {
           insee: data.insee,
           section: data.section,
@@ -72,7 +80,7 @@ function ParcelMapWidget(config, kwargs) {
         MapTools.geo
           .parcelShape(parcel)
           .then(function(geom) {
-            parcel.geom = geom;
+            parcel.coordinates = geom.coordinates;
             widget.update(parcel);
           })
           .catch(widget.apiError);
