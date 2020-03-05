@@ -28,6 +28,21 @@ var MapTools = (function() {
 
   var geo = {
     center: {},
+    geocode: function(location) {
+      return new Promise((resolve, reject) => {
+        Gp.Services.geocode({
+          apiKey: GEOPORTAL_API_KEY,
+          location: location,
+          filterOptions: {
+            type: ["StreetAddress"],
+          },
+          onSuccess: function(resp) {
+            resolve(resp.locations);
+          },
+          onFailure: reject,
+        });
+      });
+    },
     parcelFromPos: function(pos) {
       return new Promise((resolve, reject) => {
         Gp.Services.reverseGeocode({

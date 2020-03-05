@@ -6,7 +6,10 @@ from ..models import Project
 
 class ProjectMapWidget(MapWidget):
     class Media:
-        js = ("api/js/widgets/project-map.js",)
+        js = (
+            "api/js/lib/geoportal-access-lib.js",
+            "api/js/widgets/project-map.js",
+        )
 
 
 class ProjectForm(AggregationForm):
