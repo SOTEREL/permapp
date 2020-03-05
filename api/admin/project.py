@@ -6,17 +6,11 @@ from inline_actions.admin import InlineActionsModelAdminMixin
 
 from ..forms import ProjectForm
 from ..models import Project
-from ..models.map import Parcel
-
-
-class ParcelInline(admin.TabularInline):
-    model = Parcel
 
 
 @admin.register(Project)
 class ProjectAdmin(InlineActionsModelAdminMixin, admin.ModelAdmin):
     form = ProjectForm
-    inlines = [ParcelInline]
     save_on_top = True
     search_fields = ("name",)
 
