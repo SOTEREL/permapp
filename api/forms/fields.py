@@ -4,9 +4,10 @@ from django.forms import CharField
 
 
 class AggregationField(CharField):
-    def __init__(self, aggregated_fields, *args, **kwargs):
+    def __init__(self, aggregated_fields, *, hide_subfields=True, **kwargs):
         self.aggregated_fields = aggregated_fields
-        super().__init__(*args, **kwargs)
+        self.hide_subfields = hide_subfields
+        super().__init__(**kwargs)
 
     def to_python(self, value):
         if not value:

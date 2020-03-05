@@ -1,7 +1,5 @@
-from django.forms import ModelForm
-
 from ..fields import AggregationField
-from ..mixins import AggregationFormMixin, ProjectMapFormMixin
+from ..project_map import ProjectMapForm
 from ..widgets import MapWidget
 from ...models.map import Parcel
 
@@ -13,16 +11,11 @@ class ParcelMapWidget(MapWidget):
         js = ("api/js/lib/geoportal-access-lib.js", "api/js/widgets/parcel-map.js")
 
 
-class ParcelForm(ModelForm, AggregationFormMixin, ProjectMapFormMixin):
+class ParcelForm(ProjectMapForm):
     map = AggregationField(
         ["insee", "section", "number", "geom"], widget=ParcelMapWidget
     )
 
     class Meta:
         model = Parcel
-        fields = ["project", "map", "insee", "section", "number", "geom"]
-
-    def __init__(self, *args, **kwargs):
-        ModelForm.__init__(self, *args, **kwargs)
-        AggregationFormMixin.__init__(self)
-        ProjectMapFormMixin.__init__(self)
+        fields = ["project", "map"]

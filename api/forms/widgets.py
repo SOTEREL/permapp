@@ -7,6 +7,7 @@ class MapWidget(HiddenInput):
     template_name = "api/widgets/map.html"
     js_func = None
     js_args = None
+    subfields = None
 
     class Media:
         css = {"all": ("api/css/leaflet.css",)}
@@ -21,6 +22,7 @@ class MapWidget(HiddenInput):
         attrs.update(
             field_template_name=super().template_name,
             map_id=widget_id + "_map",
+            subfields=self.subfields or {},
             js_func=self.js_func or self.__class__.__name__,
             js_args=self.js_args or {},
         )

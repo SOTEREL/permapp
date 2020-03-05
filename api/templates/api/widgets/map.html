@@ -18,6 +18,7 @@ django.jQuery(document).ready(function() {
   {{ widget.attrs.js_func }}(
     "{{ widget.attrs.map_id }}",
     document.getElementById("{{ widget.attrs.id }}"),
+    {{ widget.attrs.subfields|safe }},
     {{ widget.attrs.js_args|safe }}
   );
 });

@@ -1,4 +1,4 @@
-function MapWidget(mapId, field, kwargs) {
+function MapWidget(mapId, field, subfields, kwargs) {
   var self = {};
   kwargs = kwargs || {};
 
@@ -33,7 +33,12 @@ function MapWidget(mapId, field, kwargs) {
   };
 
   self.read = function() {
-    return JSON.parse(field.value);
+    var data = {};
+    for (var name in subfields) {
+      data[name] = document.getElementById(subfields[name]).value;
+    }
+    console.info(data);
+    return data;
   };
 
   self.update = function(data) {
@@ -46,7 +51,7 @@ function MapWidget(mapId, field, kwargs) {
       if (projectId === "") {
         return;
       }
-      fetch("/_api/projects/" + projectId + "/") // TODO
+      fetch("/_api/projects/" + projectId + "/") // TODO: store url in var
         .then(function(resp) {
           return resp.json();
         })

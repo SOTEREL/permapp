@@ -1,16 +1,14 @@
-function ProjectMapWidget(mapId, field) {
-  var widget = MapWidget(mapId, field);
+function ProjectMapWidget(mapId, field, subfields) {
+  var widget = MapWidget(mapId, field, subfields);
   var center;
 
   widget.update = function(data) {
-    if (
-      data.map_lat === null ||
-      data.map_lng === null ||
-      data.map_zoom === null
-    ) {
+    if (data.map_lat === "" || data.map_lng === "" || data.map_zoom === "") {
       return;
     }
-    field.value = JSON.stringify(data);
+    document.getElementById(subfields.map_lat).value = data.map_lat;
+    document.getElementById(subfields.map_lng).value = data.map_lng;
+    document.getElementById(subfields.map_zoom).value = data.map_zoom;
     widget.map.setView([data.map_lat, data.map_lng], data.map_zoom);
     if (center) widget.map.removeLayer(center);
     center = L.marker([data.map_lat, data.map_lng]).addTo(widget.map);
