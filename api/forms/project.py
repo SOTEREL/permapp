@@ -1,5 +1,5 @@
 from .fields import AggregationField
-from .aggregation import AggregationForm
+from .forms import AggregationForm
 from .widgets import MapWidget
 from ..models import Project
 

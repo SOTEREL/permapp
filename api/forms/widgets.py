@@ -1,3 +1,4 @@
+import copy
 import json
 
 from django.forms import HiddenInput
@@ -13,9 +14,18 @@ class MapWidget(HiddenInput):
         css = {"all": ("api/css/leaflet.css",)}
         js = ("api/js/lib/leaflet.js", "api/js/map-tools.js", "api/js/widgets/map.js")
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.js_args = copy.deepcopy(self.__class__.js_args or {})
+
     @property
     def is_hidden(self):
         return False
+
+    def add_js_arg(self, key, value):
+        if self.js_args is None:
+            self.js_args = {}
+        self.js_args[key] = value
 
     def get_context(self, name, value, attrs):
         widget_id = attrs["id"]
@@ -24,6 +34,5 @@ class MapWidget(HiddenInput):
             map_id=widget_id + "_map",
             subfields=self.subfields or {},
             js_func=self.js_func or self.__class__.__name__,
-            js_args=self.js_args or {},
         )
         return super().get_context(name, value, attrs)

@@ -4,6 +4,7 @@ from django.forms import ALL_FIELDS, HiddenInput, ModelForm, modelform_factory
 from django.forms.models import ModelFormMetaclass
 
 from .fields import AggregationField
+from .widgets import MapWidget
 
 
 class AggregationFormMetaclass(ModelFormMetaclass):
@@ -39,7 +40,22 @@ class AggregationForm(ModelForm, metaclass=AggregationFormMetaclass):
             field = self.fields[field_name]
             field.widget.subfields = {}
             field.required = False
+            field.initial = {}
             for subfield_name in field.aggregated_fields:
                 field.widget.subfields[subfield_name] = self[subfield_name].auto_id
+                field.initial[subfield_name] = self[subfield_name].initial
                 if field.hide_subfields:
                     self.fields[subfield_name].widget = HiddenInput()
+            field.initial = json.dumps(field.initial)
+
+
+class ProjectMapForm(AggregationForm):
+    project_field_name = "project"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        project_field_id = self[self.project_field_name].auto_id
+        for field in self.fields.values():
+            if isinstance(field.widget, MapWidget):
+                field.widget.add_js_arg("project_field_id", project_field_id)
