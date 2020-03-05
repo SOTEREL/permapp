@@ -1,13 +1,12 @@
 from ..fields import AggregationField
 from ..forms import ProjectMapForm
-from ..widgets import MapWidget
+from ..widgets import MapDrawingWidget
 from ...models.map import Point
 
 
-class PointMapWidget(MapWidget):
+class PointMapWidget(MapDrawingWidget):
     class Media:
-        css = {"all": ("api/css/leaflet.draw.css",)}
-        js = ("api/js/lib/leaflet.draw.js", "api/js/widgets/point-map.js")
+        js = ("api/js/widgets/point-map.js",)
 
 
 class PointForm(ProjectMapForm):

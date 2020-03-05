@@ -1,26 +1,39 @@
-function PointMapWidget(mapId, field, kwargs) {
-  var widget = MapWidget(mapId, field, kwargs);
-  var drawnItems = new L.FeatureGroup();
+function PointMapWidget(config, kwargs) {
+  var mapWidget = MapWidget(config, kwargs);
+  var drawingWidget = MapDrawingWidget(config, kwargs);
 
-  widget.update = function(data) {
-    field.value = JSON.stringify(data);
+  mapWidget.readers = {
+    lat: function(field) {
+      return parseFloat(field.value);
+    },
+    lng: function(field) {
+      return parseFloat(field.value);
+    },
   };
 
-  function draw() {
-    var data = widget.read();
-    if (data.lat !== null && data.lng !== null) {
-      drawnItems.clearLayers();
-      L.marker(data).addTo(drawnItems);
-    }
-  }
+  mapWidget.centerFromData = function(data) {
+    return data;
+  };
 
-  function updateFromDrawing() {
-    var coords = drawnItems.toGeoJSON().features[0].geometry.coordinates;
-    widget.update({
+  drawingWidget.draw = function(data, drawingLayer) {
+    if (isNaN(data.lat) || isNaN(data.lng)) {
+      return;
+    }
+    drawingLayer.clearLayers();
+    L.marker(data).addTo(drawingLayer);
+  };
+
+  drawingWidget.updateFromDrawing = function(drawingLayer) {
+    var feature = drawingLayer.toGeoJSON().features[0];
+    if (feature === undefined) {
+      return;
+    }
+    var coords = feature.geometry.coordinates;
+    mapWidget.update({
       lat: coords[1],
       lng: coords[0],
     });
-  }
+  };
 
   // TODO:
   // TypeError: points is undefined
@@ -28,34 +41,15 @@ function PointMapWidget(mapId, field, kwargs) {
   // _initMapCenter http://127.0.0.1:8000/static/api/js/widgets/map.js:66
   // init http://127.0.0.1:8000/static/api/js/widgets/map.js:78
   // FeatureMapWidget http://127.0.0.1:8000/static/api/js/widgets/feature-map.js:15
-  widget.init([MapTools.layers.satellite, drawnItems]);
-
-  draw();
-
-  widget.map.addControl(
-    new L.Control.Draw({
-      edit: false,
-      draw: {
-        circle: false,
-        circlemarker: false,
-        polygon: false,
-        polyline: false,
-        rectangle: false,
-      },
-    })
-  );
-
-  // TODO: draw when editing feature
-
-  widget.map.on(L.Draw.Event.DRAWSTART, function(event) {
-    drawnItems.clearLayers();
-  });
-
-  widget.map.on(L.Draw.Event.DRAWSTOP, updateFromDrawing);
-  widget.map.on(L.Draw.Event.EDITSTOP, updateFromDrawing);
-
-  widget.map.on(L.Draw.Event.CREATED, function(event) {
-    var layer = event.layer;
-    drawnItems.addLayer(layer);
+  mapWidget.init([MapTools.layers.satellite]);
+  drawingWidget.init(mapWidget, {
+    edit: false,
+    draw: {
+      circle: false,
+      circlemarker: false,
+      polygon: false,
+      polyline: false,
+      rectangle: false,
+    },
   });
 }

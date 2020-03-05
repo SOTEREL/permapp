@@ -37,3 +37,12 @@ class MapWidget(HiddenInput):
             js_args=json.dumps(self.js_args),
         )
         return super().get_context(name, value, attrs)
+
+
+class MapDrawingWidget(MapWidget):
+    class Media:
+        css = {"all": ("api/css/leaflet.draw.css",)}
+        js = (
+            "api/js/lib/leaflet.draw.js",
+            "api/js/widgets/map-drawing.js",
+        )

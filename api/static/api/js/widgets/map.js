@@ -74,9 +74,7 @@ function MapWidget(config, kwargs) {
     self.postUpdate(data);
   };
 
-  self.postUpdate = function(data) {
-    throw "Not implemented";
-  };
+  self.postUpdate = function(data) {};
 
   self.centerFromData = function(data) {};
 
