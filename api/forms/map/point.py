@@ -12,7 +12,7 @@ class PointMapWidget(MapDrawingWidget):
 
 
 class PointForm(ProjectMapForm):
-    map = AggregationField(["coordinates"], widget=PointMapWidget)
+    map = AggregationField(["coordinates", "projection"], widget=PointMapWidget)
 
     class Meta:
         model = Point

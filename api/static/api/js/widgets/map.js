@@ -41,6 +41,9 @@ function MapWidget(config, kwargs) {
     coordinates: function(field, value) {
       field.value = JSON.stringify(value);
     },
+    projection: function(field, value) {
+      field.value = self.map.options.crs.code;
+    },
   };
 
   self.read = function() {
