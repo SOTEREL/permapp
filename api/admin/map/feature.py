@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from ..mixins import LinkToProject
+from ...forms.map import make_feature_form
 
 
 class FeatureAbstractAdmin(admin.ModelAdmin, LinkToProject):
@@ -13,3 +14,9 @@ class FeatureAbstractAdmin(admin.ModelAdmin, LinkToProject):
         if obj is not None:
             return (*readonly_fields, "project")
         return readonly_fields
+
+
+def register_feature_admin(model):
+    @admin.register(model)
+    class PointAdmin(FeatureAbstractAdmin):
+        form = make_feature_form(model)

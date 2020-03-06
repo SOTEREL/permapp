@@ -16,18 +16,6 @@ function ParcelMapWidget(config, kwargs) {
     return MapTools.geo.center.fromMultiPolygon(data.coordinates);
   };
 
-  widget.readers = {
-    coordinates: function(field) {
-      return JSON.parse(field.value);
-    },
-  };
-
-  widget.writers = {
-    coordinates: function(field, value) {
-      field.value = JSON.stringify(value);
-    },
-  };
-
   widget.postUpdate = function(data) {
     if (parcel) {
       widget.map.removeLayer(parcel);

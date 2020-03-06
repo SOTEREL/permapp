@@ -4,19 +4,40 @@ from ..widgets import MapDrawingWidget
 
 
 def make_form(model):
-    class FeatureMapWidget(MapDrawingWidget):
-        class Media:
-            js = (
-                "api/js/widgets/{feature}-map.js".format(
-                    feature=model.geom_type.lower()
-                ),
-            )
+    FeatureMapWidget = type(
+        f"{model.__name__}MapWidget",
+        (MapDrawingWidget,),
+        {
+            "js_args": {"geom_type": model.geom_type},
+            "Media": type(
+                "Media",
+                (),
+                {
+                    "js": (
+                        "api/js/widgets/feature-map.js",
+                        "api/js/widgets/{feature}-map.js".format(
+                            feature=model.__name__.lower()
+                        ),
+                    )
+                },
+            ),
+        },
+    )
 
-    class FeatureForm(ProjectMapForm):
-        map = AggregationField(["coordinates"], widget=FeatureMapWidget)
-
-        class Meta:
-            model = model
-            fields = ["project", "name", "map", "description", "style"]
-
-    return FeatureForm
+    return type(
+        f"{model.__name__}Form",
+        (ProjectMapForm,),
+        {
+            "map": AggregationField(
+                ["coordinates", "projection"], widget=FeatureMapWidget
+            ),
+            "Meta": type(
+                "Meta",
+                (),
+                {
+                    "model": model,
+                    "fields": ["project", "name", "map", "description", "style"],
+                },
+            ),
+        },
+    )

@@ -64,96 +64,16 @@ function ProjectMapWidget(config) {
     },
   });
 
-  var GeocoderControl = L.Control.extend({
-    options: {
-      position: "topleft",
-    },
-    onAdd: function(map) {
-      var container = L.DomUtil.create("div", "leaflet-control");
-      container.style.display = "flex";
-
-      var icon = L.DomUtil.create("div", "leaflet-bar", container);
-      icon.style.background =
-        "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAnFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4jUzeAAAAM3RSTlMAAQIDBwgJDg8RExcdICMzPUJERUdMUVJcX2F5e36FiZigoqWrtcPF2eDi5Obp6+/z+fuRCq6wAAAAiklEQVQYGVXBRwKCMABFwU8QFbtgwV6wV/Dd/26GZKMzspIbUC5r8swB79mWs4VVHEbDN8+arC6MVWm8Wcpac5Q3pDSSLqTyImhJKujLC6Ej6UQmL4ampBkPI2fFXVb9Q25kjWGkSgKPrJ8egamc5IPzgomcaH4urpuuyWGqX8EeBvoV7FjoT9AzXxZnEVySl7A0AAAAAElFTkSuQmCC) white no-repeat center";
-      icon.style.border = "1px solid #000";
-      icon.style.width = "30px";
-      icon.style.height = "30px";
-      icon.style.cursor = "pointer";
-      icon.title = "Rechercher un lieu";
-
-      var searchContainer = L.DomUtil.create("div", "", container);
-      searchContainer.style.marginLeft = "5px";
-      searchContainer.style.display = "none";
-
-      var input = L.DomUtil.create("input", "leaflet-bar", searchContainer);
-      input.style.height = "30px";
-      input.style.boxSizing = "border-box";
-      input.style.margin = "0px";
-      input.style.textAlign = "center";
-
-      var results = L.DomUtil.create("div", "leaflet-bar", searchContainer);
-      results.style.display = "none";
-      results.style.padding = "5px";
-      results.style.marginTop = "5px";
-      results.style.background = "white";
-      results.style.maxHeight = "200px";
-      results.style.overflow = "auto";
-
-      function clear() {
-        input.value = "";
-        results.style.display = "none";
-        searchContainer.style.display = "none";
-      }
-
-      icon.addEventListener("click", function() {
-        if (searchContainer.style.display == "none") {
-          searchContainer.style.display = "block";
-        } else {
-          clear();
-        }
-      });
-
-      input.addEventListener("keypress", function(e) {
-        if (e.keyCode != 13) {
-          return;
-        }
-
-        e.preventDefault();
-
-        var query = this.value;
-        MapTools.geo.geocode(query).then(function(locations) {
-          results.innerHTML = "";
-          for (var loc of locations) {
-            (function(loc) {
-              var result = L.DomUtil.create("div", "", results);
-              result.innerText =
-                loc.placeAttributes.municipality +
-                " (" +
-                loc.placeAttributes.postalCode +
-                ")";
-              result.style.cursor = "pointer";
-
-              result.addEventListener("click", function() {
-                widget.update({
-                  map_lat: loc.position.x,
-                  map_lng: loc.position.y,
-                  map_zoom: 18,
-                });
-                clear();
-              });
-            })(loc);
-          }
-          if (!locations.length) {
-            results.innerHTML = "Aucun résultat";
-          }
-          results.style.display = "block";
-        });
-      });
-
-      return container;
-    },
-  });
-
   widget.map.addControl(new ResetControl());
-  widget.map.addControl(new GeocoderControl());
+  widget.map.addControl(
+    new MapTools.controls.GeocoderControl({
+      onSelectLocation: function(loc) {
+        widget.update({
+          map_lat: loc.position.x,
+          map_lng: loc.position.y,
+          map_zoom: 18,
+        });
+      },
+    })
+  );
 }

@@ -1,8 +1,7 @@
-function MapWidget(config, kwargs) {
+function MapWidget(config) {
   var self = {};
-  kwargs = kwargs || {};
 
-  var _projectField = document.getElementById(kwargs.project_field_id);
+  var _projectField = document.getElementById(config.project_field_id);
   var _loading = false;
   var _formRow = django.jQuery("#" + config.mapId).closest(".form-row");
   var _errorUl = django.jQuery('<ul class="errorlist"></ul>');
@@ -116,8 +115,8 @@ function MapWidget(config, kwargs) {
       return _setMapCenterFromProject();
     }
     self.map.setView(
-      kwargs.defaultView || [46.55886030311719, 2.0654296875000004],
-      kwargs.defaultZoom || 5
+      config.defaultView || [46.55886030311719, 2.0654296875000004],
+      config.defaultZoom || 5
     );
   }
 

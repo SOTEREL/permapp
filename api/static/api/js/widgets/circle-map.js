@@ -1,10 +1,10 @@
-function PointMapWidget(config) {
+function CircleMapWidget(config) {
   FeatureMapWidget(config, "Point", {
-    edit: false,
+    edit: true,
     draw: {
-      circle: false,
+      circle: true,
       circlemarker: false,
-      marker: true,
+      marker: false,
       polygon: false,
       polyline: false,
       rectangle: false,

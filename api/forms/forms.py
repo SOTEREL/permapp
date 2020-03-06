@@ -39,7 +39,6 @@ class AggregationForm(ModelForm, metaclass=AggregationFormMetaclass):
         for field_name in self.aggregator_fields:
             field = self.fields[field_name]
             field.widget.subfields = {}
-            field.required = False
             field.initial = {}
             for subfield_name in field.aggregated_fields:
                 field.widget.subfields[subfield_name] = self[subfield_name].auto_id

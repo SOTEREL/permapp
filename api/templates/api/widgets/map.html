@@ -20,8 +20,10 @@ django.jQuery(document).ready(function() {
       mapId: "{{ widget.attrs.map_id }}",
       mapField: document.getElementById("{{ widget.attrs.id }}"),
       subfields: {{ widget.attrs.subfields|safe }},
-    },
-    {{ widget.attrs.js_args|safe }}
+      {% for k, v in widget.attrs.js_args.items %}
+        {{ k }}: {{ v|safe }},
+      {% endfor %}
+    }
   );
 });
 </script>
