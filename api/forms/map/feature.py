@@ -1,27 +1,22 @@
-from django.forms import ModelForm
-
 from ..fields import AggregationField
-from ..mixins import AggregationFormMixin, ProjectMapFormMixin
-from ..widgets import MapWidget
-from ...models.map import Feature
+from ..forms import ProjectMapForm
+from ..widgets import MapDrawingWidget
 
 
-class FeatureMapWidget(MapWidget):
-    js_args = dict(project_field_id="id_project")
+def make_form(model):
+    class FeatureMapWidget(MapDrawingWidget):
+        class Media:
+            js = (
+                "api/js/widgets/{feature}-map.js".format(
+                    feature=model.geom_type.lower()
+                ),
+            )
 
-    class Media:
-        css = {"all": ("api/css/leaflet.draw.css",)}
-        js = ("api/js/lib/leaflet.draw.js", "api/js/widgets/feature-map.js")
+    class FeatureForm(ProjectMapForm):
+        map = AggregationField(["coordinates"], widget=FeatureMapWidget)
 
+        class Meta:
+            model = model
+            fields = ["project", "name", "map", "description", "style"]
 
-class FeatureForm(ModelForm, AggregationFormMixin, ProjectMapFormMixin):
-    map = AggregationField(["geom"], widget=FeatureMapWidget)
-
-    class Meta:
-        model = Feature
-        fields = ["project", "name", "description", "geom"]
-
-    def __init__(self, *args, **kwargs):
-        ModelForm.__init__(self, *args, **kwargs)
-        AggregationFormMixin.__init__(self)
-        ProjectMapFormMixin.__init__(self)
+    return FeatureForm

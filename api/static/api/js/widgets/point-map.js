@@ -2,26 +2,27 @@ function PointMapWidget(config, kwargs) {
   var mapWidget = MapWidget(config, kwargs);
   var drawingWidget = MapDrawingWidget(config, kwargs);
 
-  mapWidget.readers = {
-    lat: function(field) {
-      return parseFloat(field.value);
-    },
-    lng: function(field) {
-      return parseFloat(field.value);
-    },
-  };
-
   mapWidget.centerFromData = function(data) {
-    return data;
+    return {
+      lng: data.coordinates[0],
+      lat: data.coordinates[1],
+    };
   };
 
   mapWidget.isDataValid = function(data) {
-    return !isNaN(data.lat) && !isNaN(data.lng);
+    return (
+      data.coordinates &&
+      !isNaN(data.coordinates[0]) &&
+      !isNaN(data.coordinates[1])
+    );
   };
 
   drawingWidget.draw = function(data, drawingLayer) {
     drawingLayer.clearLayers();
-    L.marker(data).addTo(drawingLayer);
+    L.marker({
+      lng: data.coordinates[0],
+      lat: data.coordinates[1],
+    }).addTo(drawingLayer);
   };
 
   drawingWidget.updateFromDrawing = function(drawingLayer) {
@@ -30,10 +31,7 @@ function PointMapWidget(config, kwargs) {
       return;
     }
     var coords = feature.geometry.coordinates;
-    mapWidget.update({
-      lat: coords[1],
-      lng: coords[0],
-    });
+    mapWidget.update({ coordinates: coords });
   };
 
   mapWidget.init([MapTools.layers.satellite]);

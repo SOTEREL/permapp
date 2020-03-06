@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django_filters",
     "categories.editor",
     "inline_actions",
+    "django_json_widget",
     "spa",
     "api",
 ]
@@ -126,3 +127,5 @@ CORS_ORIGIN_WHITELIST = ["http://localhost:8080"]
 REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"]
 }
+
+LEAFLET_DEFAULT_PROJECTION = "EPSG:3857"

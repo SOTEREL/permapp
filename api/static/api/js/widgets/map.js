@@ -32,8 +32,16 @@ function MapWidget(config, kwargs) {
     self.loading(false);
   };
 
-  self.readers = {};
-  self.writers = {};
+  self.readers = {
+    coordinates: function(field) {
+      return JSON.parse(field.value);
+    },
+  };
+  self.writers = {
+    coordinates: function(field, value) {
+      field.value = JSON.stringify(value);
+    },
+  };
 
   self.read = function() {
     var data = {};
@@ -91,8 +99,11 @@ function MapWidget(config, kwargs) {
   }
 
   function _initMapCenter() {
-    var dataCenter = self.centerFromData(self.read());
-    if (self.isDataValid(self.read()) && dataCenter !== undefined) {
+    var isDataValid = self.isDataValid(self.read());
+    var dataCenter = !isDataValid
+      ? undefined
+      : self.centerFromData(self.read());
+    if (dataCenter !== undefined) {
       return self.map.setView(
         [dataCenter.lat, dataCenter.lng],
         dataCenter.zoom || 18

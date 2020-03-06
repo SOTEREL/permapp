@@ -41,6 +41,7 @@ setup(
         "django-categories>=1.7",
         "djangorestframework-recursive>=0.1.2",
         "django-inline-actions>=2.3.0",
+        "django-json-widget>=1.0.0",
     ],
     include_package_data=True,
     classifiers=[

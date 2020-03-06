@@ -1,3 +1,5 @@
+from django_json_widget.widgets import JSONEditorWidget
+
 from ..fields import AggregationField
 from ..forms import ProjectMapForm
 from ..widgets import MapDrawingWidget
@@ -10,8 +12,9 @@ class PointMapWidget(MapDrawingWidget):
 
 
 class PointForm(ProjectMapForm):
-    map = AggregationField(["lat", "lng"], widget=PointMapWidget)
+    map = AggregationField(["coordinates"], widget=PointMapWidget)
 
     class Meta:
         model = Point
-        fields = ["project", "name", "map", "description"]
+        fields = ["project", "name", "map", "description", "style"]
+        widgets = {"style": JSONEditorWidget}

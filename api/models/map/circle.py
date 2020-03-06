@@ -11,7 +11,7 @@ class CircleBase(PointBase):
 
     @property
     def geojson_props(self):
-        return {"radius": self.radius}
+        return {**PointBase.geojson_props, "radius": self.radius}
 
 
 class Circle(CircleBase):
