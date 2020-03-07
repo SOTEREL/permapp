@@ -1,10 +1,11 @@
+from django.core.validators import MinValueValidator
 from django.db import models
 
 from .point import PointBase
 
 
 class CircleBase(PointBase):
-    radius = models.PositiveSmallIntegerField()
+    radius = models.FloatField(validators=[MinValueValidator(0)])
 
     class Meta:
         abstract = True

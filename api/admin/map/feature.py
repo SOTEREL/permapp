@@ -16,7 +16,7 @@ class FeatureAbstractAdmin(admin.ModelAdmin, LinkToProject):
         return readonly_fields
 
 
-def register_feature_admin(model):
+def register_feature_admin(model, **kwargs):
     @admin.register(model)
-    class PointAdmin(FeatureAbstractAdmin):
-        form = make_feature_form(model)
+    class FeatureAdmin(FeatureAbstractAdmin):
+        form = make_feature_form(model, **kwargs)

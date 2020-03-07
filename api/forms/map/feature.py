@@ -3,24 +3,22 @@ from ..forms import ProjectMapForm
 from ..widgets import MapDrawingWidget
 
 
-def make_form(model):
+def make_form(model, extra_js=None):
+    js = ("api/js/widgets/feature-map.js",)
+    if extra_js is None:
+        js = (
+            *js,
+            "api/js/widgets/{feature}-map.js".format(feature=model.geom_type.lower()),
+        )
+    else:
+        js = (*js, *extra_js)
+
     FeatureMapWidget = type(
         f"{model.__name__}MapWidget",
         (MapDrawingWidget,),
         {
             "js_args": {"geom_type": model.geom_type},
-            "Media": type(
-                "Media",
-                (),
-                {
-                    "js": (
-                        "api/js/widgets/feature-map.js",
-                        "api/js/widgets/{feature}-map.js".format(
-                            feature=model.geom_type.lower()
-                        ),
-                    )
-                },
-            ),
+            "Media": type("Media", (), {"js": js}),
         },
     )
 
