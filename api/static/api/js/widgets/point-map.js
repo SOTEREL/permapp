@@ -9,5 +9,5 @@ function PointMapWidget(config) {
       polyline: false,
       rectangle: false,
     },
-  });
+  }).init();
 }

@@ -121,7 +121,7 @@ var MapTools = (function() {
       polyCenter = geo.center.fromPolygon(poly);
       points.push([polyCenter.lng, polyCenter.lat]);
     }
-    return geo.center.fromLine(points);
+    return geo.center.fromLineString(points);
   };
 
   return {

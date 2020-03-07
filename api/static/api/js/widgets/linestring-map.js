@@ -1,6 +1,6 @@
 function LineMapWidget(config) {
   FeatureMapWidget(config, "LineString", {
-    //edit: true,
+    edit: true,
     draw: {
       circle: false,
       circlemarker: false,
@@ -9,5 +9,5 @@ function LineMapWidget(config) {
       polyline: true,
       rectangle: false,
     },
-  });
+  }).init();
 }

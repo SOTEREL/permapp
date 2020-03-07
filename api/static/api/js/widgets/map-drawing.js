@@ -1,7 +1,7 @@
 function MapDrawingWidget(config, mapWidget) {
   var self = {};
   self.mapWidget = mapWidget;
-  var drawnItems = new L.FeatureGroup();
+  self.drawnItems = new L.FeatureGroup();
 
   self.mapWidget.centerFromData = function(data) {
     return MapTools.geo.center["from" + config.geomType](data.coordinates);
@@ -11,11 +11,13 @@ function MapDrawingWidget(config, mapWidget) {
     return data.coordinates; // TODO
   };
 
-  self.draw = function(data, drawingLayer) {
+  self.isSingleFeature = true;
+
+  self.draw = function(data) {
     if (!data.coordinates || !config.geomType) {
-      throw "MapDrawingWidget.draw() must be implemented";
+      throw "Unknown geometry type, MapDrawingWidget.draw() must be implemented";
     }
-    L.geoJSON(
+    self.drawnItems = L.geoJSON(
       {
         type: "Feature",
         geometry: {
@@ -26,7 +28,8 @@ function MapDrawingWidget(config, mapWidget) {
       {
         style: {}, // TODO
       }
-    ).addTo(drawingLayer);
+    );
+    self.drawnItems.addTo(self.mapWidget.map);
   };
 
   self.updateFromDrawing = function(drawingLayer) {
@@ -39,7 +42,7 @@ function MapDrawingWidget(config, mapWidget) {
   };
 
   self.drawStart = function(e) {
-    drawnItems.eachLayer(function(layer) {
+    self.drawnItems.eachLayer(function(layer) {
       try {
         layer.setOpacity(0.5);
       } catch {
@@ -51,8 +54,8 @@ function MapDrawingWidget(config, mapWidget) {
     });
   };
 
-  self.drawStop = self.editStop = function(e) {
-    drawnItems.eachLayer(function(layer) {
+  self.drawStop = self.editStop = self.deleteStop = function(e) {
+    self.drawnItems.eachLayer(function(layer) {
       try {
         layer.setOpacity(1);
       } catch {
@@ -62,35 +65,38 @@ function MapDrawingWidget(config, mapWidget) {
         });
       }
     });
-    self.updateFromDrawing(drawnItems);
+    self.updateFromDrawing(self.drawnItems);
   };
 
   self.drawCreated = function(e) {
-    drawnItems.clearLayers();
+    if (self.isSingleFeature) {
+      self.drawnItems.clearLayers();
+    }
     var layer = e.layer;
-    drawnItems.addLayer(layer);
+    self.drawnItems.addLayer(layer);
   };
 
   self.init = function(drawControlOptions) {
-    self.mapWidget.map.addLayer(drawnItems);
+    self.mapWidget.map.addLayer(self.drawnItems);
 
     var data = self.mapWidget.read();
     if (self.mapWidget.isDataValid(data)) {
-      self.draw(data, drawnItems);
+      self.draw(data);
     }
 
     if (drawControlOptions.edit === true) {
       drawControlOptions.edit = {
-        featureGroup: drawnItems,
+        featureGroup: self.drawnItems,
       };
     } else if (drawControlOptions.edit) {
-      drawControlOptions.edit.featureGroup = drawnItems;
+      drawControlOptions.edit.featureGroup = self.drawnItems;
     }
     self.mapWidget.map.addControl(new L.Control.Draw(drawControlOptions));
 
     self.mapWidget.map.on(L.Draw.Event.DRAWSTART, self.drawStart);
     self.mapWidget.map.on(L.Draw.Event.DRAWSTOP, self.drawStop);
     self.mapWidget.map.on(L.Draw.Event.EDITSTOP, self.editStop);
+    self.mapWidget.map.on(L.Draw.Event.DELETESTOP, self.deleteStop);
     self.mapWidget.map.on(L.Draw.Event.CREATED, self.drawCreated);
   };
 

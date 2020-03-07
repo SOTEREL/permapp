@@ -9,5 +9,5 @@ function PolygonMapWidget(config) {
       polyline: false,
       rectangle: true,
     },
-  });
+  }).init();
 }

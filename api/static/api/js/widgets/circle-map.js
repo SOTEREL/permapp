@@ -1,4 +1,5 @@
 function CircleMapWidget(config) {
+  // TODO: style
   FeatureMapWidget(config, "Point", {
     edit: true,
     draw: {
@@ -9,5 +10,5 @@ function CircleMapWidget(config) {
       polyline: false,
       rectangle: false,
     },
-  });
+  }).init();
 }

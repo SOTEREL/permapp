@@ -3,6 +3,12 @@ function FeatureMapWidget(config, geomType, drawControlOptions) {
   var mapWidget = MapWidget(config);
   var drawingWidget = MapDrawingWidget(config, mapWidget);
 
-  mapWidget.init([MapTools.layers.satellite]);
-  drawingWidget.init(drawControlOptions);
+  return {
+    mapWidget: mapWidget,
+    drawingWidget: drawingWidget,
+    init: function() {
+      mapWidget.init([MapTools.layers.satellite]);
+      drawingWidget.init(drawControlOptions);
+    },
+  };
 }

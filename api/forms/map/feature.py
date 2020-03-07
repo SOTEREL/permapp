@@ -16,7 +16,7 @@ def make_form(model):
                     "js": (
                         "api/js/widgets/feature-map.js",
                         "api/js/widgets/{feature}-map.js".format(
-                            feature=model.__name__.lower()
+                            feature=model.geom_type.lower()
                         ),
                     )
                 },
