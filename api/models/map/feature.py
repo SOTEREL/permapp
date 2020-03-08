@@ -6,6 +6,7 @@ from jsonfield import JSONField
 
 from shapely.geometry import shape
 
+from .category import Category
 from ..project import Project
 
 
@@ -18,6 +19,7 @@ class Feature(models.Model):
         max_length=50, default=settings.LEAFLET_DEFAULT_PROJECTION
     )
     style = JSONField(default=dict, blank=True)
+    categories = models.ManyToManyField(Category)
 
     def __init_subclass__(cls, *, geom_type=None, **kwargs):
         # geom_type is only defined for abstract shape classes
