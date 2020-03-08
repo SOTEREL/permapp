@@ -38,6 +38,7 @@ def make_form(model, extra_js=None):
                         "project",
                         "name",
                         "is_observation",
+                        "is_important",
                         "map",
                         "description",
                         "permanence",

@@ -21,6 +21,7 @@ class Feature(models.Model):
     )
     style = JSONField(default=dict, blank=True)
     is_observation = models.BooleanField(default=True)
+    is_important = models.BooleanField(default=False)
     categories = models.ManyToManyField(Category)
     permanence = models.PositiveSmallIntegerField(
         null=True,
