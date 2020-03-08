@@ -10,10 +10,22 @@ class CategoryInlineAdmin(admin.TabularInline):
 
 
 class FeatureAbstractAdmin(admin.ModelAdmin, LinkToProject):
-    list_display = ("name", "link_to_project", "description")
+    list_display = (
+        "name",
+        "link_to_project",
+        "description",
+        "permanence",
+        "joined_categories",
+    )
     save_on_top = True
-    search_fields = ("name", "description", "project__name")
+    search_fields = ("name", "description", "project__name", "categories__name")
     inlines = [CategoryInlineAdmin]
+
+    def joined_categories(self, obj):
+        cats = obj.categories.values_list("name", flat=True)
+        return ", ".join(cats)
+
+    joined_categories.short_description = "categories"
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super().get_readonly_fields(request, obj=obj)

@@ -34,7 +34,14 @@ def make_form(model, extra_js=None):
                 (),
                 {
                     "model": model,
-                    "fields": ["project", "name", "map", "description", "style"],
+                    "fields": [
+                        "project",
+                        "name",
+                        "map",
+                        "description",
+                        "permanence",
+                        "style",
+                    ],
                 },
             ),
         },

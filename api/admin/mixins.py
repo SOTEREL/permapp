@@ -7,4 +7,4 @@ class LinkToProject:
         link = reverse("admin:api_project_change", args=[obj.project.id])
         return format_html('<a href="{}">{}</a>', link, obj.project.name)
 
-    link_to_project.short_description = "Project"
+    link_to_project.short_description = "project"

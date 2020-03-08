@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from jsonfield import JSONField
@@ -20,6 +21,11 @@ class Feature(models.Model):
     )
     style = JSONField(default=dict, blank=True)
     categories = models.ManyToManyField(Category)
+    permanence = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
+        validators=[MaxValueValidator(settings.FEATURE_PERMANENCE_MAX)],
+    )
 
     def __init_subclass__(cls, *, geom_type=None, **kwargs):
         # geom_type is only defined for abstract shape classes
@@ -27,7 +33,7 @@ class Feature(models.Model):
             cls.geom_type = geom_type
 
     def __str__(self):
-        return self.name or self.id
+        return self.name
 
     def validate_coordinates(self, value):
         raise NotImplementedError(
