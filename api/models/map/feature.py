@@ -11,7 +11,7 @@ from ..project import Project
 
 class Feature(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50, default="", blank=True)
+    name = models.CharField(max_length=50)
     description = models.TextField(default="", blank=True)
     coordinates = JSONField()
     projection = models.CharField(
