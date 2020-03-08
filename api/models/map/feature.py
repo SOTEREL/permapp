@@ -20,6 +20,7 @@ class Feature(models.Model):
         max_length=50, default=settings.LEAFLET_DEFAULT_PROJECTION
     )
     style = JSONField(default=dict, blank=True)
+    is_observation = models.BooleanField(default=True)
     categories = models.ManyToManyField(Category)
     permanence = models.PositiveSmallIntegerField(
         null=True,

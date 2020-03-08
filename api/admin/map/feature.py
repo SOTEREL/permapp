@@ -14,9 +14,11 @@ class FeatureAbstractAdmin(admin.ModelAdmin, LinkToProject):
         "name",
         "link_to_project",
         "description",
+        "is_observation",
         "permanence",
         "joined_categories",
     )
+    list_filter = ("is_observation", "categories")
     save_on_top = True
     search_fields = ("name", "description", "project__name", "categories__name")
     inlines = [CategoryInlineAdmin]
