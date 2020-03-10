@@ -1,5 +1,5 @@
 from . import project
-from .map import category, circle, parcel
+from .map import category, circle, parcel, view
 from .map.feature import register_feature_admin
 from .. import models
 
