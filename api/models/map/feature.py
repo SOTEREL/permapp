@@ -82,3 +82,15 @@ class Feature(models.Model):
             "geometry": self.geojson_geom,
             "properties": self.geojson_props,
         }
+
+
+def attachment_path(instance, filename):
+    return f"feature_{instance.feature.id}/{filename}"
+
+
+class FeatureAttachment(models.Model):
+    feature = models.ForeignKey(
+        Feature, on_delete=models.CASCADE, related_name="attachments"
+    )
+    upload = models.FileField(upload_to=attachment_path)
+    comments = models.TextField(default="", blank=True)

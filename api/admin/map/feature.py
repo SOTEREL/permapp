@@ -2,7 +2,11 @@ from django.contrib import admin
 
 from ..mixins import LinkToProject
 from ...forms.map import make_feature_form
-from ...models.map import Feature
+from ...models.map import Feature, FeatureAttachment
+
+
+class AttachmentInline(admin.TabularInline):
+    model = FeatureAttachment
 
 
 class FeatureAbstractAdmin(admin.ModelAdmin, LinkToProject):
@@ -10,6 +14,7 @@ class FeatureAbstractAdmin(admin.ModelAdmin, LinkToProject):
     list_filter = ("category", "is_risky")
     save_on_top = True
     search_fields = ("name", "description", "project__name", "category,")
+    inlines = [AttachmentInline]
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super().get_readonly_fields(request, obj=obj)
