@@ -22,8 +22,10 @@ class Feature(models.Model):
         max_length=50, default=settings.LEAFLET_DEFAULT_PROJECTION
     )
     style = JSONField(default=dict, blank=True)
-    is_risk = models.BooleanField(default=False)
-    categories = models.ManyToManyField(Category)
+    is_risky = models.BooleanField(default=False)
+    category = models.ForeignKey(
+        Category, null=True, blank=True, on_delete=models.SET_NULL
+    )
     permanence = models.PositiveSmallIntegerField(
         null=True,
         blank=True,

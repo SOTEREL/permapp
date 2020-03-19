@@ -5,28 +5,11 @@ from ...forms.map import make_feature_form
 from ...models.map import Feature
 
 
-class CategoryInlineAdmin(admin.TabularInline):
-    model = Feature.categories.through
-
-
 class FeatureAbstractAdmin(admin.ModelAdmin, LinkToProject):
-    list_display = (
-        "name",
-        "link_to_project",
-        "description",
-        "permanence",
-        "joined_categories",
-    )
-    list_filter = ("categories",)
+    list_display = ("name", "link_to_project", "description", "permanence", "category")
+    list_filter = ("category", "is_risky")
     save_on_top = True
-    search_fields = ("name", "description", "project__name", "categories__name")
-    inlines = [CategoryInlineAdmin]
-
-    def joined_categories(self, obj):
-        cats = obj.categories.values_list("name", flat=True)
-        return ", ".join(cats)
-
-    joined_categories.short_description = "categories"
+    search_fields = ("name", "description", "project__name", "category,")
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super().get_readonly_fields(request, obj=obj)
