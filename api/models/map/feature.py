@@ -15,13 +15,14 @@ class Feature(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     description = models.TextField(default="", blank=True)
+    created_on = models.DateField(auto_now_add=True)
+    updated_on = models.DateField(auto_now=True)
     coordinates = JSONField()
-    projection = models.CharField(
+    map_projection = models.CharField(
         max_length=50, default=settings.LEAFLET_DEFAULT_PROJECTION
     )
     style = JSONField(default=dict, blank=True)
-    is_observation = models.BooleanField(default=True)
-    is_important = models.BooleanField(default=False)
+    is_risk = models.BooleanField(default=False)
     categories = models.ManyToManyField(Category)
     permanence = models.PositiveSmallIntegerField(
         null=True,

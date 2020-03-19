@@ -40,7 +40,7 @@ function MapWidget(config) {
     coordinates: function(field, value) {
       field.value = JSON.stringify(value);
     },
-    projection: function(field, value) {
+    map_projection: function(field, value) {
       field.value = self.map.options.crs.code;
     },
   };
