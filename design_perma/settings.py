@@ -130,3 +130,5 @@ REST_FRAMEWORK = {
 
 LEAFLET_DEFAULT_PROJECTION = "EPSG:3857"
 FEATURE_PERMANENCE_MAX = 10
+
+MAP_TILE_LAYERS = ("geoportal.satellite", "geoportal.cadastre")
