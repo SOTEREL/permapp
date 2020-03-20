@@ -19,18 +19,6 @@ class View(models.Model):
         return self.name
 
 
-class ViewTileLayer(models.Model):
-    NAME_CHOICES = [(name, name) for name in settings.MAP_TILE_LAYERS]
-    view = models.ForeignKey(View, on_delete=models.CASCADE, related_name="tile_layers")
-    name = models.CharField(max_length=100, choices=NAME_CHOICES)
-
-    class Meta:
-        unique_together = ("view", "name")
-
-    def __str__(self):
-        return self.name
-
-
 class ViewFeature(models.Model):
     view = models.ForeignKey(View, on_delete=models.CASCADE)
     feature = models.ForeignKey(Feature, on_delete=models.CASCADE)

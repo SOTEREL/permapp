@@ -1,11 +1,7 @@
 from django.contrib import admin
 
 from ..mixins import LinkToProject
-from ...models.map import Feature, View, ViewTileLayer
-
-
-class TileLayerInline(admin.TabularInline):
-    model = ViewTileLayer
+from ...models.map import Feature, View
 
 
 class FeatureInline(admin.TabularInline):
@@ -36,8 +32,5 @@ class ViewAdmin(admin.ModelAdmin, LinkToProject):
     def get_inline_instances(self, request, obj=None):
         project = obj.project if obj else None
         if project is None:
-            return [TileLayerInline(self.model, self.admin_site)]
-        return [
-            TileLayerInline(self.model, self.admin_site),
-            FeatureInline(self.model, self.admin_site, project=project),
-        ]
+            return []
+        return [FeatureInline(self.model, self.admin_site, project=project)]
