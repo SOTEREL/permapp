@@ -21,7 +21,10 @@ function MultiPolygonMapWidget(config) {
         return feat.geometry.coordinates;
       });
     }
-    w.mapWidget.update({ coordinates: coords });
+    w.mapWidget.update({
+      coordinates: coords,
+      path_options: w.drawingWidget.getPathOptions(drawingLayer),
+    });
   };
 
   w.drawingWidget.draw = function(data) {
@@ -35,7 +38,7 @@ function MultiPolygonMapWidget(config) {
           },
         },
         {
-          style: {}, // TODO
+          style: data.path_options,
         }
       ).eachLayer(function(layer) {
         w.drawingWidget.drawnItems.addLayer(layer);

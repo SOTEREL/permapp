@@ -1,0 +1,10 @@
+/* Override Django admin form style */
+label.leaflet-styleeditor-label {
+  float: none !important;
+}
+
+ul.leaflet-styleeditor-select-option-wrapper {
+  margin: 0px !important;
+  margin-top: 15px !important;
+  padding: 0px !important;
+}

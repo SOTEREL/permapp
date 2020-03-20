@@ -35,9 +35,15 @@ function MapWidget(config) {
     coordinates: function(field) {
       return JSON.parse(field.value);
     },
+    path_options: function(field) {
+      return JSON.parse(field.value);
+    },
   };
   self.writers = {
     coordinates: function(field, value) {
+      field.value = JSON.stringify(value);
+    },
+    path_options: function(field, value) {
       field.value = JSON.stringify(value);
     },
     map_projection: function(field, value) {

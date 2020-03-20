@@ -21,7 +21,7 @@ class Feature(models.Model):
     map_projection = models.CharField(
         max_length=50, default=settings.LEAFLET_DEFAULT_PROJECTION
     )
-    style = JSONField(default=dict, blank=True)
+    path_options = JSONField(default=dict, blank=True)
     is_risky = models.BooleanField(default=False)
     category = models.ForeignKey(
         Category, null=True, blank=True, on_delete=models.SET_NULL
@@ -71,7 +71,7 @@ class Feature(models.Model):
             "id": self.id,
             "name": self.name,
             "description": self.description,
-            "style": self.style,
+            "options": self.path_options,
             "projection": self.projection,
         }
 

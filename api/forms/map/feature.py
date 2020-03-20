@@ -27,7 +27,8 @@ def make_form(model, extra_js=None):
         (ProjectMapForm,),
         {
             "map": AggregationField(
-                ["coordinates", "map_projection"], widget=FeatureMapWidget
+                ["coordinates", "map_projection", "path_options"],
+                widget=FeatureMapWidget,
             ),
             "Meta": type(
                 "Meta",
@@ -41,7 +42,6 @@ def make_form(model, extra_js=None):
                         "map",
                         "description",
                         "permanence",
-                        "style",
                     ],
                 },
             ),

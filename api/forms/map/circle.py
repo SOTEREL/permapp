@@ -11,9 +11,9 @@ class CircleMapWidget(MapDrawingWidget):
 
 class CircleForm(ProjectMapForm):
     map = AggregationField(
-        ["coordinates", "radius", "projection"], widget=CircleMapWidget
+        ["coordinates", "map_projection", "path_options"], widget=CircleMapWidget
     )
 
     class Meta:
         model = Circle
-        fields = ["project", "name", "map", "description", "style"]
+        fields = ["project", "name", "map", "description"]

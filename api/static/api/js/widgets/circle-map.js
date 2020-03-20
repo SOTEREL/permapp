@@ -24,7 +24,7 @@ function CircleMapWidget(config) {
     var center = circle.getLatLng();
     w.mapWidget.update({
       coordinates: [center.lng, center.lat],
-      radius: circle.getRadius(),
+      path_options: w.drawingWidget.getPathOptions(drawingLayer),
     });
   };
 
@@ -32,7 +32,7 @@ function CircleMapWidget(config) {
     var lat = data.coordinates[1];
     var lng = data.coordinates[0];
     w.drawingWidget.drawnItems.addLayer(
-      L.circle({ lat: lat, lng: lng }, { radius: data.radius })
+      L.circle({ lat: lat, lng: lng }, data.path_options)
     );
     w.drawingWidget.drawnItems.addTo(w.mapWidget.map);
   };
