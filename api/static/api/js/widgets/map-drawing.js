@@ -118,7 +118,7 @@ function MapDrawingWidget(config, mapWidget) {
 
     styleCtrlOpts = styleCtrlOpts || {};
     if (styleCtrlOpts.openOnLeafletDraw === undefined) {
-      styleCtrlOpts.openOnLeafletDraw = true;
+      styleCtrlOpts.openOnLeafletDraw = false;
     }
     if (styleCtrlOpts.showTooltip === undefined) {
       styleCtrlOpts.showTooltip = false;

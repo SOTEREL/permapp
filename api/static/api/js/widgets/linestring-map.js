@@ -1,4 +1,4 @@
-function LineMapWidget(config) {
+function LineStringMapWidget(config) {
   FeatureMapWidget(config, "LineString", {
     edit: true,
     draw: {

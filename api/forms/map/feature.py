@@ -1,9 +1,12 @@
+from django.conf import settings
+from django.forms import IntegerField
+
 from ..fields import AggregationField
 from ..forms import ProjectMapForm
 from ..widgets import MapDrawingWidget
 
 
-def make_form(model, extra_js=None):
+def make_form(model, extra_js=None, extra_fields=None, map_widget_name=None):
     js = ("api/js/widgets/feature-map.js",)
     if extra_js is None:
         js = (
@@ -13,8 +16,11 @@ def make_form(model, extra_js=None):
     else:
         js = (*js, *extra_js)
 
+    if map_widget_name is None:
+        map_widget_name = f"{model.geom_type}MapWidget"
+
     FeatureMapWidget = type(
-        f"{model.__name__}MapWidget",
+        map_widget_name,
         (MapDrawingWidget,),
         {
             "js_args": {"geom_type": model.geom_type},
@@ -30,6 +36,9 @@ def make_form(model, extra_js=None):
                 ["coordinates", "map_projection", "path_options"],
                 widget=FeatureMapWidget,
             ),
+            "permanence": IntegerField(
+                required=False, min_value=0, max_value=settings.FEATURE_PERMANENCE_MAX
+            ),
             "Meta": type(
                 "Meta",
                 (),
@@ -41,7 +50,7 @@ def make_form(model, extra_js=None):
                         "category",
                         "map",
                         "description",
-                        "permanence",
+                        *(extra_fields or []),
                     ],
                 },
             ),

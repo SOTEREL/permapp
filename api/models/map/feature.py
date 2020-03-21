@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.utils.text import slugify
 
 from jsonfield import JSONField
 
@@ -68,6 +69,7 @@ class Feature(models.Model):
     @property
     def geojson_props(self):
         return {
+            "type": slugify(self.__class__.__name__),
             "id": self.id,
             "name": self.name,
             "description": self.description,
