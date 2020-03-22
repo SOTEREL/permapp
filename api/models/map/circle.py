@@ -9,5 +9,5 @@ class CircleBase(PointBase):
         abstract = True
 
 
-class Circle(CircleBase):
+class Circle(CircleBase, is_generic=True):
     pass

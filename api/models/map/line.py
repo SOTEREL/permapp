@@ -10,5 +10,5 @@ class LineBase(Feature, geom_type="LineString"):
         validate_line_coordinates(value)
 
 
-class Line(LineBase):
+class Line(LineBase, is_generic=True):
     pass

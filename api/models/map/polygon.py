@@ -20,9 +20,9 @@ class MultiPolygonBase(PolygonBase, geom_type="MultiPolygon"):
         validate_multipolygon_coordinates(value)
 
 
-class Polygon(PolygonBase):
+class Polygon(PolygonBase, is_generic=True):
     pass
 
 
-class MultiPolygon(MultiPolygonBase):
+class MultiPolygon(MultiPolygonBase, is_generic=True):
     pass

@@ -11,5 +11,5 @@ class PointBase(Feature, geom_type="Point"):
         validate_point_coordinates(value)
 
 
-class Point(PointBase):
+class Point(PointBase, is_generic=True):
     pass

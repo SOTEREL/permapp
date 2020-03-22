@@ -1,9 +1,14 @@
 from . import project
-from .map import category, circle, parcel, view
+from .map import category, default_category, parcel, view
 from .map.feature import register_feature_admin
 from .. import models
 
 
+register_feature_admin(
+    models.map.Circle,
+    extra_js=["api/js/widgets/circle-map.js"],
+    map_widget_name="CircleMapWidget",
+)
 register_feature_admin(models.map.Line)
 register_feature_admin(models.map.MultiPolygon)
 register_feature_admin(models.map.Point)

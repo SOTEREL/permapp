@@ -33,10 +33,11 @@ class Feature(models.Model):
         validators=[MaxValueValidator(settings.FEATURE_PERMANENCE_MAX)],
     )
 
-    def __init_subclass__(cls, *, geom_type=None, **kwargs):
+    def __init_subclass__(cls, *, geom_type=None, is_generic=False, **kwargs):
         # geom_type is only defined for abstract shape classes
         if geom_type is not None:
             cls.geom_type = geom_type
+        cls.is_generic = is_generic
 
     def __str__(self):
         return self.name

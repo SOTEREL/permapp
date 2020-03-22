@@ -14,3 +14,6 @@ from .artificial_area import ArtificialArea
 from .building import Building
 from .pathway import Pathway
 from .wall import Wall
+
+# Must be imported AFTER all features, so that they can be registered first
+from .default_category import DefaultCategory
