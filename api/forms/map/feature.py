@@ -6,6 +6,14 @@ from ..forms import ProjectMapForm
 from ..widgets import MapDrawingWidget
 
 
+class FeatureForm(ProjectMapForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.default_category is not None:
+            self.fields["category"].initial = self.default_category
+            self.fields["category"].disabled = True
+
+
 def make_form(model, extra_js=None, extra_fields=None, map_widget_name=None):
     js = ("api/js/widgets/feature-map.js",)
     if extra_js is None:
@@ -30,8 +38,9 @@ def make_form(model, extra_js=None, extra_fields=None, map_widget_name=None):
 
     return type(
         f"{model.__name__}Form",
-        (ProjectMapForm,),
+        (FeatureForm,),
         {
+            "default_category": model.default_category(),
             "map": AggregationField(
                 ["coordinates", "map_projection", "path_options"],
                 widget=FeatureMapWidget,

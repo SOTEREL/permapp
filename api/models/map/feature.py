@@ -42,6 +42,16 @@ class Feature(models.Model):
     def __str__(self):
         return self.name
 
+    @classmethod
+    def default_category(cls):
+        # Import from here to avoid circular import
+        from .default_category import DefaultCategory
+
+        try:
+            return DefaultCategory.objects.get(feature=cls.__name__).category
+        except DefaultCategory.DoesNotExist:
+            return None
+
     def validate_coordinates(self, value):
         raise NotImplementedError(
             f"{self.__class__.__name__}.validate_coordinates() must be implemented"
