@@ -15,5 +15,8 @@ class DefaultCategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     feature = models.CharField(max_length=50, choices=features, unique=True)
 
+    class Meta:
+        verbose_name_plural = "default categories"
+
     def __str__(self):
         return f"{self.feature}: {self.category}"
