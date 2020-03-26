@@ -57,6 +57,7 @@ def make_form(model, extra_js=None, extra_fields=None, map_widget_name=None):
                         "project",
                         "name",
                         "category",
+                        "drawing_class",
                         "map",
                         "description",
                         *(extra_fields or []),

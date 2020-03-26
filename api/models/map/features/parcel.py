@@ -13,6 +13,7 @@ class Parcel(MultiPolygonBase):
     class Meta:
         pass
         # TODO: project field doesn't exist in this table
+        # https://docs.djangoproject.com/en/3.0/ref/models/instances/#django.db.models.Model.validate_unique
         # unique_together = ("project", "insee", "section", "number")
 
     def __str__(self):

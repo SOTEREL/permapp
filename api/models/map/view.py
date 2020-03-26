@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 
-from .feature import Feature
+from .features.feature import Feature
 from ..project import Project
 
 

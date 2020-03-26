@@ -2,7 +2,7 @@ from django.apps import apps
 from django.db import models
 
 from .category import Category
-from .feature import Feature
+from .features.feature import Feature
 
 features = [
     (model.__name__, model.__name__)

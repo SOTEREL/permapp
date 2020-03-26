@@ -8,8 +8,9 @@ from jsonfield import JSONField
 
 from shapely.geometry import shape
 
-from .category import Category
-from ..project import Project
+from ..category import Category
+from ..drawing_class import DrawingClass
+from ...project import Project
 
 
 class Feature(models.Model):
@@ -18,20 +19,36 @@ class Feature(models.Model):
     description = models.TextField(default="", blank=True)
     created_on = models.DateField(auto_now_add=True)
     updated_on = models.DateField(auto_now=True)
+
+    category = models.ForeignKey(
+        Category, null=True, blank=True, on_delete=models.SET_NULL
+    )
+    drawing_class = models.ForeignKey(
+        DrawingClass, null=True, blank=True, on_delete=models.SET_NULL
+    )
+
     coordinates = JSONField()
     map_projection = models.CharField(
         max_length=50, default=settings.LEAFLET_DEFAULT_PROJECTION
     )
     path_options = JSONField(default=dict, blank=True)
+
     is_risky = models.BooleanField(default=False)
-    category = models.ForeignKey(
-        Category, null=True, blank=True, on_delete=models.SET_NULL
-    )
     permanence = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
         validators=[MaxValueValidator(settings.FEATURE_PERMANENCE_MAX)],
     )
+
+    @classmethod
+    def default_category(cls):
+        # Import from here to avoid circular import
+        from ..default_category import DefaultCategory
+
+        try:
+            return DefaultCategory.objects.get(feature=cls.__name__).category
+        except DefaultCategory.DoesNotExist:
+            return None
 
     def __init_subclass__(cls, *, geom_type=None, is_generic=False, **kwargs):
         # geom_type is only defined for abstract shape classes
@@ -41,16 +58,6 @@ class Feature(models.Model):
 
     def __str__(self):
         return self.name
-
-    @classmethod
-    def default_category(cls):
-        # Import from here to avoid circular import
-        from .default_category import DefaultCategory
-
-        try:
-            return DefaultCategory.objects.get(feature=cls.__name__).category
-        except DefaultCategory.DoesNotExist:
-            return None
 
     def validate_coordinates(self, value):
         raise NotImplementedError(

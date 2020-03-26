@@ -1,7 +1,5 @@
-from jsonfield import JSONField
-
 from .feature import Feature
-from .validators import validate_polygon_coordinates, validate_multipolygon_coordinates
+from ..validators import validate_polygon_coordinates, validate_multipolygon_coordinates
 
 
 class PolygonBase(Feature, geom_type="Polygon"):

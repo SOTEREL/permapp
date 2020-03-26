@@ -1,5 +1,5 @@
 from .feature import Feature
-from .validators import validate_line_coordinates
+from ..validators import validate_line_coordinates
 
 
 class LineBase(Feature, geom_type="LineString"):

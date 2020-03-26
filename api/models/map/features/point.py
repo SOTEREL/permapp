@@ -1,6 +1,6 @@
 from .feature import Feature
-from .validators import validate_point_coordinates
-from ..fields import LatField, LngField
+from ..validators import validate_point_coordinates
+from ...fields import LatField, LngField
 
 
 class PointBase(Feature, geom_type="Point"):
