@@ -16,3 +16,4 @@ from .features.wall import Wall
 
 # Must be imported AFTER all features, so that they can be registered first
 from .default_category import DefaultCategory
+from .default_drawing_class import DefaultDrawingClass

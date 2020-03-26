@@ -1,7 +1,7 @@
 from django.apps import apps
 from django.db import models
 
-from .category import Category
+from .drawing_class import DrawingClass
 from .features.feature import Feature
 
 features = [
@@ -11,12 +11,12 @@ features = [
 ]
 
 
-class DefaultCategory(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+class DefaultDrawingClass(models.Model):
+    drawing_class = models.ForeignKey(DrawingClass, on_delete=models.CASCADE)
     feature_model = models.CharField(max_length=50, choices=features, unique=True)
 
     class Meta:
-        verbose_name_plural = "default categories"
+        verbose_name_plural = "default drawing classes"
 
     def __str__(self):
-        return f"{self.feature_model}: {self.category}"
+        return f"{self.feature_model}: {self.drawing_class}"

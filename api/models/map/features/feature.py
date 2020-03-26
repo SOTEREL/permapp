@@ -46,8 +46,20 @@ class Feature(models.Model):
         from ..default_category import DefaultCategory
 
         try:
-            return DefaultCategory.objects.get(feature=cls.__name__).category
+            return DefaultCategory.objects.get(feature_model=cls.__name__).category
         except DefaultCategory.DoesNotExist:
+            return None
+
+    @classmethod
+    def default_drawing_class(cls):
+        # Import from here to avoid circular import
+        from ..default_drawing_class import DefaultDrawingClass
+
+        try:
+            return DefaultDrawingClass.objects.get(
+                feature_model=cls.__name__
+            ).drawing_class
+        except DefaultDrawingClass.DoesNotExist:
             return None
 
     def __init_subclass__(cls, *, geom_type=None, is_generic=False, **kwargs):

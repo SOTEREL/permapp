@@ -1,5 +1,12 @@
 from . import project
-from .map import category, default_category, drawing_class, parcel, view
+from .map import (
+    category,
+    default_category,
+    default_drawing_class,
+    drawing_class,
+    parcel,
+    view,
+)
 from .map.feature import register_feature_admin
 from .. import models
 
