@@ -10,9 +10,11 @@ class FeatureForm(ProjectMapForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        """
         category = self._meta.model.default_category()
         if category is not None:
             self.fields["category"].initial = category
+        """
 
         drawing_class = self._meta.model.default_drawing_class()
         if drawing_class is not None:
@@ -60,7 +62,7 @@ def make_form(model, extra_js=None, extra_fields=None, map_widget_name=None):
                     "fields": [
                         "project",
                         "name",
-                        "category",
+                        "type",
                         "drawing_class",
                         "map",
                         "description",

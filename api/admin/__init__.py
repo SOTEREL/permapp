@@ -4,6 +4,7 @@ from .map import (
     default_category,
     default_drawing_class,
     drawing_class,
+    feature_type,
     parcel,
     view,
 )

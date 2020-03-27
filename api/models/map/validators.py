@@ -1,6 +1,17 @@
 from django.core.exceptions import ValidationError
 
+from jsonschema import Draft7Validator
+from jsonschema.exceptions import SchemaError
+
 from ..fields import LngField, LatField
+
+
+def validate_json_schema(value):
+    print("validate_json_schema", value)
+    try:
+        Draft7Validator.check_schema(value)
+    except SchemaError as e:
+        raise ValidationError(str(e))
 
 
 def validate_point_coordinates(value):

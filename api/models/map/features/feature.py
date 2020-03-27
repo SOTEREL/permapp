@@ -8,6 +8,7 @@ from jsonfield import JSONField
 
 from shapely.geometry import shape
 
+from .feature_type import FeatureType
 from ..category import Category
 from ..drawing_class import DrawingClass
 from ...project import Project
@@ -20,8 +21,8 @@ class Feature(models.Model):
     created_on = models.DateField(auto_now_add=True)
     updated_on = models.DateField(auto_now=True)
 
-    category = models.ForeignKey(
-        Category, null=True, blank=True, on_delete=models.SET_NULL
+    type = models.ForeignKey(
+        FeatureType, null=True, blank=True, on_delete=models.SET_NULL
     )
     drawing_class = models.ForeignKey(
         DrawingClass, null=True, blank=True, on_delete=models.SET_NULL
@@ -39,6 +40,7 @@ class Feature(models.Model):
         blank=True,
         validators=[MaxValueValidator(settings.FEATURE_PERMANENCE_MAX)],
     )
+    extra_props = JSONField(default=dict, blank=True)
 
     @classmethod
     def default_category(cls):
