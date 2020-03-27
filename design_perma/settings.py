@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "categories.editor",
     "inline_actions",
     "django_json_widget",
+    "jsonschemaform",
     "spa",
     "api",
 ]

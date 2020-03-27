@@ -43,6 +43,7 @@ setup(
         "django-inline-actions>=2.3.0",
         "django-json-widget>=1.0.0",
         "jsonschema>=3.2.0",
+        "django-jsonschema-form=>1.0.3",
     ],
     include_package_data=True,
     classifiers=[

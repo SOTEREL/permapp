@@ -5,6 +5,7 @@ from django.db import models
 from django.utils.text import slugify
 
 from jsonfield import JSONField
+import jsonschema
 
 from shapely.geometry import shape
 
@@ -78,9 +79,19 @@ class Feature(models.Model):
             f"{self.__class__.__name__}.validate_coordinates() must be implemented"
         )
 
+    def validate_extra_props(self, value):
+        if self.type is None:
+            return
+        schema = self.type.extra_props_schema
+        try:
+            jsonschema.validate(value, schema)
+        except jsonschema.exceptions.ValidationError as e:
+            raise ValidationError(str(e))
+
     def clean(self):
         super().clean()
         self.validate_coordinates(self.coordinates)
+        self.validate_extra_props(self.extra_props)
 
     @property
     def centroid(self):

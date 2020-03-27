@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.forms import IntegerField
 
+from jsonschemaform.admin.widgets.jsonschema_widget import JSONSchemaWidget
+
 from ..fields import AggregationField
 from ..forms import ProjectMapForm
 from ..widgets import MapDrawingWidget
@@ -10,15 +12,18 @@ class FeatureForm(ProjectMapForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        """
-        category = self._meta.model.default_category()
-        if category is not None:
-            self.fields["category"].initial = category
-        """
-
         drawing_class = self._meta.model.default_drawing_class()
         if drawing_class is not None:
             self.fields["drawing_class"].initial = drawing_class
+
+        feature_type = self.instance.type
+        if feature_type is None:
+            self.fields["extra_props"].widget = self.fields[
+                "extra_props"
+            ].hidden_widget()
+        else:
+            extra_props_schema = feature_type.extra_props_schema
+            self.fields["extra_props"].widget = JSONSchemaWidget(extra_props_schema)
 
 
 def make_form(model, extra_js=None, extra_fields=None, map_widget_name=None):
@@ -66,6 +71,7 @@ def make_form(model, extra_js=None, extra_fields=None, map_widget_name=None):
                         "drawing_class",
                         "map",
                         "description",
+                        "extra_props",
                         *(extra_fields or []),
                     ],
                 },

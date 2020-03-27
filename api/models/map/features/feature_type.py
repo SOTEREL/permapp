@@ -14,7 +14,7 @@ class FeatureType(models.Model):
         Category, null=True, blank=True, on_delete=models.SET_NULL
     )
     extra_props_schema = JSONField(
-        default=dict, blank=True, validators=[validate_json_schema]
+        default=None, null=True, blank=True, validators=[validate_json_schema]
     )
 
     class Meta:
