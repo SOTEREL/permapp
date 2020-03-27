@@ -70,7 +70,7 @@ def make_form(model, extra_js=None, extra_fields=None, map_widget_name=None):
                         "type",
                         "drawing_class",
                         "map",
-                        "description",
+                        "comments",
                         "extra_props",
                         *(extra_fields or []),
                     ],

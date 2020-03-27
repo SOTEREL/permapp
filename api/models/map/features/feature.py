@@ -18,7 +18,7 @@ from ...project import Project
 class Feature(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
-    description = models.TextField(default="", blank=True)
+    comments = models.TextField(default="", blank=True)
     created_on = models.DateField(auto_now_add=True)
     updated_on = models.DateField(auto_now=True)
 

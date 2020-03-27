@@ -10,10 +10,10 @@ class AttachmentInline(admin.TabularInline):
 
 
 class FeatureAbstractAdmin(admin.ModelAdmin, LinkToProject):
-    list_display = ("name", "link_to_project", "description", "permanence")
+    list_display = ("name", "link_to_project", "comments", "permanence")
     list_filter = ("is_risky",)
     save_on_top = True
-    search_fields = ("name", "description", "project__name")
+    search_fields = ("name", "comments", "project__name")
     inlines = [AttachmentInline]
 
     def get_readonly_fields(self, request, obj=None):
