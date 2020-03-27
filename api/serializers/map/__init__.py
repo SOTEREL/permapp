@@ -1,2 +1,3 @@
 from .category import CategorySerializer, CategoryRecursiveSerializer
-from .parcel import ParcelSerializer
+
+# from .parcel import ParcelSerializer

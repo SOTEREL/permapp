@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from ..mixins import LinkToProject
-from ...forms.map import make_feature_form
+from ...forms.map import FeatureChangeForm, FeatureAddForm
 from ...models.map import Feature, FeatureAttachment
 
 
@@ -9,8 +9,11 @@ class AttachmentInline(admin.TabularInline):
     model = FeatureAttachment
 
 
-class FeatureAbstractAdmin(admin.ModelAdmin, LinkToProject):
-    list_display = ("name", "link_to_project", "comments", "permanence")
+@admin.register(Feature)
+class FeatureAdmin(admin.ModelAdmin, LinkToProject):
+    add_form = FeatureAddForm
+    form = FeatureChangeForm
+    list_display = ("name", "type", "link_to_project", "comments")
     list_filter = ("is_risky",)
     save_on_top = True
     search_fields = ("name", "comments", "project__name")
@@ -19,11 +22,5 @@ class FeatureAbstractAdmin(admin.ModelAdmin, LinkToProject):
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super().get_readonly_fields(request, obj=obj)
         if obj is not None:
-            return (*readonly_fields, "project")
+            return (*readonly_fields, "project", "type")
         return readonly_fields
-
-
-def register_feature_admin(model, **kwargs):
-    @admin.register(model)
-    class FeatureAdmin(FeatureAbstractAdmin):
-        form = make_feature_form(model, **kwargs)

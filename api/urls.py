@@ -5,7 +5,7 @@ from . import views
 
 router = DefaultRouter()
 router.register("projects", views.ProjectViewSet)
-router.register("parcels", views.map.ParcelViewSet)
+# router.register("parcels", views.map.ParcelViewSet)
 
 map_router = DefaultRouter()
 map_router.register("categories", views.map.CategoryViewSet)

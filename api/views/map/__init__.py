@@ -1,2 +1,3 @@
 from .category import CategoryViewSet
-from .parcel import ParcelViewSet
+
+# from .parcel import ParcelViewSet
