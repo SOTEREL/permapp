@@ -1,4 +1,3 @@
-from django.apps import apps
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -9,6 +8,7 @@ from django.dispatch import receiver
 from jsonfield import JSONField
 import jsonschema
 
+from .feature_style import FeatureStyle
 from .feature_type import FeatureType
 from ..project import Project
 
@@ -17,11 +17,7 @@ class Feature(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     created_on = models.DateField(auto_now_add=True)
     updated_on = models.DateField(auto_now=True)
-
-    # What it describes
-    type = models.ForeignKey(
-        FeatureType, null=True, blank=True, on_delete=models.SET_NULL
-    )
+    type = models.ForeignKey(FeatureType, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     comments = models.TextField(default="", blank=True)
     is_risky = models.BooleanField(default=False)
@@ -31,19 +27,16 @@ class Feature(models.Model):
         validators=[MaxValueValidator(settings.FEATURE_PERMANENCE_MAX)],
     )
     extra_props = JSONField(default=dict, blank=True)
-
-    # How it is drawn
-    # drawing_class = models.ForeignKey(
-    #    DrawingClass, null=True, blank=True, on_delete=models.SET_NULL
-    # )
-    # drawing_options = JSONField(default=dict, blank=True)
+    style = models.ForeignKey(
+        FeatureStyle, null=True, blank=True, on_delete=models.SET_NULL
+    )
 
     def __str__(self):
         return self.name
 
     @property
     def shape_model(self):
-        return apps.get_app_config("api").get_model(self.type.shape_model)
+        return self.type.shape_model
 
     def validate_extra_props(self, value):
         if self.type is None or value is None:

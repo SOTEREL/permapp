@@ -12,6 +12,8 @@ from ..feature import Feature
 
 
 class Shape(PolymorphicModel):
+    STYLE_SCHEMA = None
+
     feature = models.OneToOneField(Feature, on_delete=models.CASCADE)
     map_projection = models.CharField(
         max_length=50, default=settings.LEAFLET_DEFAULT_PROJECTION

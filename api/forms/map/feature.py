@@ -29,21 +29,22 @@ class FeatureChangeForm(ModelForm):
             "permanence",
             "comments",
             "extra_props",
+            "style",
         )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         feature_type = self.instance.type
-        if feature_type is None:
+
+        self.fields["style"].queryset = self.fields["style"].queryset.filter(
+            feature_type=feature_type
+        )
+
+        extra_props_schema = feature_type.extra_props_schema
+        if extra_props_schema is None:
             self.fields["extra_props"].widget = self.fields[
                 "extra_props"
             ].hidden_widget()
         else:
-            extra_props_schema = feature_type.extra_props_schema
-            if extra_props_schema is None:
-                self.fields["extra_props"].widget = self.fields[
-                    "extra_props"
-                ].hidden_widget()
-            else:
-                self.fields["extra_props"].widget = JSONSchemaWidget(extra_props_schema)
+            self.fields["extra_props"].widget = JSONSchemaWidget(extra_props_schema)

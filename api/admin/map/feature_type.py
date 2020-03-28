@@ -6,7 +6,7 @@ from ...models.map import FeatureType
 
 @admin.register(FeatureType)
 class FeatureTypeAdmin(admin.ModelAdmin):
-    list_display = ("name", "category", "shape_model")
+    list_display = ("name", "category", "shape_model_name")
     form = FeatureTypeForm
     prepopulated_fields = {"slug": ("name",)}
     save_on_top = True
