@@ -127,12 +127,17 @@ var MapTools = (function() {
   return {
     geo: geo,
     layers: {
-      satellite: makeLayer("ORTHOIMAGERY.ORTHOPHOTOS", "normal", "image/jpeg"),
-      cadastral: makeLayer(
-        "CADASTRALPARCELS.PARCELS",
-        "bdparcellaire",
-        "image/png"
-      ),
+      satellite: function() {
+        // Need to make a copy in case of multiple maps on the same page
+        return makeLayer("ORTHOIMAGERY.ORTHOPHOTOS", "normal", "image/jpeg");
+      },
+      cadastral: function() {
+        return makeLayer(
+          "CADASTRALPARCELS.PARCELS",
+          "bdparcellaire",
+          "image/png"
+        );
+      },
     },
     controls: {
       GeocoderControl: L.Control.extend({

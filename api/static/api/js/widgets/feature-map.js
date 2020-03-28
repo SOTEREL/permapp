@@ -7,7 +7,7 @@ function FeatureMapWidget(config, geomType, drawControlOptions) {
     mapWidget: mapWidget,
     drawingWidget: drawingWidget,
     init: function() {
-      mapWidget.init([MapTools.layers.satellite]);
+      mapWidget.init([MapTools.layers.satellite()]);
       drawingWidget.init(drawControlOptions);
     },
   };
