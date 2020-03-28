@@ -48,3 +48,7 @@ class FeatureChangeForm(ModelForm):
             ].hidden_widget()
         else:
             self.fields["extra_props"].widget = JSONSchemaWidget(extra_props_schema)
+
+    def clean(self):
+        super().clean()
+        print("feature errors:", self.errors)

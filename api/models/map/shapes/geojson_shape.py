@@ -39,7 +39,8 @@ class GeoJSONShape(Shape):
 
     def clean(self):
         super().clean()
-        self.validate_coordinates(self.coordinates)
+        if self.coordinates is not None:
+            self.validate_coordinates(self.coordinates)
 
     @property
     def centroid(self):

@@ -44,11 +44,11 @@ function MapDrawingWidget(config, mapWidget) {
         },
       },
       {
-        style: data.path_options,
+        style: config.featureStyle,
         pointToLayer: function(geoJsonPoint, latlng) {
-          var options = django.jQuery.extend(true, {}, data.path_options);
-          if (options.icon !== undefined) {
-            options.icon = L.icon(options.icon);
+          var options = {};
+          if (config.featureStyle !== null) {
+            options.icon = L.icon(config.featureStyle);
           }
           return L.marker(latlng, options);
         },

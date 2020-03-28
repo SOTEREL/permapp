@@ -15,6 +15,7 @@ class AttachmentInline(admin.TabularInline):
 
 @admin.register(Feature)
 class FeatureAdmin(PolymorphicInlineSupportMixin, admin.ModelAdmin, LinkToProject):
+    form = FeatureChangeForm
     list_display = ("name", "type", "link_to_project", "comments")
     list_filter = ("is_risky",)
     save_on_top = True
@@ -22,8 +23,8 @@ class FeatureAdmin(PolymorphicInlineSupportMixin, admin.ModelAdmin, LinkToProjec
 
     def get_form(self, request, obj=None, **kwargs):
         if obj is None:
-            return FeatureAddForm
-        return FeatureChangeForm
+            kwargs["form"] = FeatureAddForm
+        return super().get_form(request, obj, **kwargs)
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super().get_readonly_fields(request, obj=obj)
