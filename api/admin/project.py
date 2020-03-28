@@ -13,6 +13,7 @@ class ProjectAdmin(InlineActionsModelAdminMixin, admin.ModelAdmin):
     form = ProjectForm
     save_on_top = True
     search_fields = ("name",)
+    prepopulated_fields = {"slug": ("name",)}
 
     def get_inline_actions(self, request, obj=None):
         actions = super().get_inline_actions(request, obj=obj)

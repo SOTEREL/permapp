@@ -9,3 +9,4 @@ class FeatureTypeAdmin(admin.ModelAdmin):
     list_display = ("name", "category", "shape_model")
     form = FeatureTypeForm
     prepopulated_fields = {"slug": ("name",)}
+    save_on_top = True

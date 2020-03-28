@@ -44,6 +44,7 @@ class FeatureAdmin(PolymorphicInlineSupportMixin, admin.ModelAdmin, LinkToProjec
                 ),
                 "readonly_fields": ["shape_ptr"],
                 "can_delete": False,
+                "extra": 0,
             },
         )
 

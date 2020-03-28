@@ -109,7 +109,7 @@ function MapWidget(config) {
   function _initMapCenter() {
     var isDataValid = self.isDataValid(self.read());
     var dataCenter = !isDataValid
-      ? undefined
+      ? config.mapCenter
       : self.centerFromData(self.read());
     if (dataCenter !== undefined) {
       return self.map.setView(

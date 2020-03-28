@@ -76,5 +76,5 @@ function ParcelMapWidget(config, kwargs) {
       .catch(widget.apiError);
   });
 
-  widget.init([MapTools.layers.satellite, MapTools.layers.cadastral]);
+  widget.init([MapTools.layers.satellite(), MapTools.layers.cadastral()]);
 }

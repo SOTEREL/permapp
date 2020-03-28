@@ -43,7 +43,7 @@ class Feature(models.Model):
 
     @property
     def shape_model(self):
-        return self.shape.__class__
+        return apps.get_app_config("api").get_model(self.type.shape_model)
 
     def validate_extra_props(self, value):
         if self.type is None or value is None:
