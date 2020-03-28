@@ -4,10 +4,15 @@ from django.utils.translation import gettext_lazy as _
 
 from jsonfield import JSONField
 
+from polymorphic.models import PolymorphicModel
+
 from shapely.geometry import shape
 
+from ..feature import Feature
 
-class Shape(models.Model):
+
+class Shape(PolymorphicModel):
+    feature = models.OneToOneField(Feature, on_delete=models.CASCADE)
     map_projection = models.CharField(
         max_length=50, default=settings.LEAFLET_DEFAULT_PROJECTION
     )

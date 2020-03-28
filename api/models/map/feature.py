@@ -9,9 +9,7 @@ from django.dispatch import receiver
 from jsonfield import JSONField
 import jsonschema
 
-
 from .feature_type import FeatureType
-from .shapes import Shape
 from ..project import Project
 
 
@@ -34,11 +32,6 @@ class Feature(models.Model):
     )
     extra_props = JSONField(default=dict, blank=True)
 
-    # How it is represented spatially
-    shape = models.OneToOneField(
-        Shape, null=True, blank=True, on_delete=models.SET_NULL
-    )
-
     # How it is drawn
     # drawing_class = models.ForeignKey(
     #    DrawingClass, null=True, blank=True, on_delete=models.SET_NULL
@@ -47,6 +40,14 @@ class Feature(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def shape_model(self):
+        return apps.get_app_config("api").get_model(self.type.shape_model)
+
+    @property
+    def specialized_shape(self):
+        return self.shape_model.objects.get(pk=self.shape.pk)
 
     def validate_extra_props(self, value):
         if self.type is None or value is None:
@@ -81,6 +82,4 @@ class FeatureAttachment(models.Model):
 @receiver(post_save, sender=Feature)
 def create_shape(sender, instance, created, **kwargs):
     if created and instance.type and instance.type.shape_model:
-        shape_model = apps.get_app_config("api").get_model(instance.type.shape_model)
-        instance.shape = shape_model.objects.create()
-        instance.save()
+        instance.shape_model.objects.create(feature=instance)

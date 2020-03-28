@@ -6,13 +6,12 @@ from .shape import Shape
 
 
 class GeoJSONShape(Shape):
+    GEOM_TYPE = None
+
     coordinates = JSONField(default=None, null=True, blank=True)
 
     class Meta:
         abstract = True
-
-    def __init_subclass__(cls, *, geom_type, **kwargs):
-        cls.geom_type = geom_type
 
     def validate_coordinates(self, value):
         raise NotImplementedError(
@@ -37,7 +36,7 @@ class GeoJSONShape(Shape):
 
     @property
     def geojson_geom(self):
-        return {"type": self.geom_type, "coordinates": self.coordinates}
+        return {"type": self.GEOM_TYPE, "coordinates": self.coordinates}
 
     @property
     def geojson_props(self):

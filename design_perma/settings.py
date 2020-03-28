@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "inline_actions",
     "django_json_widget",
     "jsonschemaform",
+    "polymorphic",
     "spa",
     "api",
 ]

@@ -4,7 +4,9 @@ from .geojson_shape import GeoJSONShape
 from ..validators import validate_point_coordinates
 
 
-class Circle(GeoJSONShape, geom_type="Point"):
+class Circle(GeoJSONShape):
+    GEOM_TYPE = "Point"
+
     radius = models.PositiveSmallIntegerField()
 
     def validate_coordinates(self, value):

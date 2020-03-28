@@ -30,7 +30,7 @@ class ViewAdmin(admin.ModelAdmin, LinkToProject):
         return readonly_fields
 
     def get_inline_instances(self, request, obj=None):
-        project = obj.project if obj else None
+        project = obj.project if obj is not None else None
         if project is None:
             return []
         return [FeatureInline(self.model, self.admin_site, project=project)]

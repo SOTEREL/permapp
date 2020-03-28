@@ -4,9 +4,10 @@ from django.utils.text import slugify
 from jsonfield import JSONField
 
 from .category import Category
-from .shapes import SHAPE_MODEL_NAMES
 from .validators import validate_json_schema
 
+# Define this here to avoid circular import: Shape -> Feature -> FeatureType -> Shape
+SHAPE_MODEL_NAMES = ["Circle", "Line", "MultiPolygon", "Point", "Polygon"]
 shape_model_choices = [(x, x) for x in SHAPE_MODEL_NAMES]
 
 

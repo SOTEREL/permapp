@@ -27,7 +27,6 @@ class FeatureChangeForm(ModelForm):
             "name",
             "is_risky",
             "permanence",
-            "shape",
             "comments",
             "extra_props",
         )
