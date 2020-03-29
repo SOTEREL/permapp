@@ -25,6 +25,7 @@ function MultiPolygonMapWidget(config) {
     }
     w.mapWidget.update({
       coordinates: coords,
+      zoom: w.mapWidget.map.getZoom(),
     });
   };
 

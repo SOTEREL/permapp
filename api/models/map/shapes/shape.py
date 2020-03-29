@@ -18,6 +18,7 @@ class Shape(PolymorphicModel):
     map_projection = models.CharField(
         max_length=50, default=settings.LEAFLET_DEFAULT_PROJECTION
     )
+    zoom = models.PositiveSmallIntegerField(default=settings.SATELLITE_LAYER_MAX_ZOOM)
 
     def __str__(self):
         return str(self.feature)

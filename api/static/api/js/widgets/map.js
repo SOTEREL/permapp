@@ -32,6 +32,9 @@ function MapWidget(config) {
   };
 
   self.readers = {
+    zoom: function(field) {
+      return parseInt(field.value);
+    },
     coordinates: function(field) {
       return JSON.parse(field.value);
     },
@@ -48,6 +51,9 @@ function MapWidget(config) {
     },
     map_projection: function(field, value) {
       field.value = self.map.options.crs.code;
+    },
+    zoom: function(field, value) {
+      field.value = value;
     },
   };
 
@@ -111,11 +117,9 @@ function MapWidget(config) {
     var dataCenter = !isDataValid
       ? config.mapCenter
       : self.centerFromData(self.read());
+    var zoom = self.read().zoom || 18;
     if (dataCenter !== undefined) {
-      return self.map.setView(
-        [dataCenter.lat, dataCenter.lng],
-        dataCenter.zoom || 18
-      );
+      return self.map.setView([dataCenter.lat, dataCenter.lng], zoom);
     }
     if (_projectField && _projectField.value !== "") {
       return _setMapCenterFromProject();

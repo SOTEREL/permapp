@@ -30,7 +30,7 @@ def make_geojson_form(model, extra_js=None, extra_fields=None, map_widget_name=N
         (ShapeForm,),
         {
             "map": AggregationField(
-                ["coordinates", "map_projection"], widget=FeatureMapWidget
+                ["coordinates", "map_projection", "zoom"], widget=FeatureMapWidget
             ),
             "Meta": type("Meta", (), {"model": model, "fields": ["map"]}),
         },

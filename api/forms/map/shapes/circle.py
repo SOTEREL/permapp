@@ -13,7 +13,7 @@ class CircleMapWidget(MapDrawingWidget):
 
 class CircleForm(ShapeForm):
     map = AggregationField(
-        ["coordinates", "map_projection", "radius"], widget=CircleMapWidget
+        ["coordinates", "map_projection", "radius", "zoom"], widget=CircleMapWidget
     )
 
     class Meta:

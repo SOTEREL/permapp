@@ -65,6 +65,7 @@ function MapDrawingWidget(config, mapWidget) {
     var coords = feature.geometry.coordinates;
     self.mapWidget.update({
       coordinates: coords,
+      zoom: self.mapWidget.map.getZoom(),
     });
   };
 

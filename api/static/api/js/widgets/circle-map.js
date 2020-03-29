@@ -26,6 +26,7 @@ function CircleMapWidget(config) {
     w.mapWidget.update({
       coordinates: [center.lng, center.lat],
       radius: circle.getRadius(),
+      zoom: w.mapWidget.map.getZoom(),
     });
   };
 
