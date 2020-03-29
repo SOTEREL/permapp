@@ -3,7 +3,9 @@ function CircleMapWidget(config) {
   var w = FeatureMapWidget(config, "Point", {
     edit: true,
     draw: {
-      circle: true,
+      circle: {
+        shapeOptions: config.featureStyle || {},
+      },
       circlemarker: false,
       marker: false,
       polygon: false,

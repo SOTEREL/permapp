@@ -5,7 +5,9 @@ function MultiPolygonMapWidget(config) {
       circle: false,
       circlemarker: false,
       marker: false,
-      polygon: true,
+      polygon: {
+        shapeOptions: config.featureStyle || {},
+      },
       polyline: false,
       rectangle: true,
     },

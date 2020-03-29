@@ -6,7 +6,9 @@ function LineStringMapWidget(config) {
       circlemarker: false,
       marker: false,
       polygon: false,
-      polyline: true,
+      polyline: {
+        shapeOptions: config.featureStyle || {},
+      },
       rectangle: false,
     },
   }).init();

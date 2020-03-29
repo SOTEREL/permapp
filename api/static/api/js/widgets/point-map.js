@@ -4,7 +4,12 @@ function PointMapWidget(config) {
     draw: {
       circle: false,
       circlemarker: false,
-      marker: true,
+      marker: {
+        icon:
+          config.featureStyle !== null
+            ? L.icon(config.featureStyle)
+            : new L.Icon.Default(),
+      },
       polygon: false,
       polyline: false,
       rectangle: false,
