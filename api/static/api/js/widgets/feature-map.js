@@ -7,7 +7,16 @@ function FeatureMapWidget(config, geomType, drawControlOptions) {
     mapWidget: mapWidget,
     drawingWidget: drawingWidget,
     init: function() {
-      mapWidget.init([MapTools.layers.satellite()]);
+      mapWidget.init(
+        "Satellite",
+        {
+          Satellite: MapTools.layers.satellite(),
+          IGN: MapTools.layers.ign(),
+        },
+        {
+          Parcelles: MapTools.layers.cadastral(),
+        }
+      );
       drawingWidget.init(drawControlOptions);
     },
   };

@@ -126,12 +126,16 @@ function MapWidget(config) {
     );
   }
 
-  self.init = function(layers) {
+  self.init = function(defaultLayerName, baseLayers, overlays) {
     _formRow.prepend(_errorUl);
     _initMapCenter();
-    for (var layer of layers) {
-      layer.addTo(self.map);
-    }
+    baseLayers[defaultLayerName].addTo(self.map);
+    L.control
+      .layers(baseLayers, overlays, {
+        hideSingleBase: true,
+        position: "topleft",
+      })
+      .addTo(self.map);
     self.update(self.read());
     self.loading(false);
   };

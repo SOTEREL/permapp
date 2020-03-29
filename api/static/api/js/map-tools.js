@@ -138,6 +138,13 @@ var MapTools = (function() {
           "image/png"
         );
       },
+      ign: function() {
+        return makeLayer(
+          "GEOGRAPHICALGRIDSYSTEMS.PLANIGN",
+          "normal",
+          "image/jpeg"
+        );
+      },
     },
     controls: {
       GeocoderControl: L.Control.extend({
