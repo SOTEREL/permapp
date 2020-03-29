@@ -8,7 +8,7 @@ from .feature_type import FeatureType
 
 
 class FeatureStyle(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, blank=True)
     feature_type = models.ForeignKey(FeatureType, on_delete=models.CASCADE)
     style = JSONField(default=dict, blank=True)
 
