@@ -65,7 +65,6 @@ function MapDrawingWidget(config, mapWidget) {
     var coords = feature.geometry.coordinates;
     self.mapWidget.update({
       coordinates: coords,
-      path_options: self.getPathOptions(drawingLayer),
     });
   };
 
@@ -116,6 +115,7 @@ function MapDrawingWidget(config, mapWidget) {
       self.draw(data);
     }
 
+    /*
     styleCtrlOpts = styleCtrlOpts || {};
     if (styleCtrlOpts.openOnLeafletDraw === undefined) {
       styleCtrlOpts.openOnLeafletDraw = false;
@@ -143,6 +143,7 @@ function MapDrawingWidget(config, mapWidget) {
     }
     self.styleOptions = styleCtrlOpts.forms;
     self.mapWidget.map.addControl(L.control.styleEditor(styleCtrlOpts));
+    */
 
     if (drawCtrlOpts.edit === true) {
       drawCtrlOpts.edit = {

@@ -26,7 +26,6 @@ function CircleMapWidget(config) {
     var center = circle.getLatLng();
     w.mapWidget.update({
       coordinates: [center.lng, center.lat],
-      path_options: w.drawingWidget.getPathOptions(drawingLayer),
     });
   };
 

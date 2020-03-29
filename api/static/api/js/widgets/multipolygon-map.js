@@ -25,7 +25,6 @@ function MultiPolygonMapWidget(config) {
     }
     w.mapWidget.update({
       coordinates: coords,
-      path_options: w.drawingWidget.getPathOptions(drawingLayer),
     });
   };
 
