@@ -6,6 +6,6 @@ from ...models.map import FeatureStyle
 
 @admin.register(FeatureStyle)
 class FeatureStyleAdmin(admin.ModelAdmin):
-    list_display = ("name", "feature_type")
+    list_display = ("name", "shape_ctype")
     form = FeatureStyleForm
     save_on_top = True

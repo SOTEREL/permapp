@@ -1,26 +1,31 @@
+from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db import models
 
 from jsonfield import JSONField
 import jsonschema
 
-from .feature_type import FeatureType
+from .validators import validate_shape_ctype
 
 
 class FeatureStyle(models.Model):
-    name = models.CharField(max_length=50, blank=True)
-    feature_type = models.ForeignKey(FeatureType, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50, unique=True)
+    shape_ctype = models.ForeignKey(
+        ContentType,
+        on_delete=models.CASCADE,
+        related_name="+",
+        validators=[validate_shape_ctype],
+    )
     style = JSONField(default=dict, blank=True)
 
     class Meta:
         verbose_name_plural = "feature styles"
-        unique_together = ("name", "feature_type")
 
     def __str__(self):
-        return f"{self.name} ({self.feature_type})"
+        return self.name
 
     def validate_style(self, value):
-        schema = self.feature_type.shape_model.STYLE_SCHEMA
+        schema = self.shape_ctype.model_class().STYLE_SCHEMA
         try:
             jsonschema.validate(value, schema)
         except jsonschema.exceptions.ValidationError as e:

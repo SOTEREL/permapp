@@ -1,12 +1,9 @@
-from django.apps import apps
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.text import slugify
-
-from jsonfield import JSONField
 
 from .category import Category
+from .feature_style import FeatureStyle
 from .validators import validate_feature_ctype, validate_shape_ctype
 
 
@@ -28,6 +25,9 @@ class FeatureType(models.Model):
         related_name="+",
         validators=[validate_feature_ctype],
     )
+    style = models.ForeignKey(
+        FeatureStyle, null=True, blank=True, on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name_plural = "feature types"
@@ -38,7 +38,7 @@ class FeatureType(models.Model):
 
         for ctype in ContentType.objects.all():
             model = ctype.model_class()
-            if issubclass(model, Shape):
+            if model is not None and issubclass(model, Shape):
                 yield ctype
 
     @classmethod
@@ -47,11 +47,19 @@ class FeatureType(models.Model):
 
         for ctype in ContentType.objects.all():
             model = ctype.model_class()
-            if issubclass(model, Feature):
+            if model is not None and issubclass(model, Feature):
                 yield ctype
 
     def __str__(self):
         return self.name
+
+    @property
+    def shape_model(self):
+        return self.shape_ctype.model_class()
+
+    @property
+    def feature_model(self):
+        return self.feature_ctype.model_class()
 
     def clean_fields(self, exclude=None):
         super().clean_fields(exclude=exclude)
@@ -62,10 +70,14 @@ class FeatureType(models.Model):
                 if getattr(saved_instance, field) != getattr(self, field):
                     raise ValidationError(f"Cannot modify {field} field")
 
-    @property
-    def shape_model(self):
-        return self.shape_ctype.model_class()
+    def validate_style(self, value):
+        if value is None:
+            return
+        if value.shape_ctype != self.shape_ctype:
+            raise ValidationError(
+                f"The style {value} applies to another shape type than {self.shape_ctype}"
+            )
 
-    @property
-    def feature_model(self):
-        return self.feature_ctype.model_class()
+    def clean(self):
+        super().clean()
+        self.validate_style(self.style)

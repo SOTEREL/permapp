@@ -9,7 +9,6 @@ from jsonfield import JSONField
 import jsonschema
 from polymorphic.models import PolymorphicModel
 
-from .feature_style import FeatureStyle
 from .feature_type import FeatureType
 from ..project import Project
 
@@ -26,9 +25,6 @@ class Feature(PolymorphicModel):
         null=True,
         blank=True,
         validators=[MaxValueValidator(settings.FEATURE_PERMANENCE_MAX)],
-    )
-    style = models.ForeignKey(
-        FeatureStyle, null=True, blank=True, on_delete=models.SET_NULL
     )
 
     def __str__(self):

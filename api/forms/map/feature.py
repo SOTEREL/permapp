@@ -21,20 +21,4 @@ class FeatureChangeForm(ModelForm):
 
     class Meta:
         model = Feature
-        fields = (
-            "project",
-            "type",
-            "name",
-            "is_risky",
-            "permanence",
-            "comments",
-            "style",
-        )
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        feature_type = self.instance.type
-        self.fields["style"].queryset = self.fields["style"].queryset.filter(
-            feature_type=feature_type
-        )
+        fields = ("project", "type", "name", "is_risky", "permanence", "comments")

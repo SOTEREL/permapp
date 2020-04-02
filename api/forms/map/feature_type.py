@@ -1,10 +1,14 @@
 from django.forms import ALL_FIELDS, ModelForm
 from django_json_widget.widgets import JSONEditorWidget
 
+from ..fields import ShapeCtypeField, FeatureCtypeField
 from ...models.map import FeatureType
 
 
 class FeatureTypeForm(ModelForm):
+    shape_ctype = ShapeCtypeField()
+    feature_ctype = FeatureCtypeField()
+
     class Meta:
         model = FeatureType
         fields = ALL_FIELDS
@@ -12,13 +16,10 @@ class FeatureTypeForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        ctype_fields = {
-            "shape_ctype": FeatureType.list_shape_ctypes,
-            "feature_ctype": FeatureType.list_feature_ctypes,
-        }
-        for field, list_ctypes in ctype_fields.items():
-            if field in self.fields:
-                ctype_ids = [ctype.pk for ctype in list_ctypes()]
-                self.fields[field].queryset = self.fields[field].queryset.filter(
-                    pk__in=ctype_ids
-                )
+        try:
+            field = self.fields["style"]
+            shape_ctype = self.instance.shape_ctype
+        except (KeyError, FeatureType.shape_ctype.RelatedObjectDoesNotExist):
+            pass
+        else:
+            field.queryset = field.queryset.filter(shape_ctype=shape_ctype)

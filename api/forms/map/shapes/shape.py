@@ -7,7 +7,7 @@ class ShapeForm(AggregationForm):
         super().__init__(*args, **kwargs)
 
         if self.instance is not None and self.instance.feature_id is not None:
-            style = self.instance.feature.style
+            style = self.instance.feature.type.style
             if style is not None:
                 style = style.style
 

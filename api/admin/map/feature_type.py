@@ -16,3 +16,9 @@ class FeatureTypeAdmin(admin.ModelAdmin):
         if obj is not None:
             return (*readonly_fields, "feature_ctype", "shape_ctype")
         return readonly_fields
+
+    def get_fields(self, request, obj=None):
+        fields = super().get_fields(request, obj=obj)
+        if obj is None:
+            fields.remove("style")
+        return fields
