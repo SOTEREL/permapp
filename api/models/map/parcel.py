@@ -3,10 +3,10 @@ from django.core.validators import MinLengthValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .polygon import MultiPolygonBase
+from .feature import Feature
 
 
-class Parcel(MultiPolygonBase):
+class Parcel(Feature):
     # https://apicarto.ign.fr/api/doc/cadastre#/Parcelle/get_cadastre_parcelle
     insee = models.CharField(max_length=5, validators=[MinLengthValidator(5)])
     section = models.CharField(max_length=2, validators=[MinLengthValidator(2)])

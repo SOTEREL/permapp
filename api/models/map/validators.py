@@ -1,9 +1,26 @@
+from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 
 from jsonschema import Draft7Validator
 from jsonschema.exceptions import SchemaError
 
 from ..fields import LngField, LatField
+
+
+def validate_feature_ctype(value):
+    from .feature_type import FeatureType  # Import here to avoid circular import
+
+    ctype = ContentType.objects.get_for_id(value)
+    if ctype not in FeatureType.list_feature_ctypes():
+        raise ValidationError(f"The content type '{ctype}' is not a feature type")
+
+
+def validate_shape_ctype(value):
+    from .feature_type import FeatureType  # Import here to avoid circular import
+
+    ctype = ContentType.objects.get_for_id(value)
+    if ctype not in FeatureType.list_shape_ctypes():
+        raise ValidationError(f"The content type '{ctype}' is not a shape type")
 
 
 def validate_json_schema(value):
