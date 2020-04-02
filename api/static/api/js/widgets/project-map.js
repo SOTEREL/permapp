@@ -31,7 +31,10 @@ function ProjectMapWidget(config) {
     widget.update(readPos());
   }
 
-  widget.init([MapTools.layers.satellite()]);
+  widget.init("Satellite", {
+    Satellite: MapTools.layers.satellite(),
+    IGN: MapTools.layers.ign(),
+  });
 
   // If the center is not specified in data (probably because we are creating
   // a new project), we use the default center;
