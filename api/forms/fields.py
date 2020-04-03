@@ -35,10 +35,3 @@ class ShapeCtypeField(CtypeField):
 
 class FeatureCtypeField(CtypeField):
     list_ctypes = FeatureType.list_feature_ctypes
-
-
-class FeatureTypeField(ModelChoiceField):
-    def __init__(self, model, *args, **kwargs):
-        ctype = ContentType.objects.get_for_model(model)
-        queryset = FeatureType.objects.filter(feature_ctype=ctype)
-        super().__init__(*args, queryset=queryset, **kwargs)
