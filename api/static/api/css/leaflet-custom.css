@@ -27,3 +27,8 @@ ul.leaflet-styleeditor-select-option-wrapper {
   content: none !important;
   display: block !important;
 }
+
+ul.leaflet-draw-actions {
+  margin-left: 0px !important;
+  padding-left: 0px !important;
+}
