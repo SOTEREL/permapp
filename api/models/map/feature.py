@@ -55,17 +55,9 @@ class FeatureAttachment(models.Model):
     comments = models.TextField(default="", blank=True)
 
 
-"""
-@receiver(pre_save, sender=Feature)
-def extend_feature(sender, instance, created, **kwargs):
-    if created and instance.feature_model is not Feature:
-        extended_feature = instance.feature_model()
-        extended_feature.__dict__.update(instance.__dict__)
-        extended_feature.save()
-"""
-
-
-@receiver(post_save, sender=Feature)
+@receiver(post_save)
 def create_shape(sender, instance, created, **kwargs):
+    if not issubclass(sender, Feature):
+        return
     if created and instance.type:
         instance.shape_model.objects.create(feature=instance)
