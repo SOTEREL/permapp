@@ -1,20 +1,22 @@
 from django.contrib import admin
+from django.contrib.contenttypes.admin import GenericStackedInline
 from django.urls import reverse
 from django.utils.html import format_html
 
 from polymorphic.admin import PolymorphicInlineSupportMixin, StackedPolymorphicInline
 
-from ..mixins import LinkToProject
+from ..mixins import LinkToProjectMixin
 from ...forms.map import FeatureChangeForm, FeatureAddForm, shapes as shape_forms
 from ...models.map import Feature, FeatureAttachment
 
 
 class AttachmentInline(admin.TabularInline):
     model = FeatureAttachment
+    extra = 1
 
 
 @admin.register(Feature)
-class FeatureAdmin(PolymorphicInlineSupportMixin, admin.ModelAdmin, LinkToProject):
+class FeatureAdmin(PolymorphicInlineSupportMixin, admin.ModelAdmin, LinkToProjectMixin):
     add_form = FeatureAddForm
     form = FeatureChangeForm
     list_display = ("name", "type", "link_to_project", "comments")
@@ -25,8 +27,6 @@ class FeatureAdmin(PolymorphicInlineSupportMixin, admin.ModelAdmin, LinkToProjec
     def get_form(self, request, obj=None, **kwargs):
         if obj is None:
             kwargs["form"] = self.add_form
-        else:
-            pass  # TODO: select form based on feature type
         return super().get_form(request, obj, **kwargs)
 
     def get_readonly_fields(self, request, obj=None):
@@ -41,8 +41,10 @@ class FeatureAdmin(PolymorphicInlineSupportMixin, admin.ModelAdmin, LinkToProjec
 
         ShapeInline = type(
             "ShapeInline",
-            (admin.StackedInline,),
+            (GenericStackedInline,),
             {
+                "ct_field": "content_type",
+                "ct_fk_field": "object_id",
                 "model": obj.shape_model,
                 "form": getattr(
                     shape_forms,
@@ -52,6 +54,7 @@ class FeatureAdmin(PolymorphicInlineSupportMixin, admin.ModelAdmin, LinkToProjec
                 "readonly_fields": ["shape_ptr"],
                 "can_delete": False,
                 "extra": 0,
+                "max_num": 1,
             },
         )
 

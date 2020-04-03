@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from ..mixins import LinkToProject
+from ..mixins import LinkToProjectMixin
 from ...models.map import Feature, View
 
 
@@ -18,7 +18,7 @@ class FeatureInline(admin.TabularInline):
 
 
 @admin.register(View)
-class ViewAdmin(admin.ModelAdmin, LinkToProject):
+class ViewAdmin(admin.ModelAdmin, LinkToProjectMixin):
     list_display = ("name", "link_to_project")
     save_on_top = True
     search_fields = ("name", "project__name")

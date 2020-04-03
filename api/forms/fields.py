@@ -31,7 +31,3 @@ class CtypeField(ModelChoiceField):
 
 class ShapeCtypeField(CtypeField):
     list_ctypes = FeatureType.list_shape_ctypes
-
-
-class FeatureCtypeField(CtypeField):
-    list_ctypes = FeatureType.list_feature_ctypes

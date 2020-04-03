@@ -1,13 +1,12 @@
 from django.forms import ALL_FIELDS, ModelForm
 from django_json_widget.widgets import JSONEditorWidget
 
-from ..fields import ShapeCtypeField, FeatureCtypeField
+from ..fields import ShapeCtypeField
 from ...models.map import FeatureType
 
 
 class FeatureTypeForm(ModelForm):
     shape_ctype = ShapeCtypeField()
-    feature_ctype = FeatureCtypeField()
 
     class Meta:
         model = FeatureType
