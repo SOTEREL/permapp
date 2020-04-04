@@ -32,8 +32,8 @@ def validate_json_schema(value):
 
 
 def validate_point_coordinates(value):
-    if not isinstance(value, list):
-        raise ValidationError("Point coordinates must be a list.")
+    if not isinstance(value, (list, tuple)):
+        raise ValidationError("Point coordinates must be a list or a tuple.")
     if len(value) != 2:
         raise ValidationError("Point can only have two coordinates.")
     lng, lat = value
@@ -42,8 +42,8 @@ def validate_point_coordinates(value):
 
 
 def validate_line_coordinates(value):
-    if not isinstance(value, list):
-        raise ValidationError("Line coordinates must be a list.")
+    if not isinstance(value, (list, tuple)):
+        raise ValidationError("Line coordinates must be a list or a tuple.")
     if len(value) < 2:
         raise ValidationError("Line coordinates must contain at least two points.")
     for p in value:
@@ -62,15 +62,15 @@ def validate_linear_ring_coordinates(value):
 
 
 def validate_polygon_coordinates(value):
-    if not isinstance(value, list):
-        raise ValidationError("Polygon coordinates must be a list.")
+    if not isinstance(value, (list, tuple)):
+        raise ValidationError("Polygon coordinates must be a list or a tuple.")
     if len(value) != 1:
         raise ValidationError("models.map.Polygon handles single polygons only.")
     validate_linear_ring_coordinates(value[0])
 
 
 def validate_multipolygon_coordinates(value):
-    if not isinstance(value, list):
-        raise ValidationError("MultiPolygon coordinates must be a list.")
+    if not isinstance(value, (list, tuple)):
+        raise ValidationError("MultiPolygon coordinates must be a list or a tuple.")
     for poly in value:
         validate_polygon_coordinates(poly)

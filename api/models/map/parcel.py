@@ -12,7 +12,9 @@ from ...geoportal import parcel_coordinates, ParcelCoordinatesNotFoundError
 
 
 class Parcel(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(
+        Project, related_name="parcels", on_delete=models.CASCADE
+    )
     # https://apicarto.ign.fr/api/doc/cadastre#/Parcelle/get_cadastre_parcelle
     insee = models.CharField(max_length=5, validators=[MinLengthValidator(5)])
     section = models.CharField(max_length=2, validators=[MinLengthValidator(2)])
@@ -56,4 +58,5 @@ def create_shape(sender, instance, created, **kwargs):
     else:
         shape = instance.shape
         shape.coordinates = instance._coordinates
+        shape.full_clean()
         shape.save()

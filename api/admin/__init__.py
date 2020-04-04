@@ -1,2 +1,2 @@
 from . import project
-from .map import category, feature, feature_style, feature_type, parcel, view
+from .map import borders, category, feature, feature_style, feature_type, parcel, view

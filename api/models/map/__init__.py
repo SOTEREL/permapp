@@ -1,5 +1,6 @@
 from . import shapes
 
+from .borders import Borders
 from .category import Category
 from .feature import Feature, FeatureAttachment
 from .feature_style import FeatureStyle

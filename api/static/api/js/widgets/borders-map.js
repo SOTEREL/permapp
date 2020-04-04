@@ -1,9 +1,9 @@
-function ParcelMapWidget(config, kwargs) {
+function BordersMapWidget(config, kwargs) {
   var widget = MapWidget(config, kwargs);
-  var parcel;
+  var borders;
 
   widget.isDataValid = function(data) {
-    return data.insee !== "" && data.section !== "" && data.number !== "";
+    return true;
   };
 
   widget.centerFromData = function(data) {
@@ -12,8 +12,8 @@ function ParcelMapWidget(config, kwargs) {
   };
 
   widget.postUpdate = function(data) {
-    if (parcel) {
-      widget.map.removeLayer(parcel);
+    if (borders) {
+      widget.map.removeLayer(borders);
     }
     parcel = L.geoJSON(
       {
@@ -22,18 +22,12 @@ function ParcelMapWidget(config, kwargs) {
           type: "MultiPolygon",
           coordinates: data.coordinates,
         },
-        properties: {
-          insee: data.insee,
-          section: data.section,
-          number: data.number,
-        },
       },
       {
         style: {
-          fillColor: "white",
-          fillOpacity: 0.5,
-          color: "#000",
-          weight: 1,
+          fillOpacity: 0,
+          color: "red",
+          weight: 2,
         },
         onEachFeature: function(feature, layer) {
           var html = "";
@@ -52,25 +46,6 @@ function ParcelMapWidget(config, kwargs) {
     widget.loading(false);
   };
 
-  widget.map.on("click", function(e) {
-    if (widget.loading()) {
-      return;
-    }
-    widget.loading(true);
-    MapTools.geo
-      .parcelFromPos(e.latlng)
-      .then(function(parcel) {
-        MapTools.geo
-          .parcelShape(parcel)
-          .then(function(geom) {
-            parcel.coordinates = geom.coordinates;
-            widget.update(parcel);
-          })
-          .catch(widget.apiError);
-      })
-      .catch(widget.apiError);
-  });
-
   widget.init(
     "Satellite",
     {
@@ -79,7 +54,6 @@ function ParcelMapWidget(config, kwargs) {
     },
     {
       Parcelles: MapTools.layers.cadastral(),
-    },
-    ["Parcelles"]
+    }
   );
 }

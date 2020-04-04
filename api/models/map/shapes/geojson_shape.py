@@ -37,9 +37,11 @@ class GeoJSONShape(Shape):
             f"{self.__class__.__name__}.validate_coordinates() must be implemented"
         )
 
-    def clean(self):
-        super().clean()
-        if self.coordinates is not None:
+    def clean_fields(self, exclude=None):
+        super().clean_fields(exclude=exclude)
+        if self.coordinates is not None and (
+            not exclude or "coordinates" not in exclude
+        ):
             self.validate_coordinates(self.coordinates)
 
     @property
