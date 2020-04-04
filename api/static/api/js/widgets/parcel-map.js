@@ -76,5 +76,15 @@ function ParcelMapWidget(config, kwargs) {
       .catch(widget.apiError);
   });
 
-  widget.init([MapTools.layers.satellite(), MapTools.layers.cadastral()]);
+  widget.init(
+    "Satellite",
+    {
+      Satellite: MapTools.layers.satellite(),
+      IGN: MapTools.layers.ign(),
+    },
+    {
+      Parcelles: MapTools.layers.cadastral(),
+    },
+    ["Parcelles"]
+  );
 }

@@ -3,7 +3,7 @@ from django.contrib.contenttypes.admin import GenericStackedInline
 from django.urls import reverse
 from django.utils.html import format_html
 
-from polymorphic.admin import PolymorphicInlineSupportMixin, StackedPolymorphicInline
+from polymorphic.admin import PolymorphicInlineSupportMixin
 
 from ..mixins import LinkToProjectMixin
 from ...forms.map import FeatureChangeForm, FeatureAddForm, shapes as shape_forms

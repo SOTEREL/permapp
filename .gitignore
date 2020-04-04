@@ -113,13 +113,13 @@ target/
 __pycache__/
 local_settings.py
 
-.env
-db.sqlite3
-media/
-
 
 #########################################
 # Custom
 #########################################
 
 !api/static/api/js/lib/
+design_perma/.env
+db.sqlite3
+media/
+collectedstatic/

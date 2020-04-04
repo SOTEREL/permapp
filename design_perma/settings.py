@@ -12,20 +12,26 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+import environ
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+env = environ.Env(
+    DEBUG=(bool, False), GEOPORTAL_API_KEY=str, LOGS_DIR=(environ.Path, BASE_DIR)
+)
+env.read_env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "#47yo8zz+qt23#hjxibc1lgx3&8s(2%fmkk30_uhh)2_c&08)_"
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [] if DEBUG else env("ALLOWED_HOSTS").split(";")
 
 
 # Application definition
@@ -84,12 +90,7 @@ WSGI_APPLICATION = "design_perma.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-    }
-}
+DATABASES = {"default": env.db()}
 
 
 # Password validation
@@ -123,12 +124,49 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "collectedstatic")
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "filters": {
+        "require_debug_false": {"()": "django.utils.log.RequireDebugFalse"},
+        "require_debug_true": {"()": "django.utils.log.RequireDebugTrue"},
+    },
+    "formatters": {
+        "simple": {
+            "format": "[%(asctime)s][%(levelname)s] %(name)s ([%(filename)s:%(lineno)s - %(funcName)20s()) %(message)s",
+            "datefmt": "%d/%b/%Y %H:%M:%S",
+        }
+    },
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "filters": ["require_debug_true"],
+        },
+        "file": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filters": ["require_debug_false"],
+            "filename": os.path.join(env("LOGS_DIR"), "design_perma_django.log"),
+            "maxBytes": 1024 * 1024 * 10,  # 10MB
+            "backupCount": 10,
+            "formatter": "simple",
+        },
+        "mail_admins": {
+            "level": "ERROR",
+            "filters": ["require_debug_false"],
+            "class": "django.utils.log.AdminEmailHandler",
+        },
+    },
+    "loggers": {"django": {"handlers": ["console", "file"], "level": "INFO"}},
+}
 
-CORS_ORIGIN_WHITELIST = ["http://localhost:8080"]
+CORS_ORIGIN_WHITELIST = ["http://localhost:8080", "http://127.0.0.1:8080"]
 
 REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"]
@@ -137,3 +175,4 @@ REST_FRAMEWORK = {
 LEAFLET_DEFAULT_PROJECTION = "EPSG:3857"
 FEATURE_PERMANENCE_MAX = 10
 SATELLITE_LAYER_MAX_ZOOM = 19
+GEOPORTAL_API_KEY = env("GEOPORTAL_API_KEY")

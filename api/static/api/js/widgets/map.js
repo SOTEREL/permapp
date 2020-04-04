@@ -36,6 +36,7 @@ function MapWidget(config) {
       return parseInt(field.value);
     },
     coordinates: function(field) {
+      if (!field.value) return null;
       return JSON.parse(field.value);
     },
     path_options: function(field) {
@@ -76,6 +77,9 @@ function MapWidget(config) {
   };
 
   self.update = function(data) {
+    if (data.zoom === undefined) {
+      data.zoom = self.map.getZoom();
+    }
     if (!self.isDataValid(data)) {
       return;
     }
@@ -118,7 +122,7 @@ function MapWidget(config) {
       ? config.mapCenter
       : self.centerFromData(self.read());
     var zoom = self.read().zoom || 18;
-    if (dataCenter !== undefined) {
+    if (dataCenter !== undefined && dataCenter !== null) {
       return self.map.setView([dataCenter.lat, dataCenter.lng], zoom);
     }
     if (_projectField && _projectField.value !== "") {
@@ -130,10 +134,20 @@ function MapWidget(config) {
     );
   }
 
-  self.init = function(defaultLayerName, baseLayers, overlays) {
+  self.init = function(
+    defaultLayerName,
+    baseLayers,
+    overlays,
+    defaultOverlays
+  ) {
     _formRow.prepend(_errorUl);
     _initMapCenter();
     baseLayers[defaultLayerName].addTo(self.map);
+    if (defaultOverlays !== undefined) {
+      for (var overlay of defaultOverlays) {
+        overlays[overlay].addTo(self.map);
+      }
+    }
     L.control
       .layers(baseLayers, overlays, {
         hideSingleBase: true,

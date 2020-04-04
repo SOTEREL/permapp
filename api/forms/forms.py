@@ -59,6 +59,12 @@ class ProjectMapForm(AggregationForm):
         except KeyError:  # The field is probably read-only
             project_field_id = None
 
+        project = getattr(self.instance, self.project_field_name, None)
+        map_center = (
+            None if project is None else dict(lng=project.map_lng, lat=project.map_lat)
+        )
+
         for field in self.fields.values():
             if isinstance(field.widget, MapWidget):
+                field.widget.add_js_arg("mapCenter", map_center)
                 field.widget.add_js_arg("project_field_id", project_field_id)

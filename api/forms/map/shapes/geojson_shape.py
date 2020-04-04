@@ -1,6 +1,8 @@
+from django.forms import CharField
+
 from ...fields import AggregationField
 from ...widgets import MapDrawingWidget
-from .shape import ShapeForm
+from .shape import ShapeForm, ShapeMapForm
 
 
 def make_geojson_form(model, extra_js=None, extra_fields=None, map_widget_name=None):
@@ -35,3 +37,15 @@ def make_geojson_form(model, extra_js=None, extra_fields=None, map_widget_name=N
             "Meta": type("Meta", (), {"model": model, "fields": ["map"]}),
         },
     )
+
+
+class GeoJSONShapeMapForm(ShapeMapForm):
+    coordinates = CharField()
+    shape_fields = [*ShapeMapForm.shape_fields, "coordinates"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    @property
+    def shape_form_class(self):
+        return make_geojson_form(self.shape_class)

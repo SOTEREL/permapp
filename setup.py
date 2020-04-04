@@ -45,6 +45,8 @@ setup(
         "jsonschema>=3.2.0",
         "django-jsonschema-form=>1.0.3",
         "django-polymorphic>=2.1.2",
+        "django-environ=>0.4.5",
+        "requests=>2.23.0",
     ],
     include_package_data=True,
     classifiers=[

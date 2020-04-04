@@ -8,14 +8,13 @@ from django.dispatch import receiver
 
 from jsonfield import JSONField
 import jsonschema
-from polymorphic.models import PolymorphicModel
 
 from .feature_type import FeatureType
 from .shapes import Shape
 from ..project import Project
 
 
-class Feature(PolymorphicModel):
+class Feature(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     created_on = models.DateField(auto_now_add=True)
     updated_on = models.DateField(auto_now=True)
@@ -61,5 +60,5 @@ class FeatureAttachment(models.Model):
 
 @receiver(post_save, sender=Feature)
 def create_shape(sender, instance, created, **kwargs):
-    if created and instance.type:
+    if created:
         instance.shape_model.objects.create(content_object=instance)

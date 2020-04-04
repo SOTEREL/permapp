@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import redirect
 from django.urls import reverse
 
@@ -6,6 +7,7 @@ from inline_actions.admin import InlineActionsModelAdminMixin
 
 from ..forms import ProjectForm
 from ..models import Project
+from ..models.map import Parcel, Feature
 
 
 @admin.register(Project)
@@ -25,14 +27,21 @@ class ProjectAdmin(InlineActionsModelAdminMixin, admin.ModelAdmin):
 
         return actions
 
+    def redirect_to_add_model(self, project_id, model):
+        ctype = ContentType.objects.get_for_model(model)
+        return redirect(
+            reverse("admin:%s_%s_add" % (ctype.app_label, ctype.model))
+            + f"?project={project_id}"
+        )
+
     def get_add_parcel_label(self, obj):
         return "Add parcel"
 
     def add_parcel(self, request, obj, parent_obj=None):
-        return redirect(reverse("admin:api_parcel_add") + f"?project={obj.id}")
+        return self.redirect_to_add_model(obj.id, Parcel)
 
     def get_add_feature_label(self, obj):
         return "Add feature"
 
     def add_feature(self, request, obj, parent_obj=None):
-        return redirect(reverse("admin:api_feature_add") + f"?project={obj.id}")
+        return self.redirect_to_add_model(obj.id, Feature)
