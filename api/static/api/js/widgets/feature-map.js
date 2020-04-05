@@ -14,7 +14,7 @@ function FeatureMapWidget(config, geomType, drawControlOptions) {
           IGN: MapTools.layers.ign(),
         },
         {
-          Parcelles: MapTools.layers.cadastral(),
+          Cadastre: MapTools.layers.cadastral(),
         }
       );
       drawingWidget.init(drawControlOptions);

@@ -16,6 +16,7 @@ var MapTools = (function() {
         "TILEMATRIX={z}",
       {
         apiKey: GEOPORTAL_API_KEY,
+        maxZoom: 22,
         attribution:
           '<a href="https://www.geoportail.gouv.fr/">geoportail.gouv.fr</a>',
         name: name,

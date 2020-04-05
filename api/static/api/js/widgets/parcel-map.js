@@ -78,8 +78,8 @@ function ParcelMapWidget(config, kwargs) {
       IGN: MapTools.layers.ign(),
     },
     {
-      Parcelles: MapTools.layers.cadastral(),
+      Cadastre: MapTools.layers.cadastral(),
     },
-    ["Parcelles"]
+    ["Cadastre"]
   );
 }
