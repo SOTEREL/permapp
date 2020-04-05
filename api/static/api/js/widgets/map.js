@@ -6,7 +6,9 @@ function MapWidget(config) {
   var _formRow = django.jQuery("#" + config.mapId).closest(".form-row");
   var _errorUl = django.jQuery('<ul class="errorlist"></ul>');
 
-  self.map = L.map(config.mapId);
+  self.map = L.map(config.mapId, {
+    maxZoom: 25,
+  });
 
   self.loading = function(val) {
     if (val === undefined) {
@@ -118,6 +120,7 @@ function MapWidget(config) {
 
   function _initMapCenter() {
     var isDataValid = self.isDataValid(self.read());
+    // TODO: map.fitBounds()? https://leafletjs.com/reference-1.6.0.html#map-fitbounds
     var dataCenter = !isDataValid
       ? config.mapCenter
       : self.centerFromData(self.read());
@@ -154,6 +157,9 @@ function MapWidget(config) {
         position: "topleft",
       })
       .addTo(self.map);
+
+    L.control.scale({ imperial: false, updateWhenIdle: true }).addTo(self.map);
+
     self.update(self.read());
     self.loading(false);
   };

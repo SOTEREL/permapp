@@ -32,3 +32,7 @@ ul.leaflet-draw-actions {
   margin-left: 0px !important;
   padding-left: 0px !important;
 }
+
+.leaflet-container {
+  background: #FFF;
+}
