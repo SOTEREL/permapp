@@ -23,3 +23,5 @@ class ViewFeature(models.Model):
     view = models.ForeignKey(View, on_delete=models.CASCADE)
     feature = models.ForeignKey(Feature, on_delete=models.CASCADE)
     z_index = models.PositiveSmallIntegerField(default=0)
+    min_zoom = models.PositiveSmallIntegerField(default=0)
+    max_zoom = models.PositiveSmallIntegerField(null=True, blank=True)
