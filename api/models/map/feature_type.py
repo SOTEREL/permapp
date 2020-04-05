@@ -11,6 +11,7 @@ from .validators import validate_feature_ctype, validate_shape_ctype
 class FeatureType(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(unique=True)
+    description = models.TextField(default="", blank=True)
     category = models.ForeignKey(
         Category, null=True, blank=True, on_delete=models.SET_NULL
     )
