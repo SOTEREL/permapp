@@ -1,7 +1,5 @@
 import Vue from "vue";
 
-import ProjectApi from "@/api/Project";
-
 export default {
   namespaced: true,
   state: {
@@ -21,7 +19,7 @@ export default {
   },
   actions: {
     async load({ commit }, pid) {
-      const cfg = await ProjectApi.load(pid);
+      const cfg = await Vue.$api.project.load(pid);
       commit("setId", pid);
       commit("setName", cfg.name);
     },

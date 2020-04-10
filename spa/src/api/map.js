@@ -1,5 +1,6 @@
-import Api from "./api";
-import ProjectApi from "./Project";
+import Vue from "vue";
+
+import ProjectApi from "./project";
 
 export default {
   load(pid) {
@@ -11,6 +12,10 @@ export default {
   },
 
   loadBorders(pid) {
-    return axios.get(`/data/${pid}/borders.json`).then(resp => resp.data);
+    return Vue.axios
+      .get("/map/borders/", {
+        project: pid,
+      })
+      .then(resp => resp.data);
   },
 };

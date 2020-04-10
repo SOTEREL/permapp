@@ -2,8 +2,8 @@ import Vue from "vue";
 
 // Mutations beginning with "_" must be called by an action
 export default {
-  setup(state, cfg) {
-    state.setup = { ...state.setup, ...cfg };
+  setupView(state, cfg) {
+    state.view = { ...state.view, ...cfg };
   },
   setBorders(state, borders) {
     state.borders = borders;

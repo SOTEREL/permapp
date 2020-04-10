@@ -1,3 +1,4 @@
+from .borders import BordersSerializer
 from .category import CategorySerializer, CategoryRecursiveSerializer
 from .feature import FeatureSerializer, FeatureDetailSerializer
 from .feature_type import FeatureTypeSerializer

@@ -1,15 +1,13 @@
 import Vue from "vue";
 
-import MapApi from "@/api/Map";
-
 export default {
   async load({ commit, rootState }) {
-    const cfg = await MapApi.load(rootState.project.id);
-    commit("setup", cfg);
+    const cfg = await Vue.$api.map.load(rootState.project.id);
+    commit("setupView", cfg);
   },
 
   async loadBorders({ commit, rootState }) {
-    const borders = await MapApi.loadBorders(rootState.project.id);
+    const borders = await Vue.$api.map.loadBorders(rootState.project.id);
     commit("setBorders", borders.borders);
   },
 

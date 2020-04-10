@@ -9,8 +9,6 @@
 </template>
 
 <script>
-import ProjectApi from "@/api/Project";
-
 export default {
   data() {
     return {
@@ -22,7 +20,7 @@ export default {
   },
   methods: {
     fetchProjects() {
-      return ProjectApi.list().then(projects => {
+      return Vue.$api.project.list().then(projects => {
         this.projects = projects;
       });
     },
