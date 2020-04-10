@@ -3,25 +3,27 @@ import Vue from "vue";
 export default {
   namespaced: true,
   state: {
+    list: null,
     id: null,
     name: "",
-    apiKeys: {
-      geoportal: process.env.VUE_APP_GEOPORTAL_API_KEY,
-    },
   },
   mutations: {
-    setId(state, id) {
-      state.id = id;
+    setList(state, list) {
+      state.list = list;
     },
-    setName(state, name) {
-      state.name = name;
+    setLoaded(state, project) {
+      state.id = project.id;
+      state.name = project.name;
     },
   },
   actions: {
+    async list({ commit }) {
+      const data = await Vue.$api.project.list();
+      commit("setList", data);
+    },
     async load({ commit }, pid) {
-      const cfg = await Vue.$api.project.load(pid);
-      commit("setId", pid);
-      commit("setName", cfg.name);
+      const data = await Vue.$api.project.load(pid);
+      commit("setLoaded", data);
     },
   },
   getters: {},

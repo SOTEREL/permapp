@@ -1,8 +1,10 @@
 <template>
   <GeoportalLayer
     layer="ORTHOIMAGERY.ORTHOPHOTOS"
-    styl="normal"
+    style_="normal"
     format="image/jpeg"
+    layer-type="base"
+    name="Satellite"
   />
 </template>
 
@@ -10,7 +12,6 @@
 import GeoportalLayer from "./GeoportalLayer";
 
 export default {
-  modelKey: "satellite-geoportal",
   components: { GeoportalLayer },
 };
 </script>

@@ -6,12 +6,10 @@
     @update:center="centerUpdated"
     @update:bounds="boundsUpdated"
   >
-    <component
-      :is="id + '-background'"
-      v-for="id in view.backgrounds"
-      :key="'background/' + id"
-      v-bind="features.background[id]"
-    />
+    <l-control-layers position="topleft"></l-control-layers>
+    <IGNLayer />
+    <SatelliteLayer />
+    <CadastralLayer />
     <component
       :is="feature.type"
       v-for="feature in view.features"
@@ -24,24 +22,23 @@
 <script>
 import "leaflet/dist/leaflet.css";
 
-import { mapState, mapGetters } from "vuex";
+import { mapState } from "vuex";
 
-import { LMap } from "vue2-leaflet";
+import { LMap, LControlLayers } from "vue2-leaflet";
 
-import SatelliteLayer from "./SatelliteLayer";
 import CadastralLayer from "./CadastralLayer";
-
-const mapBackgrounds = layers =>
-  layers.reduce(
-    (acc, layer) => ({ ...acc, [layer.modelKey + "-background"]: layer }),
-    {}
-  );
+import IGNLayer from "./IGNLayer";
+import SatelliteLayer from "./SatelliteLayer";
 
 export default {
   components: {
     LMap,
-    ...mapBackgrounds([SatelliteLayer, CadastralLayer]),
+    LControlLayers,
+    CadastralLayer,
+    IGNLayer,
+    SatelliteLayer,
   },
+
   props: {
     initialZoom: {
       type: Number,
@@ -56,11 +53,14 @@ export default {
       required: true,
     },
   },
-  computed: mapState({
-    features: state => state.map.features,
-    interaction: state => state.map.interaction,
-    view: state => state.map.view,
-  }),
+
+  computed: {
+    ...mapState({
+      features: state => state.map.features,
+      view: state => state.map.view,
+    }),
+  },
+
   data() {
     return {
       zoom: this.initialZoom,
@@ -68,6 +68,7 @@ export default {
       bounds: null,
     };
   },
+
   methods: {
     zoomUpdated(zoom) {
       this.zoom = zoom;

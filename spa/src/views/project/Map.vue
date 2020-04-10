@@ -3,20 +3,17 @@
     <div v-if="loading">
       Loading...
     </div>
+    <div v-else-if="httpErr">
+      {{ httpErr }}
+    </div>
     <div v-else>
-      <div class="toolbar">
-        <router-link
-          :to="{ name: 'project/map/borders', params: { pid: project.id } }"
-        >
-          Bordures
-        </router-link>
-      </div>
+      <div class="toolbar"></div>
       <router-view :project="project" />
       <div class="map">
         <Map
-          :initial-zoom="map.setup.zoom"
-          :initial-lat="map.setup.lat"
-          :initial-lng="map.setup.lng"
+          :initial-zoom="map.view.zoom"
+          :initial-lat="map.view.lat"
+          :initial-lng="map.view.lng"
         />
       </div>
     </div>
@@ -32,34 +29,37 @@ export default {
   components: {
     Map,
   },
+
   data() {
     return {
       httpErr: null,
       loading: true,
     };
   },
+
   computed: mapState({
     map: state => state.map,
     project: state => state.project,
   }),
+
   created() {
     this.fetchMap();
   },
+
   methods: {
-    fetchMap() {
+    async fetchMap() {
       this.loading = true;
       this.httpErr = null;
-      this.$store
-        .dispatch("map/load")
-        .catch(err => {
-          this.httpErr = {
-            code: err.response.status,
-            message: err.response.statusText,
-          };
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+      try {
+        await this.$store.dispatch("map/load");
+      } catch (e) {
+        this.httpErr = {
+          code: e.response.status,
+          message: e.response.statusText,
+        };
+      } finally {
+        this.loading = false;
+      }
     },
   },
 };

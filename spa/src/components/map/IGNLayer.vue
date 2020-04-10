@@ -1,10 +1,10 @@
 <template>
   <GeoportalLayer
-    layer="CADASTRALPARCELS.PARCELS"
-    style_="bdparcellaire"
-    format="image/png"
-    layer-type="overlay"
-    name="Cadastre"
+    layer="GEOGRAPHICALGRIDSYSTEMS.PLANIGN"
+    style_="normal"
+    format="image/jpeg"
+    layer-type="base"
+    name="Carte IGN"
   />
 </template>
 

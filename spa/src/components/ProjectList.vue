@@ -1,5 +1,8 @@
 <template>
   <div class="projects">
+    <div class="error">
+      {{ error }}
+    </div>
     <div v-for="p in projects" :key="p.id" class="project">
       <router-link :to="{ name: 'project', params: { pid: p.id } }">
         {{ p.name }}
@@ -9,20 +12,33 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
-      projects: [],
+      error: null,
     };
   },
-  created() {
-    this.fetchProjects();
+
+  computed: {
+    ...mapState({
+      projects: state => state.project.list,
+    }),
   },
+
+  created() {
+    this.load();
+  },
+
   methods: {
-    fetchProjects() {
-      return Vue.$api.project.list().then(projects => {
-        this.projects = projects;
-      });
+    async load() {
+      this.error = null;
+      try {
+        this.$store.dispatch("project/list");
+      } catch (e) {
+        this.error = e;
+      }
     },
   },
 };

@@ -3,26 +3,24 @@
     <div v-if="loading">
       Loading...
     </div>
-    <div v-else>
-      <div v-if="!httpErr">
-        <div class="menu">
-          <router-link to="/">
-            Accueil
-          </router-link>
-          <router-link :to="{ name: 'project', params: { pid } }">
-            Projet
-          </router-link>
-          <router-link :to="{ name: 'project/map', params: { pid } }">
-            Carte
-          </router-link>
-        </div>
-
-        <router-view :project="project" />
-      </div>
-      <Error v-else-if="httpErr.code == 404">
-        Cannot find project {{ pid }}
-      </Error>
+    <div v-else-if="httpErr">
+      <Error v-if="httpErr.code == 404"> Cannot find project {{ pid }} </Error>
       <Error v-else> Error: {{ httpErr.message }} </Error>
+    </div>
+    <div v-else>
+      <div class="menu">
+        <router-link to="/">
+          Accueil
+        </router-link>
+        <router-link :to="{ name: 'project', params: { pid } }">
+          Projet
+        </router-link>
+        <router-link :to="{ name: 'project/map', params: { pid } }">
+          Carte
+        </router-link>
+      </div>
+
+      <router-view :project="project" />
     </div>
   </div>
 </template>
@@ -34,12 +32,14 @@ export default {
   components: {
     Error,
   },
+
   data() {
     return {
       httpErr: null,
       loading: true,
     };
   },
+
   computed: {
     pid() {
       return this.$route.params.pid;
@@ -48,25 +48,32 @@ export default {
       return this.$store.state.project;
     },
   },
+
   created() {
     this.fetchProject();
   },
+
   methods: {
-    fetchProject() {
+    async fetchProject() {
       this.loading = true;
       this.httpErr = null;
-      this.$store
-        .dispatch("project/load", this.pid)
-        .catch(err => {
-          this.httpErr = {
-            code: err.response.status,
-            message: err.response.statusText,
-          };
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+      try {
+        await this.$store.dispatch("project/load", this.pid);
+      } catch (e) {
+        this.httpErr = {
+          code: e.response.status,
+          message: e.response.statusText,
+        };
+      } finally {
+        this.loading = false;
+      }
     },
   },
 };
 </script>
+
+<style>
+.menu > * {
+  margin: 0px 5px;
+}
+</style>
