@@ -1,4 +1,5 @@
 from .circle import Circle
+from .geojson_shape import GeoJSONShape
 from .line import Line
 from .multi_polygon import MultiPolygon
 from .point import Point

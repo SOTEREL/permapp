@@ -62,7 +62,7 @@ class GeoJSONShape(Shape):
 
     @property
     def geojson_props(self):
-        return {"id": self.id, "name": self.name, "projection": self.map_projection}
+        return {"id": self.id, "projection": self.map_projection}
 
     @property
     def geojson(self):

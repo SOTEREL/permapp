@@ -9,5 +9,7 @@ router.register("projects", views.ProjectViewSet)
 
 map_router = DefaultRouter()
 map_router.register("categories", views.map.CategoryViewSet)
+map_router.register("features", views.map.FeatureViewSet)
+map_router.register("feature_types", views.map.FeatureTypeViewSet)
 
 urlpatterns = [path("", include(router.urls)), path("map/", include(map_router.urls))]

@@ -27,7 +27,7 @@ class Feature(models.Model):
         blank=True,
         validators=[MaxValueValidator(settings.FEATURE_PERMANENCE_MAX)],
     )
-    shape = GenericRelation(
+    shapes = GenericRelation(
         Shape,
         related_query_name="feature",
         content_type_field="content_type",
@@ -40,6 +40,10 @@ class Feature(models.Model):
     @property
     def shape_model(self):
         return self.type.shape_model
+
+    @property
+    def shape(self):
+        return self.shapes.first()
 
     @property
     def category(self):
