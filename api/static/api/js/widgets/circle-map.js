@@ -4,6 +4,7 @@ function CircleMapWidget(config) {
     draw: {
       circle: {
         shapeOptions: config.featureStyle || {},
+        showRadius: true,
       },
       circlemarker: false,
       marker: false,

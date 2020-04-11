@@ -8,6 +8,8 @@ function LineStringMapWidget(config) {
       polygon: false,
       polyline: {
         shapeOptions: config.featureStyle || {},
+        showLength: true,
+        guidelineDistance: 15,
       },
       rectangle: false,
     },

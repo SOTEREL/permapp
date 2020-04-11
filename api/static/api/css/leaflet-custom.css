@@ -36,3 +36,16 @@ ul.leaflet-draw-actions {
 .leaflet-container {
   background: #FFF;
 }
+
+.leaflet-editing-icon {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  margin-left: -4px !important;
+  margin-top: -4px !important;
+}
+
+.leaflet-draw-guide-dash {
+  border-radius: 50% !important;
+  background: #FFF !important;
+}

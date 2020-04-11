@@ -146,11 +146,20 @@ function MapDrawingWidget(config, mapWidget) {
     */
 
     if (drawCtrlOpts.edit === true) {
-      drawCtrlOpts.edit = {
-        featureGroup: self.drawnItems,
-      };
-    } else if (drawCtrlOpts.edit) {
+      drawCtrlOpts.edit = {};
+    }
+    if (drawCtrlOpts.edit) {
       drawCtrlOpts.edit.featureGroup = self.drawnItems;
+      if (!drawCtrlOpts.edit.edit) {
+        drawCtrlOpts.edit.edit = {};
+      }
+      if (!drawCtrlOpts.edit.edit.selectedPathOptions) {
+        drawCtrlOpts.edit.edit.selectedPathOptions = {
+          fill: true,
+          fillOpacity: 0.5,
+          maintainColor: true,
+        };
+      }
     }
     self.mapWidget.map.addControl(new L.Control.Draw(drawCtrlOpts));
 
