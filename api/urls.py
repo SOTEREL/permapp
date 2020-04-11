@@ -8,7 +8,6 @@ router.register("projects", views.ProjectViewSet)
 # router.register("parcels", views.map.ParcelViewSet)
 
 map_router = DefaultRouter()
-map_router.register("borders", views.map.BordersViewSet)
 map_router.register("categories", views.map.CategoryViewSet)
 map_router.register("features", views.map.FeatureViewSet)
 map_router.register("feature_types", views.map.FeatureTypeViewSet)

@@ -29,6 +29,12 @@ class Shape(PolymorphicModel):
         return f"{self.__class__.__name__} of {self.content_object}"
 
     @property
+    def is_drawable(self):
+        raise NotImplementedError(
+            f"{self.__class__.__name__}.is_drawable property must be implemented"
+        )
+
+    @property
     def centroid(self):
         raise NotImplementedError(
             f"{self.__class__.__name__}.centroid property must be implemented"

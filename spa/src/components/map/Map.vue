@@ -10,6 +10,7 @@
     <IGNLayer />
     <SatelliteLayer />
     <CadastralLayer />
+    <BordersLayer />
     <l-geo-json
       v-for="fid in shownFeatureIds"
       :key="fid"
@@ -23,9 +24,9 @@
 import "leaflet/dist/leaflet.css";
 
 import { mapState } from "vuex";
-
 import { LMap, LControlLayers, LGeoJson } from "vue2-leaflet";
 
+import BordersLayer from "./BordersLayer";
 import CadastralLayer from "./CadastralLayer";
 import IGNLayer from "./IGNLayer";
 import SatelliteLayer from "./SatelliteLayer";
@@ -35,9 +36,18 @@ export default {
     LMap,
     LControlLayers,
     LGeoJson,
+    BordersLayer,
     CadastralLayer,
     IGNLayer,
     SatelliteLayer,
+  },
+
+  data() {
+    return {
+      zoom: null,
+      center: null,
+      bounds: null,
+    };
   },
 
   computed: {
@@ -47,14 +57,6 @@ export default {
       initialZoom: state => state.map.view.zoom,
       initialCenter: state => [state.map.view.lat, state.map.view.lng],
     }),
-  },
-
-  data() {
-    return {
-      zoom: null,
-      center: null,
-      bounds: null,
-    };
   },
 
   created() {

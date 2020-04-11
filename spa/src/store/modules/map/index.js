@@ -10,10 +10,11 @@ export const getInitialState = () => {
       lng: 0,
       features: [],
     },
+    borders: null,
+    categories: null,
     features: null,
     featureTypes: null,
     featureDrawings: {},
-    categories: null,
   };
 };
 

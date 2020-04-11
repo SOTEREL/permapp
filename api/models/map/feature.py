@@ -46,6 +46,10 @@ class Feature(models.Model):
         return self.shapes.first()
 
     @property
+    def is_drawable(self):
+        return self.shape and self.shape.is_drawable
+
+    @property
     def category(self):
         return self.type.category
 

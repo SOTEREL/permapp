@@ -7,6 +7,8 @@ from .shapes import ShapeDrawingSerializer, get_drawing_serializer_class
 
 
 class FeatureSerializer(serializers.ModelSerializer):
+    is_drawable = serializers.BooleanField()
+
     class Meta:
         model = Feature
         fields = "__all__"
@@ -15,10 +17,11 @@ class FeatureSerializer(serializers.ModelSerializer):
 class FeatureDrawingSerializer(serializers.ModelSerializer):
     style = FeatureStyleSerializer(source="type.style")
     shape = ShapeDrawingSerializer(read_only=True)
+    is_drawable = serializers.BooleanField()
 
     class Meta:
         model = Feature
-        fields = ("shape", "style")
+        fields = ("is_drawable", "shape", "style")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

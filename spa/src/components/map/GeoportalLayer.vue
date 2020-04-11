@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import { LTileLayer } from "vue2-leaflet";
 
 import { API_KEYS } from "@/constants";
@@ -32,10 +31,11 @@ export default {
     },
     name: {
       type: String,
+      default: undefined,
     },
     layerType: {
       type: String,
-      default: "base",
+      default: undefined,
     },
   },
 

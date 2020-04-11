@@ -20,7 +20,7 @@ export default {
   },
 
   loadBorders(pid) {
-    return load("borders", pid);
+    return Vue.axios.get(`/projects/${pid}/borders/`).then(resp => resp.data);
   },
 
   loadFeatures(pid) {

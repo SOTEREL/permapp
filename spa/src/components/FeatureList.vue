@@ -5,14 +5,15 @@
       {{ error }}
     </div>
     <div v-else>
-      <div
-        v-for="feature in features"
-        :key="feature.id"
-        @click="e => toggleFeature(feature.id)"
-      >
-        <span v-if="shownFeatureIds.includes(feature.id)">[X]</span>
-        <span v-else>[]</span>
-        {{ feature.name }}
+      <div v-for="feature in features" :key="feature.id">
+        <div v-if="feature.is_drawable" @click="e => toggleFeature(feature.id)">
+          <span v-if="shownFeatureIds.includes(feature.id)">[X]</span>
+          <span v-else>[]</span>
+          {{ feature.name }}
+        </div>
+        <div v-else>
+          {{ feature.name }}
+        </div>
       </div>
     </div>
   </div>

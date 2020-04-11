@@ -30,6 +30,9 @@ export default {
     if (state.view.features.includes(fid)) {
       return;
     }
+    if (!state.features[fid] || !state.features[fid].is_drawable) {
+      return;
+    }
     Vue.set(state.view, "features", [...state.view.features, fid]);
   },
 

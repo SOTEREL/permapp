@@ -45,6 +45,10 @@ class GeoJSONShape(Shape):
             self.validate_coordinates(self.coordinates)
 
     @property
+    def is_drawable(self):
+        return self.coordinates is not None
+
+    @property
     def centroid(self):
         return shape(self.geojson_geom).centroid
 
