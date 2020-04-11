@@ -5,10 +5,39 @@ export default {
   setupView(state, cfg) {
     state.view = { ...state.view, ...cfg };
   },
-  setBorders(state, borders) {
-    state.borders = borders;
+
+  setBorders(state, data) {
+    state.borders = data;
   },
-  _setBackgrounds(state, uniqueBackgrounds) {
-    Vue.set(state.view, "backgrounds", uniqueBackgrounds);
+
+  setFeatures(state, data) {
+    state.features = data;
+  },
+
+  setFeatureTypes(state, data) {
+    state.featureTypes = data;
+  },
+
+  setCategories(state, data) {
+    state.categories = data;
+  },
+
+  addFeatureDrawing(state, { fid, drawing }) {
+    Vue.set(state.featureDrawings, fid, drawing);
+  },
+
+  showFeatureOnTop(state, fid) {
+    if (state.view.features.includes(fid)) {
+      return;
+    }
+    Vue.set(state.view, "features", [...state.view.features, fid]);
+  },
+
+  hideFeature(state, fid) {
+    Vue.set(
+      state.view,
+      "features",
+      state.view.features.filter(x => x !== fid)
+    );
   },
 };

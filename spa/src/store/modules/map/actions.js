@@ -7,22 +7,30 @@ export default {
   },
 
   async loadBorders({ commit, rootState }) {
-    const borders = await Vue.$api.map.loadBorders(rootState.project.id);
-    commit("setBorders", borders.borders);
+    const data = await Vue.$api.map.loadBorders(rootState.project.id);
+    commit("setBorders", data);
   },
 
-  showBackground({ state, commit }, id) {
-    const bg = [...state.view.backgrounds, id];
-    commit("_setBackgrounds", [...new Set(bg)]);
+  async loadFeatures({ commit, rootState }) {
+    const [features, types, categories] = await Promise.all([
+      Vue.$api.map.loadFeatures(rootState.project.id),
+      Vue.$api.map.loadFeatureTypes(rootState.project.id),
+      Vue.$api.map.loadCategories(rootState.project.id),
+    ]);
+    commit("setFeatures", features);
+    commit("setFeatureTypes", types);
+    commit("setCategories", categories);
   },
 
-  hideBackground({ state, commit }, id) {
-    let bg = new Set(state.view.backgrounds);
-    bg.delete(id);
-    commit("_setBackgrounds", [...bg]);
+  async showFeatureOnTop({ commit }, fid) {
+    const drawing = await Vue.$api.map.loadFeatureDrawing(fid);
+    commit("addFeatureDrawing", { fid, drawing });
+    commit("showFeatureOnTop", fid);
   },
 
-  setBackgrounds({ commit }, bg) {
-    commit("_setBackgrounds", [...new Set(bg)]);
+  toggleFeature({ state, dispatch, commit }, fid) {
+    return state.view.features.includes(fid)
+      ? commit("hideFeature", fid)
+      : dispatch("showFeatureOnTop", fid);
   },
 };

@@ -8,9 +8,12 @@ export const getInitialState = () => {
       zoom: 13,
       lat: 0,
       lng: 0,
-      features: null,
+      features: [],
     },
     features: null,
+    featureTypes: null,
+    featureDrawings: {},
+    categories: null,
   };
 };
 

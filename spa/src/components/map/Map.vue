@@ -2,19 +2,19 @@
   <LMap
     :zoom="zoom"
     :center="center"
-    @update:zoom="zoomUpdated"
-    @update:center="centerUpdated"
-    @update:bounds="boundsUpdated"
+    @update:zoom="z => (zoom = z)"
+    @update:center="c => (center = c)"
+    @update:bounds="b => (bounds = b)"
   >
-    <l-control-layers position="topleft"></l-control-layers>
+    <l-control-layers position="topleft" />
     <IGNLayer />
     <SatelliteLayer />
     <CadastralLayer />
-    <component
-      :is="feature.type"
-      v-for="feature in view.features"
-      :key="feature.type + '/' + feature.id"
-      v-bind="features[feature.type][feature.id]"
+    <l-geo-json
+      v-for="fid in shownFeatureIds"
+      :key="fid"
+      :geojson="featureDrawings[fid].shape.geojson_geom"
+      :options-style="featureDrawings[fid].style.style"
     />
   </LMap>
 </template>
@@ -24,7 +24,7 @@ import "leaflet/dist/leaflet.css";
 
 import { mapState } from "vuex";
 
-import { LMap, LControlLayers } from "vue2-leaflet";
+import { LMap, LControlLayers, LGeoJson } from "vue2-leaflet";
 
 import CadastralLayer from "./CadastralLayer";
 import IGNLayer from "./IGNLayer";
@@ -34,51 +34,32 @@ export default {
   components: {
     LMap,
     LControlLayers,
+    LGeoJson,
     CadastralLayer,
     IGNLayer,
     SatelliteLayer,
   },
 
-  props: {
-    initialZoom: {
-      type: Number,
-      required: true,
-    },
-    initialLat: {
-      type: Number,
-      required: true,
-    },
-    initialLng: {
-      type: Number,
-      required: true,
-    },
-  },
-
   computed: {
     ...mapState({
-      features: state => state.map.features,
-      view: state => state.map.view,
+      featureDrawings: state => state.map.featureDrawings,
+      shownFeatureIds: state => state.map.view.features,
+      initialZoom: state => state.map.view.zoom,
+      initialCenter: state => [state.map.view.lat, state.map.view.lng],
     }),
   },
 
   data() {
     return {
-      zoom: this.initialZoom,
-      center: [this.initialLat, this.initialLng],
+      zoom: null,
+      center: null,
       bounds: null,
     };
   },
 
-  methods: {
-    zoomUpdated(zoom) {
-      this.zoom = zoom;
-    },
-    centerUpdated(center) {
-      this.center = center;
-    },
-    boundsUpdated(bounds) {
-      this.bounds = bounds;
-    },
+  created() {
+    this.zoom = this.initialZoom;
+    this.center = this.initialCenter;
   },
 };
 </script>

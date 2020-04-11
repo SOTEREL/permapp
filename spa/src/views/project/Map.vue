@@ -9,12 +9,9 @@
     <div v-else>
       <div class="toolbar"></div>
       <router-view :project="project" />
+      <FeatureList />
       <div class="map">
-        <Map
-          :initial-zoom="map.view.zoom"
-          :initial-lat="map.view.lat"
-          :initial-lng="map.view.lng"
-        />
+        <Map />
       </div>
     </div>
   </div>
@@ -23,10 +20,12 @@
 <script>
 import { mapState } from "vuex";
 
+import FeatureList from "@/components/FeatureList";
 import Map from "@/components/map/Map";
 
 export default {
   components: {
+    FeatureList,
     Map,
   },
 
@@ -38,7 +37,6 @@ export default {
   },
 
   computed: mapState({
-    map: state => state.map,
     project: state => state.project,
   }),
 
