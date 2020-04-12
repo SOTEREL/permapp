@@ -13,7 +13,11 @@ class FeatureType(models.Model):
     slug = models.SlugField(unique=True)
     description = models.TextField(default="", blank=True)
     category = models.ForeignKey(
-        Category, null=True, blank=True, on_delete=models.SET_NULL
+        Category,
+        null=True,
+        blank=True,
+        related_name="feature_types",
+        on_delete=models.SET_NULL,
     )
     shape_ctype = models.ForeignKey(
         ContentType,
