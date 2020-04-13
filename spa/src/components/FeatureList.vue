@@ -4,18 +4,13 @@
     <div v-else-if="error" class="error">
       {{ error }}
     </div>
-    <div v-else>
-      <div v-for="feature in features" :key="feature.id">
-        <div v-if="feature.is_drawable" @click="e => toggleFeature(feature.id)">
-          <span v-if="shownFeatureIds.includes(feature.id)">[X]</span>
-          <span v-else>[]</span>
-          {{ feature.name }}
-        </div>
-        <div v-else>
-          {{ feature.name }}
-        </div>
-      </div>
-    </div>
+    <fish-tree
+      v-else
+      :data="treeData"
+      multiple
+      expand
+      @item-checked="categoryCheckedHandler"
+    />
   </div>
 </template>
 
@@ -37,6 +32,9 @@ export default {
       categories: state => state.map.categories,
       shownFeatureIds: state => state.map.view.features,
     }),
+    treeData() {
+      return this.categories.map(this.catToTreeElement);
+    },
   },
 
   created() {
@@ -56,11 +54,59 @@ export default {
       }
     },
 
-    async toggleFeature(fid) {
-      try {
-        await this.$store.dispatch("map/toggleFeature", fid);
-      } catch (e) {
-        throw e; // TODO
+    catToTreeElement(cat) {
+      const isType = cat.sub_categories === undefined;
+      return {
+        title: cat.name,
+        key: (isType ? "type" : "category") + "-" + cat.id,
+        children: isType
+          ? this.getTreeFeatures(cat.id)
+          : this.getTreeSubCats(cat),
+      };
+    },
+
+    getTreeSubCats(cat) {
+      let children = [];
+      for (let subCat of cat.sub_categories) {
+        children.push(this.catToTreeElement(subCat));
+      }
+      for (let type of cat.feature_types) {
+        children.push(this.catToTreeElement(type));
+      }
+      return children;
+    },
+
+    getTreeFeatures(type) {
+      return this.$store.getters["map/getTypeFeatures"](type, true).map(
+        feat => ({
+          title: feat.name,
+          key: "feature-" + feat.id,
+        })
+      );
+    },
+
+    getFeatureIdsFromTreeKey(key) {
+      let [keyType, id] = key.split("-");
+      id = parseInt(id);
+      if (keyType === "feature") {
+        return [id];
+      } else if (keyType === "type") {
+        return this.$store.getters["map/getTypeFeatures"](id, true).map(
+          feat => feat.id
+        );
+      }
+      return this.$store.getters["map/getCategoryFeatures"](id, true).map(
+        feat => feat.id
+      );
+    },
+
+    categoryCheckedHandler(checkedKeys) {
+      const featureIds = checkedKeys
+        .map(this.getFeatureIdsFromTreeKey)
+        .reduce((acc, ids) => [...acc, ...ids], []);
+      this.$store.commit("map/setShownFeatures", []);
+      for (let id of featureIds) {
+        this.$store.dispatch("map/showFeatureOnTop", id).catch(console.error);
       }
     },
   },

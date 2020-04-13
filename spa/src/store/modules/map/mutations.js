@@ -43,4 +43,8 @@ export default {
       state.view.features.filter(x => x !== fid)
     );
   },
+
+  setShownFeatures(state, fids) {
+    Vue.set(state.view, "features", fids);
+  },
 };

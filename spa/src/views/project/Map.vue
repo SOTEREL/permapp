@@ -9,9 +9,11 @@
     <div v-else>
       <div class="toolbar"></div>
       <router-view :project="project" />
-      <FeatureList />
-      <div class="map">
-        <Map />
+      <div style="display: flex;">
+        <FeatureList />
+        <div class="map">
+          <Map />
+        </div>
       </div>
     </div>
   </div>
@@ -66,5 +68,6 @@ export default {
 <style scoped>
 .map {
   height: 400px;
+  flex-grow: 1;
 }
 </style>

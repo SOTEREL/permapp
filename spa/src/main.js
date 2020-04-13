@@ -5,6 +5,7 @@ import store from "./store";
 
 import api from "./boot/api";
 import axios from "./boot/axios";
+import fish from "./boot/fish";
 
 Vue.config.productionTip = false;
 
