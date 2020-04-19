@@ -11,5 +11,6 @@ map_router = DefaultRouter()
 map_router.register("categories", views.map.CategoryViewSet)
 map_router.register("features", views.map.FeatureViewSet)
 map_router.register("feature_types", views.map.FeatureTypeViewSet)
+map_router.register("views", views.map.ViewViewSet)
 
 urlpatterns = [path("", include(router.urls)), path("map/", include(map_router.urls))]

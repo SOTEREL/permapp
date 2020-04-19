@@ -18,6 +18,10 @@ class View(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def ordered_features(self):
+        return self.viewfeature_set.order_by("z_index")
+
 
 class ViewFeature(models.Model):
     view = models.ForeignKey(View, on_delete=models.CASCADE)
