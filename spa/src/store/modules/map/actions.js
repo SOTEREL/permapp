@@ -4,20 +4,20 @@ import { NonDrawableFeatureError } from "@/exceptions";
 
 export default {
   async load({ commit, rootState }) {
-    const cfg = await Vue.$api.map.load(rootState.project.id);
+    const cfg = await Vue.$api.map.get(rootState.project.id);
     commit("setupView", cfg);
   },
 
   async loadBorders({ commit, rootState }) {
-    const data = await Vue.$api.map.loadBorders(rootState.project.id);
+    const data = await Vue.$api.map.getBorders(rootState.project.id);
     commit("setBorders", data);
   },
 
   async loadFeatures({ commit, rootState }) {
     const [features, types, categories] = await Promise.all([
-      Vue.$api.map.loadFeatures(rootState.project.id),
-      Vue.$api.map.loadFeatureTypes(rootState.project.id),
-      Vue.$api.map.loadCategories(rootState.project.id),
+      Vue.$api.map.listFeatures(rootState.project.id),
+      Vue.$api.map.listFeatureTypes(rootState.project.id),
+      Vue.$api.map.listCategories(rootState.project.id),
     ]);
     commit(
       "setFeatures",
@@ -31,7 +31,7 @@ export default {
     if (!state.features[fid] || !state.features[fid].is_drawable) {
       throw new NonDrawableFeatureError(fid);
     }
-    const drawing = await Vue.$api.map.loadFeatureDrawing(fid);
+    const drawing = await Vue.$api.map.getFeatureDrawing(fid);
     commit("addFeatureDrawing", { fid, drawing });
     commit("showFeatureOnTop", fid);
   },

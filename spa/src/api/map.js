@@ -11,34 +11,34 @@ const load = (endpoint, pid) => {
 };
 
 export default {
-  load(pid) {
-    return ProjectApi.load(pid).then(data => ({
+  get(pid) {
+    return ProjectApi.get(pid).then(data => ({
       lat: data.map_lat,
       lng: data.map_lng,
       zoom: data.map_zoom,
     }));
   },
 
-  loadBorders(pid) {
+  getBorders(pid) {
     return Vue.axios.get(`/projects/${pid}/borders/`).then(resp => resp.data);
   },
 
-  loadFeatures(pid) {
+  listFeatures(pid) {
     return load("features", pid);
   },
 
-  loadFeatureTypes(pid) {
+  listFeatureTypes(pid) {
     // For now, the types are not project-specific. We keep the pid arg for later.
     return Vue.axios.get("/map/feature_types/").then(resp => resp.data);
   },
 
-  loadFeatureDrawing(fid) {
+  getFeatureDrawing(fid) {
     return Vue.axios
       .get(`/map/features/${fid}/drawing/`)
       .then(resp => resp.data);
   },
 
-  loadCategories(pid) {
+  listCategories(pid) {
     // For now, the categories are not project-specific. We keep the pid arg for later.
     return Vue.axios.get("/map/categories/").then(resp => resp.data);
   },

@@ -5,7 +5,7 @@ export default {
     return Vue.axios.get("/projects/").then(resp => resp.data);
   },
 
-  load(pid) {
+  get(pid) {
     return Vue.axios.get(`/projects/${pid}/`).then(resp => resp.data);
   },
 };

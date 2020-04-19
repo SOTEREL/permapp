@@ -22,7 +22,7 @@ export default {
       commit("setList", data);
     },
     async load({ commit }, pid) {
-      const data = await Vue.$api.project.load(pid);
+      const data = await Vue.$api.project.get(pid);
       commit("setLoaded", data);
     },
   },
