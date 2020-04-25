@@ -147,6 +147,22 @@ var MapTools = (function() {
       },
     },
     controls: {
+      CompassControl: L.Control.extend({
+        options: {
+          position: "topright",
+        },
+        onAdd: function(map) {
+          var container = L.DomUtil.create("div", "leaflet-control");
+          container.style.backgroundColor = "#FFF";
+          container.style.backgroundImage =
+            "url('/static/api/compass-rose.png')";
+          container.style.width = "40px";
+          container.style.height = "40px";
+          container.style.border = "1px solid rgba(0,0,0,1)";
+          container.style.borderRadius = "2px";
+          return container;
+        },
+      }),
       GeocoderControl: L.Control.extend({
         options: {
           position: "topleft",

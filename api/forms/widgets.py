@@ -11,19 +11,8 @@ class MapWidget(HiddenInput):
     subfields = None
 
     class Media:
-        css = {
-            "all": (
-                "api/css/leaflet.css",
-                "api/css/leaflet.compass.css",
-                "api/css/leaflet-custom.css",
-            )
-        }
-        js = (
-            "api/js/lib/leaflet.js",
-            "api/js/lib/leaflet.compass.js",
-            "api/js/map-tools.js",
-            "api/js/widgets/map.js",
-        )
+        css = {"all": ("api/css/leaflet.css", "api/css/leaflet-custom.css")}
+        js = ("api/js/lib/leaflet.js", "api/js/map-tools.js", "api/js/widgets/map.js")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
