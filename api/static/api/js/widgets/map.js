@@ -158,6 +158,10 @@ function MapWidget(config) {
       })
       .addTo(self.map);
 
+    self.map.addControl(
+      new L.Control.Compass({ autoActive: true, showDigit: true })
+    );
+
     L.control.scale({ imperial: false, updateWhenIdle: true }).addTo(self.map);
 
     self.update(self.read());

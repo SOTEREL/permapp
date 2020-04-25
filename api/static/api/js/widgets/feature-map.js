@@ -6,6 +6,7 @@ function FeatureMapWidget(config, geomType, drawControlOptions) {
   return {
     mapWidget: mapWidget,
     drawingWidget: drawingWidget,
+    map: mapWidget.map,
     init: function() {
       mapWidget.init(
         "Satellite",
