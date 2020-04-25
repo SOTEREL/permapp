@@ -39,7 +39,11 @@ class FeatureType(models.Model):
         try:
             for ctype in ContentType.objects.all():
                 model = ctype.model_class()
-                if model is not None and issubclass(model, Shape):
+                if (
+                    model is not None
+                    and model is not Shape
+                    and issubclass(model, Shape)
+                ):
                     yield ctype
         except OperationalError:  # The table hasn't been created yet
             pass
