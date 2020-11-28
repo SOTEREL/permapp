@@ -17,21 +17,19 @@ import environ
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-env = environ.Env(
-    DEBUG=(bool, False), GEOPORTAL_API_KEY=str, LOGS_DIR=(environ.Path, BASE_DIR)
-)
-env.read_env()
+env = environ.Env()
+env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = env.str("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DEBUG")
+DEBUG = env.bool("DEBUG", default=False)
 
-ALLOWED_HOSTS = [] if DEBUG else env("ALLOWED_HOSTS").split(";")
+ALLOWED_HOSTS = [] if DEBUG else env.list("ALLOWED_HOSTS")
 
 
 # Application definition
@@ -129,6 +127,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "collectedstatic")
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
+LOGS_DIR = env.path("LOGS_DIR", default=BASE_DIR)
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -152,7 +151,7 @@ LOGGING = {
             "level": "INFO",
             "class": "logging.handlers.RotatingFileHandler",
             "filters": ["require_debug_false"],
-            "filename": os.path.join(env("LOGS_DIR"), "design_perma_django.log"),
+            "filename": os.path.join(LOGS_DIR, "django.log"),
             "maxBytes": 1024 * 1024 * 10,  # 10MB
             "backupCount": 10,
             "formatter": "simple",
@@ -175,4 +174,4 @@ REST_FRAMEWORK = {
 LEAFLET_DEFAULT_PROJECTION = "EPSG:3857"
 FEATURE_PERMANENCE_MAX = 10
 SATELLITE_LAYER_MAX_ZOOM = 19
-GEOPORTAL_API_KEY = env("GEOPORTAL_API_KEY")
+GEOPORTAL_API_KEY = env.str("GEOPORTAL_API_KEY")
