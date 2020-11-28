@@ -1,8 +1,6 @@
+from design_perma.fields import LngField, LatField
 from django.conf import settings
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-
-from .fields import LngField, LatField
 
 
 class Project(models.Model):

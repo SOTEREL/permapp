@@ -49,8 +49,9 @@ INSTALLED_APPS = [
     "django_json_widget",
     "jsonschemaform",
     "polymorphic",
-    "spa",
-    "api",
+    "tagging",
+    "colorfield",
+    "map_types",
 ]
 
 MIDDLEWARE = [
