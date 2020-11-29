@@ -2,22 +2,22 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from .feature_type import FeatureType
+from .element_type import ElementType
 from .shapes.style import ShapeStyle
 from .validators import validate_shape_ctype
 
 
 class Theme(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    feature_types = models.ManyToManyField(FeatureType, through="FeatureStyle",)
+    element_types = models.ManyToManyField(ElementType, through="ElementTypeStyle",)
 
     def __str__(self):
         return self.name
 
 
-class FeatureStyle(models.Model):
+class ElementTypeStyle(models.Model):
     theme = models.ForeignKey(Theme, on_delete=models.CASCADE)
-    feature_type = models.ForeignKey(FeatureType, on_delete=models.CASCADE)
+    element_type = models.ForeignKey(ElementType, on_delete=models.CASCADE)
     shape_ctype = models.ForeignKey(
         ContentType,
         on_delete=models.CASCADE,
@@ -30,7 +30,7 @@ class FeatureStyle(models.Model):
     # the zoom level
 
     def __str__(self):
-        return self.feature_type
+        return self.element_type
 
     @classmethod
     def validate_style(cls, shape_ctype, style):

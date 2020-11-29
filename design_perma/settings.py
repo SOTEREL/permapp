@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     "polymorphic",
     "tagging",
     "colorfield",
-    "map_types",
+    "system_types",
 ]
 
 MIDDLEWARE = [

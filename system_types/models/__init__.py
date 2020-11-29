@@ -80,7 +80,7 @@ PolymorphicModelBase.call_superclass_new_method = classmethod(
 )
 
 
-from .feature_style import FeatureStyle
-from .feature_type import FeatureType
+from .element_type_style import ElementTypeStyle
+from .element_type import ElementType
 from .shapes.geojson_shape import *
 from .shapes.shape import Shape
