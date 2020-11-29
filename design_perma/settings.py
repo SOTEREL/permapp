@@ -35,7 +35,7 @@ ALLOWED_HOSTS = [] if DEBUG else env.list("ALLOWED_HOSTS")
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
+    "design_perma.admin.CustomAdminConfig",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
