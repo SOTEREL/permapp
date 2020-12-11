@@ -15,11 +15,11 @@ def validate_dash_array(value):
 
 
 def validate_shape_ctype(value):
-    from .feature_type import FeatureType  # Import here to avoid circular import
+    from .theme import ThemedElementType
 
     ctype = ContentType.objects.get_for_id(value)
-    if ctype not in FeatureType.list_shape_ctypes():
-        raise ValidationError(f"The content type '{ctype}' is not a shape type")
+    if ctype not in ThemedElementType.list_usable_shape_ctypes():
+        raise ValidationError(f"The content type '{ctype}' is not a usable shape type")
 
 
 def validate_point_coordinates(value):

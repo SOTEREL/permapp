@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "corsheaders",
     "rest_framework",
+    "admin_auto_filters",
     "django_filters",
     "categories.editor",
     "inline_actions",

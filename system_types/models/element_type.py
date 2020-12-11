@@ -9,7 +9,11 @@ class ElementType(models.Model):
     contributions = models.TextField(default="", blank=True)
 
     class Meta:
+        ordering = ["name"]
         verbose_name_plural = "element types"
+
+    def __str__(self):
+        return self.name
 
 
 tagging_register(ElementType)

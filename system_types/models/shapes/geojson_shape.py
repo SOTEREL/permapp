@@ -4,7 +4,7 @@ from jsonfield import JSONField
 from shapely.geometry import shape
 
 from .shape import Shape
-from .style import CircleStyle, LineStyle, PointStyle, PolygonStyle
+from ..styles import *  # noqa
 from ..validators import (
     validate_line_coordinates,
     validate_point_coordinates,
@@ -13,7 +13,7 @@ from ..validators import (
 )
 
 
-class GeoJSONShape(Shape, style_cls=None):
+class GeoJSONShape(Shape, style_cls=None, usable=False):
     coordinates = JSONField(default=None, null=True, blank=True)
 
     class Meta:
@@ -66,8 +66,8 @@ class GeoJSONShape(Shape, style_cls=None):
 
 class Circle(
     GeoJSONShape,
-    style_cls=CircleStyle,
     geom_type="Point",
+    style_cls=CircleStyle,  # noqa: F405
     validate_coordinates=validate_point_coordinates,
 ):
     radius = models.FloatField(default=1, validators=[MinValueValidator(0)])
@@ -75,8 +75,8 @@ class Circle(
 
 class Line(
     GeoJSONShape,
-    style_cls=LineStyle,
     geom_type="LineString",
+    style_cls=LineStyle,  # noqa: F405
     validate_coordinates=validate_line_coordinates,
 ):
     pass
@@ -84,8 +84,8 @@ class Line(
 
 class MultiPolygon(
     GeoJSONShape,
-    style_cls=PolygonStyle,
     geom_type="MultiPolygon",
+    style_cls=PolygonStyle,  # noqa: F405
     validate_coordinates=validate_multipolygon_coordinates,
 ):
     pass
@@ -93,8 +93,8 @@ class MultiPolygon(
 
 class Point(
     GeoJSONShape,
-    style_cls=PointStyle,
     geom_type="Point",
+    style_cls=PointStyle,  # noqa: F405
     validate_coordinates=validate_point_coordinates,
 ):
     pass
@@ -102,8 +102,8 @@ class Point(
 
 class Polygon(
     GeoJSONShape,
-    style_cls=PolygonStyle,
     geom_type="Polygon",
+    style_cls=PolygonStyle,  # noqa: F405
     validate_coordinates=validate_polygon_coordinates,
 ):
     pass
