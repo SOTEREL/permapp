@@ -1,10 +1,10 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from .models import *  # noqa: F403
+from .models import MapElementType, Theme
 
 
-@receiver(post_save, sender=ThemedElementType)  # noqa: F405
+@receiver(post_save, sender=MapElementType)
 def create_element_type_style(sender, instance, created, **kwargs):
     if not created:
         return
@@ -13,4 +13,5 @@ def create_element_type_style(sender, instance, created, **kwargs):
         raise ValueError(
             f"Unknow style class for shape model {instance.shape_cls.__name__}()"
         )
-    style_cls.objects.create(themed_element_type=instance)
+    for theme in Theme.objects.all():
+        style_cls.objects.create(map_element_type=instance, theme=theme)

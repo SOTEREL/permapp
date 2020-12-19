@@ -25,6 +25,7 @@ django-tagging = "^0.5.0"
 django-colorfield = "^0.3.2"
 pillow = "^8.0.1"
 django-admin-autocomplete-filter = "^0.6.1"
+django-geojson = "^3.1.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1.2"
