@@ -5,16 +5,14 @@ import django.core.validators
 from django.db import migrations, models
 import django.db.models.deletion
 import jsonfield.fields
-import system_types.models.validators
+import designdef.models.validators
 
 
 class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ("contenttypes", "0002_remove_content_type_name"),
-    ]
+    dependencies = [("contenttypes", "0002_remove_content_type_name")]
 
     operations = [
         migrations.CreateModel(
@@ -34,7 +32,7 @@ class Migration(migrations.Migration):
                 ("needs", models.TextField(blank=True, default="")),
                 ("contributions", models.TextField(blank=True, default="")),
             ],
-            options={"verbose_name_plural": "element types", "ordering": ["name"],},
+            options={"verbose_name_plural": "element types", "ordering": ["name"]},
         ),
         migrations.CreateModel(
             name="ElementTypeStyle",
@@ -54,12 +52,12 @@ class Migration(migrations.Migration):
                         editable=False,
                         null=True,
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name="polymorphic_system_types.elementtypestyle_set+",
+                        related_name="polymorphic_designdef.elementtypestyle_set+",
                         to="contenttypes.contenttype",
                     ),
                 ),
             ],
-            options={"abstract": False, "base_manager_name": "objects",},
+            options={"abstract": False, "base_manager_name": "objects"},
         ),
         migrations.CreateModel(
             name="Shape",
@@ -92,12 +90,12 @@ class Migration(migrations.Migration):
                         editable=False,
                         null=True,
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name="polymorphic_system_types.shape_set+",
+                        related_name="polymorphic_designdef.shape_set+",
                         to="contenttypes.contenttype",
                     ),
                 ),
             ],
-            options={"unique_together": {("content_type", "object_id")},},
+            options={"unique_together": {("content_type", "object_id")}},
         ),
         migrations.CreateModel(
             name="Theme",
@@ -113,7 +111,7 @@ class Migration(migrations.Migration):
                 ),
                 ("name", models.CharField(max_length=50, unique=True)),
             ],
-            options={"ordering": ["name"],},
+            options={"ordering": ["name"]},
         ),
         migrations.CreateModel(
             name="Circle",
@@ -126,7 +124,7 @@ class Migration(migrations.Migration):
                         parent_link=True,
                         primary_key=True,
                         serialize=False,
-                        to="system_types.shape",
+                        to="designdef.shape",
                     ),
                 ),
                 (
@@ -141,8 +139,8 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"abstract": False,},
-            bases=("system_types.shape",),
+            options={"abstract": False},
+            bases=("designdef.shape",),
         ),
         migrations.CreateModel(
             name="CircleStyle",
@@ -155,7 +153,7 @@ class Migration(migrations.Migration):
                         parent_link=True,
                         primary_key=True,
                         serialize=False,
-                        to="system_types.elementtypestyle",
+                        to="designdef.elementtypestyle",
                     ),
                 ),
                 (
@@ -176,13 +174,13 @@ class Migration(migrations.Migration):
                         blank=True,
                         help_text="Example: 5-5",
                         max_length=50,
-                        validators=[system_types.models.validators.validate_dash_array],
+                        validators=[designdef.models.validators.validate_dash_array],
                     ),
                 ),
                 ("icon", models.ImageField(null=True, upload_to="")),
             ],
-            options={"abstract": False,},
-            bases=("system_types.elementtypestyle", models.Model),
+            options={"abstract": False},
+            bases=("designdef.elementtypestyle", models.Model),
         ),
         migrations.CreateModel(
             name="Line",
@@ -195,7 +193,7 @@ class Migration(migrations.Migration):
                         parent_link=True,
                         primary_key=True,
                         serialize=False,
-                        to="system_types.shape",
+                        to="designdef.shape",
                     ),
                 ),
                 (
@@ -203,8 +201,8 @@ class Migration(migrations.Migration):
                     jsonfield.fields.JSONField(blank=True, default=None, null=True),
                 ),
             ],
-            options={"abstract": False,},
-            bases=("system_types.shape",),
+            options={"abstract": False},
+            bases=("designdef.shape",),
         ),
         migrations.CreateModel(
             name="LineStyle",
@@ -217,7 +215,7 @@ class Migration(migrations.Migration):
                         parent_link=True,
                         primary_key=True,
                         serialize=False,
-                        to="system_types.elementtypestyle",
+                        to="designdef.elementtypestyle",
                     ),
                 ),
                 (
@@ -238,12 +236,12 @@ class Migration(migrations.Migration):
                         blank=True,
                         help_text="Example: 5-5",
                         max_length=50,
-                        validators=[system_types.models.validators.validate_dash_array],
+                        validators=[designdef.models.validators.validate_dash_array],
                     ),
                 ),
             ],
-            options={"abstract": False,},
-            bases=("system_types.elementtypestyle", models.Model),
+            options={"abstract": False},
+            bases=("designdef.elementtypestyle", models.Model),
         ),
         migrations.CreateModel(
             name="MultiPolygon",
@@ -256,7 +254,7 @@ class Migration(migrations.Migration):
                         parent_link=True,
                         primary_key=True,
                         serialize=False,
-                        to="system_types.shape",
+                        to="designdef.shape",
                     ),
                 ),
                 (
@@ -264,8 +262,8 @@ class Migration(migrations.Migration):
                     jsonfield.fields.JSONField(blank=True, default=None, null=True),
                 ),
             ],
-            options={"abstract": False,},
-            bases=("system_types.shape",),
+            options={"abstract": False},
+            bases=("designdef.shape",),
         ),
         migrations.CreateModel(
             name="Point",
@@ -278,7 +276,7 @@ class Migration(migrations.Migration):
                         parent_link=True,
                         primary_key=True,
                         serialize=False,
-                        to="system_types.shape",
+                        to="designdef.shape",
                     ),
                 ),
                 (
@@ -286,8 +284,8 @@ class Migration(migrations.Migration):
                     jsonfield.fields.JSONField(blank=True, default=None, null=True),
                 ),
             ],
-            options={"abstract": False,},
-            bases=("system_types.shape",),
+            options={"abstract": False},
+            bases=("designdef.shape",),
         ),
         migrations.CreateModel(
             name="PointStyle",
@@ -300,13 +298,13 @@ class Migration(migrations.Migration):
                         parent_link=True,
                         primary_key=True,
                         serialize=False,
-                        to="system_types.elementtypestyle",
+                        to="designdef.elementtypestyle",
                     ),
                 ),
                 ("icon", models.ImageField(null=True, upload_to="")),
             ],
-            options={"abstract": False,},
-            bases=("system_types.elementtypestyle", models.Model),
+            options={"abstract": False},
+            bases=("designdef.elementtypestyle", models.Model),
         ),
         migrations.CreateModel(
             name="Polygon",
@@ -319,7 +317,7 @@ class Migration(migrations.Migration):
                         parent_link=True,
                         primary_key=True,
                         serialize=False,
-                        to="system_types.shape",
+                        to="designdef.shape",
                     ),
                 ),
                 (
@@ -327,8 +325,8 @@ class Migration(migrations.Migration):
                     jsonfield.fields.JSONField(blank=True, default=None, null=True),
                 ),
             ],
-            options={"abstract": False,},
-            bases=("system_types.shape",),
+            options={"abstract": False},
+            bases=("designdef.shape",),
         ),
         migrations.CreateModel(
             name="PolygonStyle",
@@ -341,7 +339,7 @@ class Migration(migrations.Migration):
                         parent_link=True,
                         primary_key=True,
                         serialize=False,
-                        to="system_types.elementtypestyle",
+                        to="designdef.elementtypestyle",
                     ),
                 ),
                 (
@@ -362,7 +360,7 @@ class Migration(migrations.Migration):
                         blank=True,
                         help_text="Example: 5-5",
                         max_length=50,
-                        validators=[system_types.models.validators.validate_dash_array],
+                        validators=[designdef.models.validators.validate_dash_array],
                     ),
                 ),
                 (
@@ -377,8 +375,8 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"abstract": False,},
-            bases=("system_types.elementtypestyle", models.Model),
+            options={"abstract": False},
+            bases=("designdef.elementtypestyle", models.Model),
         ),
         migrations.CreateModel(
             name="ThemedElementType",
@@ -396,7 +394,7 @@ class Migration(migrations.Migration):
                     "element_type",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        to="system_types.elementtype",
+                        to="designdef.elementtype",
                     ),
                 ),
                 (
@@ -405,16 +403,14 @@ class Migration(migrations.Migration):
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="+",
                         to="contenttypes.contenttype",
-                        validators=[
-                            system_types.models.validators.validate_shape_ctype
-                        ],
+                        validators=[designdef.models.validators.validate_shape_ctype],
                     ),
                 ),
                 (
                     "theme",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        to="system_types.theme",
+                        to="designdef.theme",
                     ),
                 ),
             ],
@@ -427,7 +423,7 @@ class Migration(migrations.Migration):
             model_name="theme",
             name="element_types",
             field=models.ManyToManyField(
-                through="system_types.ThemedElementType", to="system_types.ElementType"
+                through="designdef.ThemedElementType", to="designdef.ElementType"
             ),
         ),
         migrations.AddField(
@@ -436,7 +432,7 @@ class Migration(migrations.Migration):
             field=models.OneToOneField(
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name="style",
-                to="system_types.themedelementtype",
+                to="designdef.themedelementtype",
             ),
         ),
     ]

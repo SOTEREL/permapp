@@ -1,8 +1,8 @@
 from django.apps import AppConfig
 
 
-class SystemTypesConfig(AppConfig):
-    name = "system_types"
+class DesignDefConfig(AppConfig):
+    name = "designdef"
 
     def ready(self):
         from . import signals  # noqa

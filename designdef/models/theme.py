@@ -7,7 +7,7 @@ from .validators import validate_shape_ctype
 
 class Theme(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    element_types = models.ManyToManyField(ElementType, through="ThemedElementType",)
+    element_types = models.ManyToManyField(ElementType, through="ThemedElementType")
 
     class Meta:
         ordering = ["name"]
