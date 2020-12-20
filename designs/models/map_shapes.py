@@ -24,7 +24,7 @@ class Shape(PolymorphicModel):
         max_length=50, default=settings.LEAFLET_DEFAULT_PROJECTION
     )
     edit_zoom = models.PositiveSmallIntegerField(
-        default=settings.SATELLITE_LAYER_MAX_ZOOM
+        default=settings.DEFAULT_SHAPE_EDIT_ZOOM
     )
 
     def __init_subclass__(cls, *, style_cls, usable=True, **kwargs):

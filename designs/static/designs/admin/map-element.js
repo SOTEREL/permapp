@@ -1,6 +1,6 @@
 window.addEventListener("map:init", function(e) {
   var map = e.detail.map;
-  var field = document.getElementById("id_map_zoom");
+  var field = document.getElementById("id_shape-0-edit_zoom");
 
   // We need to wait a bit because django-leaflet sets the zoom to 15 for an
   // unknown reason.

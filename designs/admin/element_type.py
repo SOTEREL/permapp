@@ -1,4 +1,3 @@
-from admin_auto_filters.filters import AutocompleteFilter
 from django import forms
 from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericTabularInline
@@ -6,16 +5,6 @@ from django.db import models
 from tagging.models import TaggedItem
 
 from ..models import ElementType, MapElementType
-
-
-class ThemeFilter(AutocompleteFilter):
-    title = "theme"
-    field_name = "theme"
-
-
-class ElementTypeFilter(AutocompleteFilter):
-    title = "element type"
-    field_name = "element_type"
 
 
 class ElementTypeTagsInline(GenericTabularInline):

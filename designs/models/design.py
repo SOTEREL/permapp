@@ -8,9 +8,7 @@ class Design(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField(unique=True)
     map_center = PointField()
-    map_zoom = models.PositiveSmallIntegerField(
-        default=settings.SATELLITE_LAYER_MAX_ZOOM
-    )
+    map_zoom = models.PositiveSmallIntegerField(default=settings.DEFAULT_PROJECT_ZOOM)
 
     def __str__(self):
         return self.name

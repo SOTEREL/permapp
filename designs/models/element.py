@@ -2,10 +2,12 @@ from django.db import models
 from polymorphic.models import PolymorphicModel
 from tagging.registry import register as tagging_register
 
+from .design import Design
 from .element_type import ElementType
 
 
 class Element(PolymorphicModel):
+    design = models.ForeignKey(Design, on_delete=models.CASCADE)
     element_type = models.ForeignKey(ElementType, on_delete=models.PROTECT)
     name = models.CharField(max_length=50, unique=True)
     description = models.TextField(default="", blank=True)
