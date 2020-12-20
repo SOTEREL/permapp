@@ -20,6 +20,10 @@ class ElementTypeAdmin(admin.ModelAdmin):
     def tags(self, obj):
         return ", ".join(obj.tags.all())
 
+    def has_module_permission(self, request):
+        # Not used for now
+        return False
+
 
 @admin.register(MapElementType)
 class MapElementTypeAdmin(ElementTypeAdmin):
@@ -68,3 +72,6 @@ class MapElementTypeAdmin(ElementTypeAdmin):
             },
         )
         return [*inlines, style_inline]
+
+    def has_module_permission(self, request):
+        return admin.ModelAdmin.has_module_permission(self, request)

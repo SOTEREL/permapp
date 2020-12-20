@@ -10,7 +10,7 @@ from leaflet.admin import LeafletGeoAdminMixin
 from permapp.admin import get_instance_href
 
 from ..forms import MapShapeAdminForm
-from ..models import Element, ElementType, MapElement, MapElementType
+from ..models import ElementType, MapElement, MapElementType
 
 
 class DesignFilter(AutocompleteFilter):
@@ -23,7 +23,6 @@ class ElementTypeFilter(AutocompleteFilter):
     field_name = "element_type"
 
 
-@admin.register(Element)
 class ElementAdmin(admin.ModelAdmin):
     list_display = (
         "name",
