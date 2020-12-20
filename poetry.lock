@@ -208,6 +208,20 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "django-leaflet"
+version = "0.27.1"
+description = "Use Leaflet in your django projects"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+Django = "*"
+
+[package.extras]
+docs = ["sphinx", "sphinx-autobuild"]
+
+[[package]]
 name = "django-mptt"
 version = "0.11.0"
 description = "Utilities for implementing Modified Preorder Tree Traversal with your Django Models and working with trees of Model instances."
@@ -557,7 +571,7 @@ testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "bf11faa32b60a0d6dd27ea9b935e761a388b48283d82e0af97d8e228ce34003f"
+content-hash = "a02b54de9b31ec36900aa01353c2fff379fda33e7235f20cbfaab3b547d61abb"
 
 [metadata.files]
 appdirs = [
@@ -642,6 +656,10 @@ django-json-widget = [
 django-jsonschema-form = [
     {file = "django-jsonschema-form-1.0.3.tar.gz", hash = "sha256:543f671cb34c2b3bbe47ca6a54aeaf6802a99fe987a3431ffd86ba7e593e50c0"},
     {file = "django_jsonschema_form-1.0.3-py3-none-any.whl", hash = "sha256:befbeaa92c662084e845fb1824f745beba667c09653cc9328aec628f3f22a703"},
+]
+django-leaflet = [
+    {file = "django-leaflet-0.27.1.tar.gz", hash = "sha256:b530960242fe7718572b23976dd6037823dd478335c22c4434931335acf88bdd"},
+    {file = "django_leaflet-0.27.1-py3-none-any.whl", hash = "sha256:3cf1bc8a0e41d22651541ad5b5e2a8f2c6a13a603728883cd332daf785b37250"},
 ]
 django-mptt = [
     {file = "django-mptt-0.11.0.tar.gz", hash = "sha256:dfdb3af75ad27cdd4458b0544ec8574174f2b90f99bc2cafab6a15b4bc1895a8"},

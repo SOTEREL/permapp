@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "polymorphic",
     "tagging",
     "colorfield",
+    "leaflet",
     "djgeojson",
     "custom_auth",
     "designs",

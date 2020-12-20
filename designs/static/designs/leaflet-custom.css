@@ -1,0 +1,19 @@
+/* Override Django admin form style */
+.leaflet-touch .leaflet-control-layers-toggle {
+  width: 30px !important;
+  height: 30px !important;
+  background-size: 20px 20px !important;
+}
+
+.leaflet-control-layers-list label {
+  float: none !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 5px 0px !important;
+}
+
+.leaflet-control-layers-list label::after {
+  height: auto !important;
+  content: none !important;
+  display: block !important;
+}

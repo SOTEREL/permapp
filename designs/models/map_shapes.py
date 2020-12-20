@@ -10,14 +10,16 @@ from djgeojson.fields import (
 from polymorphic.models import PolymorphicModel
 from shapely.geometry import shape
 
-# from .element import MapElement
+from .element import MapElement
 from .map_styles import CircleStyle, LineStyle, PointStyle, PolygonStyle
 
 usable_shape_models = []
 
 
 class Shape(PolymorphicModel):
-    # map_element = models.OneToOneField(MapElement, on_delete=models.CASCADE, related_name="shape")
+    map_element = models.OneToOneField(
+        MapElement, on_delete=models.CASCADE, related_name="shape"
+    )
     map_projection = models.CharField(
         max_length=50, default=settings.LEAFLET_DEFAULT_PROJECTION
     )
