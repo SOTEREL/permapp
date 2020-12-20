@@ -24,6 +24,13 @@ window.addEventListener("map:init", function(e) {
 
   map.on("map:loadfield", function(e) {
     var field = e.field;
+    field._drawControl.setDrawingOptions({
+      polyline: field.options.is_linestring && { shapeOptions: style },
+      polygon: field.options.is_polygon && { shapeOptions: style },
+      circle: false && { shapeOptions: style },
+      rectangle: field.options.is_polygon && { shapeOptions: style },
+      marker: field.options.is_point && { shapeOptions: style },
+    });
     field.drawnItems.eachLayer(function(layer) {
       layer.setStyle(style);
     });
