@@ -8,7 +8,7 @@ class CustomAdminSite(AdminSite):
 
 
 class CustomAdminConfig(AdminConfig):
-    default_site = "design_perma.admin.CustomAdminSite"
+    default_site = "permapp.admin.CustomAdminSite"
 
 
 def get_instance_url(instance):

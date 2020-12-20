@@ -19,5 +19,5 @@ MEDIA_PRIVATE_ROOT = env.path(
 )
 
 PRIVATE_FS = FileSystemStorage(
-    location=str(MEDIA_PRIVATE_ROOT), base_url=MEDIA_PRIVATE_URL,
+    location=str(MEDIA_PRIVATE_ROOT), base_url=MEDIA_PRIVATE_URL
 )

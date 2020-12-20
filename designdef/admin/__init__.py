@@ -1,10 +1,10 @@
 from admin_auto_filters.filters import AutocompleteFilter
-from design_perma.admin import get_instance_href
 from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericTabularInline
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.utils.html import format_html
+from permapp.admin import get_instance_href
 from tagging.models import TaggedItem
 
 from ..models import *  # noqa

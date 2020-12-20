@@ -3,10 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 LANGUAGE_CODE = "fr-fr"
 
-LANGUAGES = (
-    ("fr", _("Français")),
-    ("en", _("Anglais")),
-)
+LANGUAGES = (("fr", _("Français")), ("en", _("Anglais")))
 
 TIME_ZONE = "Europe/Paris"
 

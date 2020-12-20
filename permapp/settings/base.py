@@ -31,7 +31,7 @@ env = read_env()
 DEBUG = env.bool("DEBUG")
 
 INSTALLED_APPS = [
-    "design_perma.admin.CustomAdminConfig",
+    "permapp.admin.CustomAdminConfig",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -64,7 +64,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "design_perma.urls"
+ROOT_URLCONF = "permapp.urls"
 
 TEMPLATES = [
     {
@@ -82,4 +82,4 @@ TEMPLATES = [
     }
 ]
 
-WSGI_APPLICATION = "design_perma.wsgi.application"
+WSGI_APPLICATION = "permapp.wsgi.application"

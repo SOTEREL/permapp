@@ -13,14 +13,14 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "filters": {
-        "require_debug_false": {"()": "django.utils.log.RequireDebugFalse",},
-        "require_debug_true": {"()": "django.utils.log.RequireDebugTrue",},
+        "require_debug_false": {"()": "django.utils.log.RequireDebugFalse"},
+        "require_debug_true": {"()": "django.utils.log.RequireDebugTrue"},
     },
     "formatters": {
         "simple": {
             "format": "[%(asctime)s][%(levelname)s][%(name)s] %(message)s",
             "datefmt": "%d/%b/%Y %H:%M:%S",
-        },
+        }
     },
     "handlers": {
         "console": {
@@ -47,10 +47,10 @@ LOGGING = {
             "backupCount": 3,
             "formatter": "simple",
         },
-        "design_perma_file": {
+        "permapp_file": {
             "level": "INFO",
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": os.path.join(LOGS_DIR, "avl_genetics.log"),
+            "filename": os.path.join(LOGS_DIR, "permapp.log"),
             "encoding": "utf-8",
             "maxBytes": 1024 * 1024,  # 1MB
             "backupCount": 3,
@@ -69,10 +69,10 @@ LOGGING = {
             "handlers": ["console", "django_file", "mail_admins"],
             "level": "INFO",
         },
-        "design_perma": {
-            "handlers": ["console", "design_perma_file", "mail_admins",],
+        "permapp": {
+            "handlers": ["console", "permapp_file", "mail_admins"],
             "level": "INFO",
         },
-        "cron": {"handlers": ["cron_file", "mail_admins"], "level": "INFO",},
+        "cron": {"handlers": ["cron_file", "mail_admins"], "level": "INFO"},
     },
 }

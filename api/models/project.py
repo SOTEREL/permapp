@@ -1,6 +1,6 @@
-from design_perma.fields import LngField, LatField
 from django.conf import settings
 from django.db import models
+from permapp.fields import LngField, LatField
 
 
 class Project(models.Model):
