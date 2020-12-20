@@ -76,7 +76,7 @@ class ElementAdmin(admin.ModelAdmin):
 @admin.register(MapElement)
 class MapElementAdmin(ElementAdmin):
     class Media:
-        js = ("designs/admin/map-element.js",)
+        js = ("designs/admin/map_element.js",)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "element_type":

@@ -53,7 +53,7 @@ class MapElementTypeAdmin(ElementTypeAdmin):
             (admin.TabularInline,),
             {
                 "model": obj.style_cls,
-                "autocomplete_fields": ("theme",),
+                "autocomplete_fields": ("map_theme",),
                 "formfield_overrides": {
                     models.CharField: {"widget": forms.TextInput(attrs={"size": 5})}
                 },

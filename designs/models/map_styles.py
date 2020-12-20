@@ -4,7 +4,7 @@ from django.db import models
 from polymorphic.models import PolymorphicModel
 
 from .element_type import MapElementType
-from .theme import Theme
+from .map_theme import MapTheme
 from .validators import validate_dash_array
 
 
@@ -12,15 +12,17 @@ class MapElementTypeStyle(PolymorphicModel):
     map_element_type = models.ForeignKey(
         MapElementType, on_delete=models.CASCADE, related_name="styles"
     )
-    theme = models.ForeignKey(Theme, on_delete=models.CASCADE, related_name="styles")
+    map_theme = models.ForeignKey(
+        MapTheme, on_delete=models.CASCADE, related_name="styles"
+    )
 
     class Meta:
         verbose_name = "style of map element type"
         verbose_name_plural = "styles of map element types"
-        ordering = ["theme", "map_element_type"]
+        ordering = ["map_theme", "map_element_type"]
 
     def __str__(self):
-        return f'Style of "{self.map_element_type.name}" in theme "{self.theme.name}"'
+        return f'Style of "{self.map_element_type.name}" in map_theme "{self.map_theme.name}"'
 
 
 class AbstractLineStyle(models.Model):

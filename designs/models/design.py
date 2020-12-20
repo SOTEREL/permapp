@@ -3,14 +3,14 @@ from django.db import models
 from djgeojson.fields import PointField
 
 from .configuration import Configuration
-from .theme import Theme
+from .map_theme import MapTheme
 
 
-def get_default_theme():
-    theme = Configuration.get_solo().default_theme
-    if theme is None:
+def get_default_map_theme():
+    map_theme = Configuration.get_solo().default_map_theme
+    if map_theme is None:
         return None
-    return theme.pk
+    return map_theme.pk
 
 
 class Design(models.Model):
@@ -19,8 +19,8 @@ class Design(models.Model):
     slug = models.SlugField(unique=True)
     map_center = PointField()
     map_zoom = models.PositiveSmallIntegerField(default=settings.DEFAULT_PROJECT_ZOOM)
-    theme = models.ForeignKey(
-        Theme, default=get_default_theme, null=True, on_delete=models.SET_DEFAULT
+    map_theme = models.ForeignKey(
+        MapTheme, default=get_default_map_theme, null=True, on_delete=models.SET_DEFAULT
     )
 
     def __str__(self):

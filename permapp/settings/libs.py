@@ -32,9 +32,9 @@ LEAFLET_CONFIG = {
             "js": ["https://unpkg.com/leaflet-geosearch@3.1.0/dist/geosearch.umd.js"],
             "auto-include": True,
         },
-        "custom": {
-            "css": ["designs/leaflet-custom.css"],
-            "js": ["designs/leaflet-custom.js"],
+        "admin_custom": {
+            "css": ["designs/admin/leaflet_custom.css"],
+            "js": ["designs/admin/leaflet_custom.js"],
             "auto-include": True,
         },
     },

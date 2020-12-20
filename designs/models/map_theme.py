@@ -3,7 +3,7 @@ from django.db import models
 from .element_type import MapElementType
 
 
-class Theme(models.Model):
+class MapTheme(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
     class Meta:

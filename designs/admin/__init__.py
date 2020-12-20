@@ -3,4 +3,4 @@ from .configuration import *
 from .design import *
 from .element import *
 from .element_type import *
-from .theme import *
+from .map_theme import *

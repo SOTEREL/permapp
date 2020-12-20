@@ -6,4 +6,4 @@ from ..models import Configuration
 
 @admin.register(Configuration)
 class ConfigurationAdmin(SingletonModelAdmin):
-    autocomplete_fields = ("default_theme",)
+    autocomplete_fields = ("default_map_theme",)

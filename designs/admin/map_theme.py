@@ -4,11 +4,11 @@ from django.urls import reverse
 from django.utils.html import format_html
 from permapp.admin import get_instance_href
 
-from ..models import MapElementType, Theme
+from ..models import MapElementType, MapTheme
 
 
-@admin.register(Theme)
-class ThemeAdmin(admin.ModelAdmin):
+@admin.register(MapTheme)
+class MapThemeAdmin(admin.ModelAdmin):
     list_display = ("name", "styles_html", "missing_styles_html")
     search_fields = ("name",)
 
@@ -26,7 +26,7 @@ class ThemeAdmin(admin.ModelAdmin):
         ctype = ContentType.objects.get_for_model(MapElementType)
         add_url = (
             lambda elem_type: reverse(f"admin:{ctype.app_label}_{ctype.model}_add")
-            + f"?map_element_type={elem_type.pk}&theme={obj.pk}"
+            + f"?map_element_type={elem_type.pk}&map_theme={obj.pk}"
         )
         add_link = lambda elem_type: f'<a href="{add_url(elem_type)}">{elem_type}</a>'
         return format_html(

@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from .models import MapElement, MapElementType, Theme
+from .models import MapElement, MapElementType, MapTheme
 
 
 @receiver(post_save, sender=MapElementType)
@@ -13,8 +13,8 @@ def create_element_type_style(sender, instance, created, **kwargs):
         raise ValueError(
             f"Unknow style class for shape model {instance.shape_cls.__name__}()"
         )
-    for theme in Theme.objects.all():
-        style_cls.objects.create(map_element_type=instance, theme=theme)
+    for map_theme in MapTheme.objects.all():
+        style_cls.objects.create(map_element_type=instance, map_theme=map_theme)
 
 
 @receiver(post_save, sender=MapElement)

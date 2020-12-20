@@ -11,13 +11,18 @@ class CreatorFilter(AutocompleteFilter):
     field_name = "creator"
 
 
+class MapThemeFilter(AutocompleteFilter):
+    title = "map theme"
+    field_name = "map_theme"
+
+
 @admin.register(Design)
 class DesignAdmin(LeafletGeoAdminMixin, admin.ModelAdmin):
     form = DesignAdminForm
     list_display = ("name", "creator")
-    list_filter = (CreatorFilter,)
+    list_filter = (CreatorFilter, MapThemeFilter)
     search_fields = ("name",)
-    autocomplete_fields = ("creator",)
+    autocomplete_fields = ("creator", "map_theme")
     prepopulated_fields = {"slug": ("name",)}
 
     class Media:
