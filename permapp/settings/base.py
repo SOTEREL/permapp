@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     "colorfield",
     "djgeojson",
     "custom_auth",
-    "designdef",
+    "designs",
 ]
 
 MIDDLEWARE = [

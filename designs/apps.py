@@ -1,8 +1,8 @@
 from django.apps import AppConfig
 
 
-class DesignDefConfig(AppConfig):
-    name = "designdef"
+class DesignsConfig(AppConfig):
+    name = "designs"
 
     def ready(self):
         from . import signals  # noqa

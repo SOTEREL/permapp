@@ -1,13 +1,9 @@
 from admin_auto_filters.filters import AutocompleteFilter
 from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericTabularInline
-from django.contrib.contenttypes.models import ContentType
-from django.urls import reverse
-from django.utils.html import format_html
-from permapp.admin import get_instance_href
 from tagging.models import TaggedItem
 
-from ..models import *  # noqa
+from ..models import ElementType, MapElementType
 
 
 class ThemeFilter(AutocompleteFilter):
@@ -20,46 +16,11 @@ class ElementTypeFilter(AutocompleteFilter):
     field_name = "element_type"
 
 
-@admin.register(Theme)  # noqa: F405
-class ThemeAdmin(admin.ModelAdmin):
-    list_display = ("name", "element_types_html", "missing_element_types_html")
-    search_fields = ("name",)
-
-    def element_types_html(self, obj):
-        return "TODO"
-        return format_html(
-            ", ".join(
-                get_instance_href(
-                    themed_elem_type, val=themed_elem_type.element_type.name
-                )
-                for themed_elem_type in obj.themedelementtype_set.order_by(
-                    "element_type__name"
-                )
-            )
-        )
-
-    element_types_html.short_description = "styles"
-
-    def missing_element_types_html(self, obj):
-        return "TODO"
-        ctype = ContentType.objects.get_for_model(ThemedElementType)  # noqa: F405
-        add_url = (
-            lambda elem_type: reverse(f"admin:{ctype.app_label}_{ctype.model}_add")
-            + f"?element_type={elem_type.pk}&theme={obj.pk}"
-        )
-        add_link = lambda elem_type: f'<a href="{add_url(elem_type)}">{elem_type}</a>'
-        return format_html(
-            ", ".join(add_link(elem_type) for elem_type in obj.missing_element_types)
-        )
-
-    missing_element_types_html.short_description = "undefined styles"
-
-
 class ElementTypeTagsInline(GenericTabularInline):
     model = TaggedItem
 
 
-@admin.register(ElementType)  # noqa: F405
+@admin.register(ElementType)
 class ElementTypeAdmin(admin.ModelAdmin):
     list_display = ("name", "description", "needs", "contributions", "tags")
     search_fields = ("name",)
@@ -69,7 +30,7 @@ class ElementTypeAdmin(admin.ModelAdmin):
         return ", ".join(obj.tags.all())
 
 
-@admin.register(MapElementType)  # noqa: F405
+@admin.register(MapElementType)
 class MapElementTypeAdmin(ElementTypeAdmin):
     inlines = [ElementTypeTagsInline]
 

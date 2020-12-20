@@ -78,9 +78,3 @@ PolymorphicModelBase.__new__ = polymorphic__new__
 PolymorphicModelBase.call_superclass_new_method = classmethod(
     polymorphic_call_superclass_new_method
 )
-
-
-from .element_type import *
-from .map_shapes import *
-from .map_styles import *
-from .theme import *

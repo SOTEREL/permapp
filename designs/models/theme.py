@@ -1,6 +1,6 @@
 from django.db import models
 
-from .element_type import ElementType
+from .element_type import MapElementType
 
 
 class Theme(models.Model):
@@ -13,7 +13,6 @@ class Theme(models.Model):
         return self.name
 
     @property
-    def missing_element_types(self):
-        # TODO
-        pks = list(self.element_types.values_list("pk", flat=True))
-        return ElementType.objects.exclude(pk__in=pks)
+    def missing_map_element_types(self):
+        pks = list(self.styles.values_list("map_element_type__pk", flat=True))
+        return MapElementType.objects.exclude(pk__in=pks)
