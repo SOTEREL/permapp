@@ -1,4 +1,5 @@
 import html
+import json
 
 from admin_auto_filters.filters import AutocompleteFilter
 from django.conf import settings
@@ -75,8 +76,13 @@ class ElementAdmin(admin.ModelAdmin):
 
 @admin.register(MapElement)
 class MapElementAdmin(ElementAdmin):
+    readonly_fields = ("json_str_style",)
+
     class Media:
         js = ("designs/admin/map_element.js",)
+
+    def json_str_style(self, obj):
+        return json.dumps(obj.json_style)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "element_type":

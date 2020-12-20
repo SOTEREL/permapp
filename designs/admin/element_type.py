@@ -23,6 +23,14 @@ class ElementTypeAdmin(admin.ModelAdmin):
 
 @admin.register(MapElementType)
 class MapElementTypeAdmin(ElementTypeAdmin):
+    list_display = (
+        "name",
+        "shape_ctype",
+        "description",
+        "needs",
+        "contributions",
+        "tags",
+    )
     inlines = [ElementTypeTagsInline]
 
     def shape_model(self, obj):

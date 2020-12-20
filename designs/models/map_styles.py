@@ -24,6 +24,9 @@ class MapElementTypeStyle(PolymorphicModel):
     def __str__(self):
         return f'Style of "{self.map_element_type.name}" in map_theme "{self.map_theme.name}"'
 
+    def to_json(self):
+        raise NotImplementedError()
+
 
 class AbstractLineStyle(models.Model):
     color = ColorField(help_text="A valid CSS color.")
@@ -43,6 +46,15 @@ class AbstractLineStyle(models.Model):
 
     class Meta:
         abstract = True
+
+    def to_json(self):
+        return {
+            "stroke": self.opacity > 0,
+            "color": self.color,
+            "weight": self.weight,
+            "opacity": self.opacity / 100,
+            "dashArray": self.dash_array or None,
+        }
 
 
 class LineStyle(AbstractLineStyle, MapElementTypeStyle):
@@ -68,6 +80,15 @@ class PolygonStyle(AbstractLineStyle, MapElementTypeStyle):
         help_text="Zero means no fill.",
         validators=[MaxValueValidator(100)],
     )
+
+    def to_json(self):
+        line_style = AbstractLineStyle.to_json(self)
+        return {
+            **line_style,
+            "fill": self.fill_opacity > 0,
+            "fillColor": self.fill_color,
+            "fillOpacity": self.fill_opacity / 100,
+        }
 
 
 class CircleStyle(AbstractLineStyle, AbstractPointStyle, MapElementTypeStyle):

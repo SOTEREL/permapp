@@ -25,4 +25,14 @@ tagging_register(Element)
 
 
 class MapElement(Element):
-    pass
+    @property
+    def style(self):
+        map_theme = self.design.map_theme
+        return self.element_type.styles.filter(map_theme=map_theme).first()
+
+    @property
+    def json_style(self):
+        style = self.style
+        if style is None:
+            return {}
+        return style.to_json()
