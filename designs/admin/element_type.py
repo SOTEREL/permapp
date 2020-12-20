@@ -1,6 +1,8 @@
 from admin_auto_filters.filters import AutocompleteFilter
+from django import forms
 from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericTabularInline
+from django.db import models
 from tagging.models import TaggedItem
 
 from ..models import ElementType, MapElementType
@@ -60,6 +62,12 @@ class MapElementTypeAdmin(ElementTypeAdmin):
         style_inline = type(
             "MapElementStyleInline",
             (admin.TabularInline,),
-            {"model": obj.style_cls, "autocomplete_fields": ("theme",)},
+            {
+                "model": obj.style_cls,
+                "autocomplete_fields": ("theme",),
+                "formfield_overrides": {
+                    models.CharField: {"widget": forms.TextInput(attrs={"size": 5})}
+                },
+            },
         )
         return [*inlines, style_inline]

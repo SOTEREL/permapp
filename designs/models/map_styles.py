@@ -27,7 +27,10 @@ class AbstractLineStyle(models.Model):
     color = ColorField(help_text="A valid CSS color.")
     weight = models.PositiveSmallIntegerField(default=2)
     opacity = models.PositiveSmallIntegerField(
-        default=100, verbose_name="opacity (%)", validators=[MaxValueValidator(100)]
+        default=100,
+        verbose_name="opacity (%)",
+        help_text="Zero means no stroke.",
+        validators=[MaxValueValidator(100)],
     )
     dash_array = models.CharField(
         max_length=50,
@@ -60,6 +63,7 @@ class PolygonStyle(AbstractLineStyle, MapElementTypeStyle):
     fill_opacity = models.PositiveSmallIntegerField(
         default=100,
         verbose_name="fill opacity (%)",
+        help_text="Zero means no fill.",
         validators=[MaxValueValidator(100)],
     )
 
