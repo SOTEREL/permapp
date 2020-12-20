@@ -1,5 +1,6 @@
 # flake8: noqa
 from .monkey_patching import *
+from .configuration import Configuration
 from .design import *
 from .element import *
 from .element_type import *

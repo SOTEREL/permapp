@@ -27,6 +27,7 @@ pillow = "^8.0.1"
 django-admin-autocomplete-filter = "^0.6.1"
 django-geojson = "^3.1.0"
 django-leaflet = "^0.27.1"
+django-solo = "^1.1.5"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1.2"

@@ -245,6 +245,14 @@ python-versions = "*"
 Django = ">=2.1"
 
 [[package]]
+name = "django-solo"
+version = "1.1.5"
+description = "Django Solo helps working with singletons"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "django-tagging"
 version = "0.5.0"
 description = "Generic tagging application for Django"
@@ -571,7 +579,7 @@ testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "a02b54de9b31ec36900aa01353c2fff379fda33e7235f20cbfaab3b547d61abb"
+content-hash = "b5c525abb6e177bb864510e33a85c9989f234141ecf76dbfeb30691b5ad08798"
 
 [metadata.files]
 appdirs = [
@@ -668,6 +676,9 @@ django-mptt = [
 django-polymorphic = [
     {file = "django-polymorphic-3.0.0.tar.gz", hash = "sha256:9d886f19f031d26bb1391c055ed9be06fb226a04a4cec1842b372c58873b3caa"},
     {file = "django_polymorphic-3.0.0-py2.py3-none-any.whl", hash = "sha256:73b75eb44ea302bd32820f8661e469509d245ce7f7ff09cd2ad149e5c42034ff"},
+]
+django-solo = [
+    {file = "django-solo-1.1.5.tar.gz", hash = "sha256:e412f0f844aa101fa77ba5d07768a8a77ea0e0a6e098b87a6eef3bedb2e5ecd4"},
 ]
 django-tagging = [
     {file = "django-tagging-0.5.0.tar.gz", hash = "sha256:28d68fa4831705e51ad7d1e845ed6dd9e354f9b6f8a5f63b655a430646ef4e8d"},

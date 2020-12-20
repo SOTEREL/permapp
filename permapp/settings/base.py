@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "django_json_widget",
     "jsonschemaform",
     "polymorphic",
+    "solo",
     "tagging",
     "colorfield",
     "leaflet",
