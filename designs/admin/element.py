@@ -42,7 +42,11 @@ class ElementAdmin(admin.ModelAdmin):
     list_filter = (DesignFilter, ElementTypeFilter, "permanence", "is_risky")
     search_fields = ("name", "design__name", "element_type__name")
     autocomplete_fields = ("design", "element_type")
+    readonly_fields = ("tags",)
     inlines = [ElementTagsInline]
+
+    def tags(self, obj):
+        return ", ".join(map(str, obj.all_tags.all()))
 
     def design_html(self, obj):
         return format_html(get_instance_href(obj.design))
@@ -83,8 +87,6 @@ class ElementAdmin(admin.ModelAdmin):
 
 @admin.register(MapElement)
 class MapElementAdmin(ElementAdmin):
-    readonly_fields = ("json_str_style",)
-
     class Media:
         js = ("designs/admin/map_element.js",)
 
@@ -122,3 +124,7 @@ class MapElementAdmin(ElementAdmin):
             },
         )
         return [*inlines, shape_inline]
+
+    def get_readonly_fields(self, request, obj=None):
+        fields = super().get_readonly_fields(request, obj=obj)
+        return [*fields, "json_str_style"]

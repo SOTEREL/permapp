@@ -43,6 +43,10 @@ class Element(PolymorphicModel):
     def __str__(self):
         return self.name
 
+    @property
+    def all_tags(self):
+        return self.element_type.tags.all() | self.tags.all()
+
 
 tagging_register(Element)
 
