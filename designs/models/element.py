@@ -1,9 +1,24 @@
 from django.db import models
+from polymorphic.managers import PolymorphicManager
 from polymorphic.models import PolymorphicModel
 from tagging.registry import register as tagging_register
 
 from .design import Design
 from .element_type import ElementType
+
+
+class ElementManager(PolymorphicManager):
+    def get_queryset(self):
+        return (
+            super()
+            .get_queryset()
+            .annotate(
+                is_observation=models.ExpressionWrapper(
+                    models.Q(observation_date__isnull=False),
+                    output_field=models.BooleanField(),
+                )
+            )
+        )
 
 
 class Element(PolymorphicModel):
@@ -13,6 +28,9 @@ class Element(PolymorphicModel):
     description = models.TextField(default="", blank=True)
     needs = models.TextField(default="", blank=True)
     contributions = models.TextField(default="", blank=True)
+    observation_date = models.DateField(null=True, blank=True)
+
+    objects = ElementManager()
 
     class Meta:
         ordering = ["name"]
