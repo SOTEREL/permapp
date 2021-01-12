@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.db import models
 from djgeojson.fields import (
+    GeometryCollectionField,
     LineStringField,
     MultiPolygonField,
     PointField,
@@ -106,3 +107,7 @@ class Point(GeoJSONShape, style_cls=PointStyle):
 
 class Polygon(GeoJSONShape, style_cls=PolygonStyle):
     geom = PolygonField()
+
+
+class Geometry(GeoJSONShape, style_cls=PolygonStyle):
+    geom = GeometryCollectionField()

@@ -19,7 +19,7 @@ class ElementTypeAdmin(admin.ModelAdmin):
     inlines = [ElementTypeTagsInline]
 
     def tags(self, obj):
-        return ", ".join(obj.tags.all())
+        return ", ".join(map(str, obj.tags.all()))
 
     def has_module_permission(self, request):
         # Not used for now
