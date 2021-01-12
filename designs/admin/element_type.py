@@ -9,6 +9,7 @@ from ..models import ElementType, MapElementType
 
 class ElementTypeTagsInline(GenericTabularInline):
     model = TaggedItem
+    autocomplete_fields = ("tag",)
 
 
 @admin.register(ElementType)

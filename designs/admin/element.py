@@ -4,10 +4,12 @@ import json
 from admin_auto_filters.filters import AutocompleteFilter
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.contenttypes.admin import GenericTabularInline
 from django.forms import modelform_factory
 from django.utils.html import format_html
 from leaflet.admin import LeafletGeoAdminMixin
 from permapp.admin import get_instance_href
+from tagging.models import TaggedItem
 
 from ..forms import MapShapeAdminForm
 from ..models import ElementType, MapElement, MapElementType
@@ -23,6 +25,11 @@ class ElementTypeFilter(AutocompleteFilter):
     field_name = "element_type"
 
 
+class ElementTagsInline(GenericTabularInline):
+    model = TaggedItem
+    autocomplete_fields = ("tag",)
+
+
 class ElementAdmin(admin.ModelAdmin):
     list_display = (
         "name",
@@ -35,6 +42,7 @@ class ElementAdmin(admin.ModelAdmin):
     list_filter = (DesignFilter, ElementTypeFilter, "permanence", "is_risky")
     search_fields = ("name", "design__name", "element_type__name")
     autocomplete_fields = ("design", "element_type")
+    inlines = [ElementTagsInline]
 
     def design_html(self, obj):
         return format_html(get_instance_href(obj.design))
