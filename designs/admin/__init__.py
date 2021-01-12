@@ -4,3 +4,4 @@ from .design import *
 from .element import *
 from .element_type import *
 from .map_theme import *
+from .map_view import *
