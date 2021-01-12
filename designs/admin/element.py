@@ -32,7 +32,7 @@ class ElementAdmin(admin.ModelAdmin):
         "needs_html",
         "contributions_html",
     )
-    list_filter = (DesignFilter, ElementTypeFilter)
+    list_filter = (DesignFilter, ElementTypeFilter, "permanence", "is_risky")
     search_fields = ("name", "design__name", "element_type__name")
     autocomplete_fields = ("design", "element_type")
 

@@ -33,6 +33,7 @@ class Element(PolymorphicModel):
     permanence = models.PositiveSmallIntegerField(
         null=True, blank=True, choices=settings.PERMANENCE_CHOICES
     )
+    is_risky = models.BooleanField(default=False)
 
     objects = ElementManager()
 
