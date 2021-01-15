@@ -63,3 +63,15 @@ class MapElement(Element):
         if style is None:
             return {}
         return style.to_json()
+
+
+def attachment_path(instance, filename):
+    return f"element_attachments/element_{instance.element.pk}/{filename}"
+
+
+class ElementAttachment(models.Model):
+    element = models.ForeignKey(
+        Element, on_delete=models.CASCADE, related_name="attachments"
+    )
+    upload = models.FileField(upload_to=attachment_path)
+    comments = models.TextField(default="", blank=True)

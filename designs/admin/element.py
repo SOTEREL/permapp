@@ -12,7 +12,7 @@ from permapp.admin import get_instance_href
 from tagging.models import TaggedItem
 
 from ..forms import MapShapeAdminForm
-from ..models import ElementType, MapElement, MapElementType
+from ..models import ElementAttachment, ElementType, MapElement, MapElementType
 
 
 class DesignFilter(AutocompleteFilter):
@@ -23,6 +23,10 @@ class DesignFilter(AutocompleteFilter):
 class ElementTypeFilter(AutocompleteFilter):
     title = "element type"
     field_name = "element_type"
+
+
+class ElementAttachmentInline(admin.TabularInline):
+    model = ElementAttachment
 
 
 class ElementTagsInline(GenericTabularInline):
@@ -43,7 +47,7 @@ class ElementAdmin(admin.ModelAdmin):
     search_fields = ("name", "design__name", "element_type__name")
     autocomplete_fields = ("design", "element_type")
     readonly_fields = ("tags",)
-    inlines = [ElementTagsInline]
+    inlines = [ElementTagsInline, ElementAttachmentInline]
 
     def tags(self, obj):
         return ", ".join(map(str, obj.all_tags.all()))
