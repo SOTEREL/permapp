@@ -67,6 +67,14 @@ class MapElement(Element):
             return {}
         return style.to_json()
 
+    @property
+    def json_shape(self):
+        geojson = getattr(self.shape, "geojson", None)
+        if geojson is None:
+            return None
+        geojson["properties"]["style"] = self.json_style
+        return geojson
+
 
 def attachment_path(instance, filename):
     return f"element_attachments/element_{instance.element.pk}/{filename}"

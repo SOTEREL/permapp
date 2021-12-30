@@ -111,6 +111,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: path.resolve('./static/src/ts/main.ts'),
+        design_map: path.resolve('./static/src/ts/design_map.ts'),
       },
       output: {
         chunkFileNames: undefined,

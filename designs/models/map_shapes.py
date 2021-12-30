@@ -57,34 +57,28 @@ class GeoJSONShape(Shape, style_cls=None, usable=False):
 
     @property
     def is_drawable(self):
-        return self.coordinates is not None
+        return bool(self.geom)
 
     @property
     def centroid(self):
-        return shape(self.geojson_geom).centroid
+        return shape(self.geom).centroid
 
     @property
     def perimeter(self):
-        return shape(self.geojson_geom).length
+        return shape(self.geom).length
 
     @property
     def area(self):
-        return shape(self.geojson_geom).area
-
-    @property
-    def geojson_geom(self):
-        return {"type": self.GEOM_TYPE, "coordinates": self.coordinates}
-
-    @property
-    def geojson_props(self):
-        return {"id": self.id, "projection": self.map_projection}
+        return shape(self.geom).area
 
     @property
     def geojson(self):
+        if not self.is_drawable:
+            return None
         return {
             "type": "Feature",
-            "geometry": self.geojson_geom,
-            "properties": self.geojson_props,
+            "geometry": self.geom,
+            "properties": {},
         }
 
 

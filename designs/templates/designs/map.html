@@ -1,5 +1,15 @@
 {% extends 'permapp/page.html' %}
+{% load django_vite %}
+
+{% block head_extra %}
+  {% vite_asset 'ts/design_map.ts' %}
+{% endblock %}
+
+{% block js_footer %}
+  {{ block.super }}
+  {% vite_legacy_asset 'ts/design_map-legacy.ts' %}
+{% endblock %}
 
 {% block content %}
-{{ design }}
+{{ js_data|json_script:"js_data" }}
 {% endblock %}
