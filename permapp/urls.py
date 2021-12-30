@@ -7,8 +7,6 @@ urlpatterns = [
     path("_admin/", admin.site.urls),
     path("__debug__/", include("debug_toolbar.urls")),
     path("martor/", include("martor.urls")),
-    # Will work in dev mode only
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
-    # Must be at the end as it catches all urls (for vue-router)
-    path("", include("spa.urls")),
+    *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
 ]

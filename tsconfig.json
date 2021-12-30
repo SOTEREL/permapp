@@ -1,0 +1,29 @@
+{
+  "include": ["./**/*.cjs", "./**/*.ts", "./**/*.js", "./**/*.vue"],
+  "exclude": [
+    "node_modules",
+    "static/dist",
+    ".venv",
+    "collectedstatic",
+    ".eslintcache"
+  ],
+  "compilerOptions": {
+    "baseUrl": "./static/src/ts",
+    "noEmit": true,
+    "strict": true,
+    "alwaysStrict": true,
+    "target": "ESNext",
+    "moduleResolution": "Node",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "jsx": "preserve",
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "typeRoots": ["./static/src/ts/@types"],
+    "types": ["vite/client"],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
+}

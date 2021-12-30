@@ -1,2 +1,5 @@
-/dist
-**/static/**/lib/*
+node_modules
+.venv
+static/dist
+collectedstatic
+.eslintcache

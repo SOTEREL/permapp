@@ -1,51 +1,33 @@
 {
-  "name": "design-permacole",
-  "version": "0.1.0",
   "private": true,
-  "description": "",
-  "author": "Vincent Lefoulon",
   "scripts": {
-    "dev": "cd spa; vue-cli-service build --mode development --watch",
-    "serve": "cd spa; vue-cli-service serve",
-    "build": "cd spa; vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "axios": "^0.19.2",
-    "core-js": "^3.6.4",
-    "fish-ui": "^1.2.8",
-    "geoportal-access-lib": "^2.1.6",
-    "leaflet": "^1.6.0",
-    "vue": "^2.6.11",
-    "vue-axios": "^2.1.5",
-    "vue-router": "^3.1.5",
-    "vue2-leaflet": "^2.5.2",
-    "vuex": "^3.1.2"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "tsc && eslint --cache --fix --ext .ts,.js,.vue .",
+    "format": "prettier --write \"**/*.+(js|ts|json|jsonc|css|vue)\"",
+    "clean": "rm -rf node_modules/"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.2.0",
-    "@vue/cli-plugin-eslint": "~4.2.0",
-    "@vue/cli-plugin-router": "~4.2.0",
-    "@vue/cli-plugin-vuex": "~4.2.0",
-    "@vue/cli-service": "~4.2.0",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^6.7.2",
-    "eslint-plugin-prettier": "^3.1.1",
-    "eslint-plugin-vue": "^6.1.2",
-    "less": "^3.11.1",
-    "less-loader": "^5.0.0",
-    "lint-staged": "^9.5.0",
-    "prettier": "^1.19.1",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,jsx,vue}": [
-      "vue-cli-service lint",
-      "git add"
-    ]
+    "@hail2u/css-mqpacker": "github:hail2u/node-css-mqpacker",
+    "@tailwindcss/forms": "^0.4.0",
+    "@types/favicons": "^6.2.2",
+    "@types/node": "^17.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "@vitejs/plugin-legacy": "^1.6.4",
+    "autoprefixer": "^10.4.1",
+    "comment-json": "^4.1.1",
+    "cssnano": "^5.0.14",
+    "eslint": "^8.5.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-prettier": "^4.0.0",
+    "favicons": "^6.2.2",
+    "postcss": "^8.4.5",
+    "prettier": "^2.5.1",
+    "tailwindcss": "^3.0.8",
+    "typescript": "^4.5.4",
+    "vite": "^2.7.10"
   }
 }

@@ -1,0 +1,42 @@
+{% load django_vite %}
+
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    {% block icons %}
+      {% include './favicons.html' %}
+    {% endblock %}
+
+    {% block js_head %}
+      {% vite_hmr_client %}
+      {% vite_asset 'ts/main.ts' %}
+    {% endblock %}
+
+    <title>
+      {% block title %}
+        {% if title %}
+          {{ title }} - Permapp
+        {% else %}
+          Permapp
+        {% endif %}
+      {% endblock %}
+    </title>
+
+    {% block head_extra %}{% endblock %}
+  </head>
+
+  {#
+    L'id du body permet de filtrer le JS a appliquer sur la page en l'encapsulant
+    dans la callback de `document.addEventListener("DOMContentLoaded", fn);`.
+  #}
+  <body id="{% block body_id %}{% endblock %}">
+    {% block body %}{% endblock %}
+    {% block js_footer %}
+      {% vite_legacy_polyfills %}
+      {% vite_legacy_asset 'ts/main-legacy.ts' %}
+    {% endblock %}
+  </body>
+</html>

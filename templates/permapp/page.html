@@ -1,0 +1,21 @@
+{% block body %}
+  <header>
+    {% block header %}
+    <h1>Permapp</h1>
+    {% endblock %}
+  </header>
+
+  <div class="messages p-2">
+    {% block messages %}
+      {% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    {% endblock %}
+  </div>
+
+  {% block content %}{% endblock %}
+
+  <footer>
+    {% block footer %}{% endblock %}
+  </footer>
+{% endblock %}
