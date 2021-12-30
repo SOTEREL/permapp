@@ -22,7 +22,9 @@ class MapElementTypeStyle(PolymorphicModel):
         ordering = ["map_theme", "map_element_type"]
 
     def __str__(self):
-        return f'Style of "{self.map_element_type.name}" in map_theme "{self.map_theme.name}"'
+        return (
+            f'Style of "{self.map_element_type.name}" in theme "{self.map_theme.name}"'
+        )
 
     def to_json(self):
         raise NotImplementedError()
