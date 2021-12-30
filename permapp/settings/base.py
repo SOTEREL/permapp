@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "admin_reorder",
     "rest_framework",
+    "martor",
     "admin_auto_filters",
     "django_filters",
     "categories.editor",

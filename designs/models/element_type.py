@@ -1,5 +1,6 @@
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from martor.models import MartorField
 from polymorphic.models import PolymorphicModel
 from tagging.registry import register as tagging_register
 
@@ -8,7 +9,7 @@ from .validators import validate_shape_ctype
 
 class ElementType(PolymorphicModel):
     name = models.CharField(max_length=50, unique=True)
-    description = models.TextField(default="", blank=True)
+    description = MartorField(default="", blank=True)
 
     class Meta:
         ordering = ["name"]

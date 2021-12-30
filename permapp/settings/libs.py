@@ -53,3 +53,5 @@ ADMIN_REORDER = (
     "designs",
     "tagging",
 )
+
+MARTOR_ENABLE_LABEL = True
