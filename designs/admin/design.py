@@ -23,7 +23,6 @@ class DesignAdmin(LeafletGeoAdminMixin, admin.ModelAdmin):
     list_filter = (CreatorFilter, MapThemeFilter)
     search_fields = ("name",)
     autocomplete_fields = ("creator", "map_theme")
-    prepopulated_fields = {"slug": ("name",)}
 
     class Media:
         js = ("designs/admin/design.js",)

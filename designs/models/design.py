@@ -15,8 +15,7 @@ def get_default_map_theme():
 
 class Design(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50)
-    slug = models.SlugField(unique=True)
+    name = models.CharField(max_length=100)
     map_center = PointField()
     map_zoom = models.PositiveSmallIntegerField(default=settings.DEFAULT_PROJECT_ZOOM)
     map_theme = models.ForeignKey(
