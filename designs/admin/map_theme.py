@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from permapp.admin import get_instance_href
+from permapp.utils.admin import get_instance_href
 
 from ..models import MapTheme
 

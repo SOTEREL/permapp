@@ -8,7 +8,7 @@ from django.contrib.contenttypes.admin import GenericTabularInline
 from django.forms import modelform_factory
 from django.utils.html import format_html
 from leaflet.admin import LeafletGeoAdminMixin
-from permapp.admin import get_instance_href
+from permapp.utils.admin import get_instance_href
 from tagging.models import TaggedItem
 
 from ..forms import MapShapeAdminForm
