@@ -25,3 +25,8 @@ CSRF_COOKIE_SECURE = not DEBUG
 SECURE_REFERRER_POLICY = "same-origin"  # We need a referer for the CSRF in API mode
 
 AUTH_USER_MODEL = "custom_auth.User"
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+    "localhost",
+]
