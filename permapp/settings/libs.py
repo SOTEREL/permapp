@@ -23,7 +23,11 @@ LEAFLET_CONFIG = {
     "MAX_ZOOM": 18,
     "RESET_VIEW": False,
     "TILES": [
-        ("Carte", get_ign_tile_url("GEOGRAPHICALGRIDSYSTEMS.MAPS"), "IGN-F/Géoportail"),
+        (
+            "Plan",
+            "//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        ),
         ("Satellite", get_ign_tile_url("ORTHOIMAGERY.ORTHOPHOTOS"), "IGN-F/Géoportail"),
     ],
     "PLUGINS": {
