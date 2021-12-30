@@ -7,6 +7,10 @@ from tagging.registry import register as tagging_register
 from .validators import validate_shape_ctype
 
 
+def limit_shape_ctype():
+    return {"pk__in": [ctype.pk for ctype in MapElementType.list_usable_shape_ctypes()]}
+
+
 class ElementType(PolymorphicModel):
     name = models.CharField(max_length=50, unique=True)
     description = MartorField(default="", blank=True)
@@ -29,6 +33,7 @@ class MapElementType(ElementType):
         related_name="+",
         verbose_name="shape type",
         validators=[validate_shape_ctype],
+        limit_choices_to=limit_shape_ctype,
     )
 
     class Meta(ElementType.Meta):

@@ -14,12 +14,9 @@ class ElementTypeTagsInline(GenericTabularInline):
 
 @admin.register(ElementType)
 class ElementTypeAdmin(admin.ModelAdmin):
-    list_display = ("name", "description", "tags")
+    list_display = ("name", "description")
     search_fields = ("name",)
     inlines = [ElementTypeTagsInline]
-
-    def tags(self, obj):
-        return ", ".join(map(str, obj.tags.all()))
 
     def has_module_permission(self, request):
         # Not used for now
@@ -32,22 +29,9 @@ class MapElementTypeAdmin(ElementTypeAdmin):
         "name",
         "shape_ctype",
         "description",
-        "tags",
     )
+    list_filter = ("shape_ctype",)
     inlines = [ElementTypeTagsInline]
-
-    def shape_model(self, obj):
-        return obj.shape_cls.__name__
-
-    shape_model.short_description = "shape"
-    shape_model.admin_order_field = "shape_ctype"
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "shape_ctype":
-            kwargs["queryset"] = MapElementType.list_usable_shape_ctypes(  # noqa: F405
-                as_queryset=True
-            )
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def get_readonly_fields(self, request, obj=None):
         fields = super().get_readonly_fields(request, obj=obj)
