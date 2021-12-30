@@ -1,4 +1,3 @@
-import html
 import json
 
 from admin_auto_filters.filters import AutocompleteFilter
@@ -6,9 +5,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericTabularInline
 from django.forms import modelform_factory
-from django.utils.html import format_html
 from leaflet.admin import LeafletGeoAdminMixin
-from permapp.utils.admin import get_instance_href
 from tagging.models import TaggedItem
 
 from ..forms import MapShapeAdminForm
@@ -37,11 +34,9 @@ class ElementTagsInline(GenericTabularInline):
 class ElementAdmin(admin.ModelAdmin):
     list_display = (
         "name",
-        "design_html",
-        "element_type_html",
-        "description_html",
-        "needs_html",
-        "contributions_html",
+        "design",
+        "element_type",
+        "description",
     )
     list_filter = (DesignFilter, ElementTypeFilter, "permanence", "is_risky")
     search_fields = ("name", "design__name", "element_type__name")
@@ -51,37 +46,6 @@ class ElementAdmin(admin.ModelAdmin):
 
     def tags(self, obj):
         return ", ".join(map(str, obj.all_tags.all()))
-
-    def design_html(self, obj):
-        return format_html(get_instance_href(obj.design))
-
-    design_html.short_description = "design"
-    design_html.admin_order_field = "design"
-
-    def element_type_html(self, obj):
-        return format_html(get_instance_href(obj.element_type))
-
-    element_type_html.short_description = "type"
-    element_type_html.admin_order_field = "element_type"
-
-    def _format_text_field(self, obj, field):
-        escaped = html.escape(getattr(obj, field))
-        return format_html(escaped.replace("\n", "<br />"))
-
-    def description_html(self, obj):
-        return self._format_text_field(obj, "description")
-
-    description_html.short_description = "description"
-
-    def needs_html(self, obj):
-        return self._format_text_field(obj, "needs")
-
-    needs_html.short_description = "needs"
-
-    def contributions_html(self, obj):
-        return self._format_text_field(obj, "contributions")
-
-    contributions_html.short_description = "contributions"
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "element_type":
@@ -93,9 +57,6 @@ class ElementAdmin(admin.ModelAdmin):
 class MapElementAdmin(ElementAdmin):
     class Media:
         js = ("designs/admin/map_element.js",)
-
-    def json_str_style(self, obj):
-        return json.dumps(obj.json_style)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "element_type":
@@ -127,8 +88,14 @@ class MapElementAdmin(ElementAdmin):
                 },
             },
         )
-        return [*inlines, shape_inline]
+        return [shape_inline, *inlines]
+
+    def json_str_style(self, obj):
+        # For map drawing
+        return json.dumps(obj.json_style)
 
     def get_readonly_fields(self, request, obj=None):
         fields = super().get_readonly_fields(request, obj=obj)
-        return [*fields, "json_str_style"]
+        if obj:
+            fields = (*fields, "json_str_style")
+        return fields
