@@ -1,0 +1,7 @@
+{% extends 'permapp/page.html' %}
+
+{% block content %}
+{% for design in designs %}
+  <div><a href="{% url 'design_view_map' pk=design.pk %}">{{ design }}</a></div>
+{% endfor %}
+{% endblock %}
