@@ -28,10 +28,6 @@
     {% block head_extra %}{% endblock %}
   </head>
 
-  {#
-    L'id du body permet de filtrer le JS a appliquer sur la page en l'encapsulant
-    dans la callback de `document.addEventListener("DOMContentLoaded", fn);`.
-  #}
   <body id="{% block body_id %}{% endblock %}">
     {% block body %}{% endblock %}
     {% block js_footer %}

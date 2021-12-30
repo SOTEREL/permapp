@@ -121,8 +121,10 @@ local_settings.py
 #########################################
 
 .env
-!api/static/api/js/lib/
-db.sqlite3
+db.sqlite3*
 media/
 media_secret/
 collectedstatic/
+templates/permapp/favicons.html
+node_modules/
+static/dist
