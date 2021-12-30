@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from martor.models import MartorField
 from polymorphic.managers import PolymorphicManager
 from polymorphic.models import PolymorphicModel
 from tagging.registry import register as tagging_register
@@ -26,10 +27,12 @@ class Element(PolymorphicModel):
     design = models.ForeignKey(Design, on_delete=models.CASCADE)
     element_type = models.ForeignKey(ElementType, on_delete=models.PROTECT)
     name = models.CharField(max_length=50, unique=True)
-    description = models.TextField(default="", blank=True)
-    needs = models.TextField(default="", blank=True)
-    contributions = models.TextField(default="", blank=True)
-    observation_date = models.DateField(null=True, blank=True)
+    description = MartorField(default="", blank=True)
+    observation_date = models.DateField(
+        null=True,
+        blank=True,
+        help_text="If empty, an unexisting element (to be added).",
+    )
     permanence = models.PositiveSmallIntegerField(
         null=True, blank=True, choices=settings.PERMANENCE_CHOICES
     )
