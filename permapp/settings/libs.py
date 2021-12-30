@@ -43,3 +43,13 @@ LEAFLET_CONFIG = {
         },
     },
 }
+
+ADMIN_REORDER = (
+    {
+        "app": "custom_auth",
+        "label": "Authentification",
+        "models": ("custom_auth.User", "auth.Group",),
+    },
+    "designs",
+    "tagging",
+)

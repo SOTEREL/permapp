@@ -232,6 +232,17 @@ Django = "*"
 docs = ["sphinx", "sphinx-autobuild"]
 
 [[package]]
+name = "django-modeladmin-reorder"
+version = "0.3.1"
+description = "Custom ordering for the apps and models in the admin app."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+django = "*"
+
+[[package]]
 name = "django-mptt"
 version = "0.11.0"
 description = "Utilities for implementing Modified Preorder Tree Traversal with your Django Models and working with trees of Model instances."
@@ -609,7 +620,7 @@ testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "99eb0cdd697b27246989e9cf3b3d33ba84c830a5f2f0238db4a12d56b00019b4"
+content-hash = "782f7faee6b5fa74fed1524417b2df3fbcd818f9b3f0819a61eebe34378ed2e9"
 
 [metadata.files]
 asgiref = [
@@ -698,6 +709,9 @@ django-jsonschema-form = [
 django-leaflet = [
     {file = "django-leaflet-0.27.1.tar.gz", hash = "sha256:b530960242fe7718572b23976dd6037823dd478335c22c4434931335acf88bdd"},
     {file = "django_leaflet-0.27.1-py3-none-any.whl", hash = "sha256:3cf1bc8a0e41d22651541ad5b5e2a8f2c6a13a603728883cd332daf785b37250"},
+]
+django-modeladmin-reorder = [
+    {file = "django-modeladmin-reorder-0.3.1.tar.gz", hash = "sha256:bf42d0dcd184b796b4d6d988c4b4cea7914adfc4430dd9978a8a0199051f189f"},
 ]
 django-mptt = [
     {file = "django-mptt-0.11.0.tar.gz", hash = "sha256:dfdb3af75ad27cdd4458b0544ec8574174f2b90f99bc2cafab6a15b4bc1895a8"},
