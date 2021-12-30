@@ -14,7 +14,9 @@ class MapThemeAdmin(admin.ModelAdmin):
     def styles_html(self, obj):
         return format_html(
             ", ".join(
-                get_instance_href(style, val=style.map_element_type.name)
+                get_instance_href(
+                    style, val=style.map_element_type.name, attrs={"target": "_blank"}
+                )
                 for style in obj.styles.order_by("map_element_type__name")
             )
         )

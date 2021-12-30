@@ -17,6 +17,7 @@ def get_instance_url(instance):
     return reverse(f"admin:{app}_{model}_change", args=(instance.pk,))
 
 
-def get_instance_href(instance, val=None):
+def get_instance_href(instance, val=None, attrs={}):
     url = get_instance_url(instance)
-    return f'<a href="{url}">{val or instance}</a>'
+    attrs = " ".join(f'{k}="{v}"' for k, v in attrs.items())
+    return f'<a href="{url}" {attrs}>{val or instance}</a>'
