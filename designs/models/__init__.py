@@ -1,5 +1,4 @@
 # flake8: noqa
-from .monkey_patching import *
 from .configuration import *
 from .design import *
 from .element import *
