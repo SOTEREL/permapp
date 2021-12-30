@@ -14,7 +14,7 @@ class ElementTypeTagsInline(GenericTabularInline):
 
 @admin.register(ElementType)
 class ElementTypeAdmin(admin.ModelAdmin):
-    list_display = ("name", "description", "needs", "contributions", "tags")
+    list_display = ("name", "description", "tags")
     search_fields = ("name",)
     inlines = [ElementTypeTagsInline]
 
@@ -32,8 +32,6 @@ class MapElementTypeAdmin(ElementTypeAdmin):
         "name",
         "shape_ctype",
         "description",
-        "needs",
-        "contributions",
         "tags",
     )
     inlines = [ElementTypeTagsInline]

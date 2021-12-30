@@ -9,8 +9,6 @@ from .validators import validate_shape_ctype
 class ElementType(PolymorphicModel):
     name = models.CharField(max_length=50, unique=True)
     description = models.TextField(default="", blank=True)
-    needs = models.TextField(default="", blank=True)
-    contributions = models.TextField(default="", blank=True)
 
     class Meta:
         ordering = ["name"]
