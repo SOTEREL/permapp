@@ -12,7 +12,7 @@
 
     {% block js_head %}
       {% vite_hmr_client %}
-      {% vite_asset 'ts/main.ts' %}
+      {% vite_asset 'static/src/ts/main.ts' %}
     {% endblock %}
 
     <title>
@@ -32,7 +32,7 @@
     {% block body %}{% endblock %}
     {% block js_footer %}
       {% vite_legacy_polyfills %}
-      {% vite_legacy_asset 'ts/main-legacy.ts' %}
+      {% vite_legacy_asset 'static/src/ts/main-legacy.ts' %}
     {% endblock %}
   </body>
 </html>

@@ -1,17 +1,7 @@
 import legacy from '@vitejs/plugin-legacy';
-import { parse } from 'comment-json';
-import favicons from 'favicons';
-import fs from 'fs';
+import vue from '@vitejs/plugin-vue';
 import path from 'path';
 import { defineConfig, Plugin } from 'vite';
-
-interface IPluginFaviconsConfig {
-  source: string;
-  templatePath: string;
-  metadataPath: string;
-  publicPath: string;
-  faviconConfig: Partial<favicons.FaviconOptions>;
-}
 
 const htmlAutoReloadPlugin: Plugin = {
   name: 'htmlAutoReloadPlugin',
@@ -29,62 +19,11 @@ const htmlAutoReloadPlugin: Plugin = {
   },
 };
 
-const pluginFavicons = (config: IPluginFaviconsConfig) => ({
-  name: 'pluginFavicons',
-  async generateBundle() {
-    const response = await favicons(config.source, config.faviconConfig);
-
-    // Compute all paths.
-    const metadataRootPath = path.resolve(__dirname, config.metadataPath || '');
-    response.files.forEach((image) => {
-      response.images.push({
-        name: image.name,
-        contents: Buffer.from(image.contents),
-      });
-    });
-
-    // Create folders and subfolders.
-    if (!fs.existsSync(metadataRootPath)) {
-      fs.mkdirSync(metadataRootPath, { recursive: true });
-    }
-
-    // Write files.
-    response.images.forEach((element) => {
-      fs.writeFileSync(
-        path.join(metadataRootPath, element.name),
-        element.contents
-      );
-    });
-
-    // Write the template
-    if (config.templatePath) {
-      fs.writeFileSync(
-        path.resolve(__dirname, config.templatePath),
-        response.html.join('\n')
-      );
-    }
-
-    // Copy favicon.ico to the public path
-    // (for admin and other system who don't read the HTML to get the favicon)
-    const faviconPath = path.resolve(
-      __dirname,
-      config.metadataPath,
-      'favicon.ico'
-    );
-
-    if (fs.existsSync(faviconPath)) {
-      fs.copyFileSync(
-        faviconPath,
-        path.resolve(__dirname, config.publicPath, 'favicon.ico')
-      );
-    }
-  },
-});
-
 export default defineConfig({
-  root: path.resolve('./static/src'),
+  root: __dirname,
   base: '/static/',
   plugins: [
+    vue(),
     htmlAutoReloadPlugin,
     legacy({
       targets: ['defaults', 'Firefox ESR'],
@@ -110,23 +49,13 @@ export default defineConfig({
     assetsDir: '',
     rollupOptions: {
       input: {
-        main: path.resolve('./static/src/ts/main.ts'),
-        design_map: path.resolve('./static/src/ts/design_map.ts'),
+        main: path.resolve(__dirname, 'static/src/ts/main.ts'),
+        design_map_view: path.resolve(__dirname, 'designs/static/designs/map/view.ts'),
       },
       output: {
         chunkFileNames: undefined,
       },
-      plugins: [
-        pluginFavicons({
-          source: path.resolve('./static/assets/images/favicon.png'),
-          metadataPath: path.resolve('./static/dist/metadatas'),
-          publicPath: path.resolve('./static/dist'),
-          templatePath: path.resolve('./templates/permapp/favicons.html'),
-          faviconConfig: parse(
-            fs.readFileSync('./static/app.config.jsonc').toString()
-          ),
-        }),
-      ],
+      plugins: [],
     },
   },
 });

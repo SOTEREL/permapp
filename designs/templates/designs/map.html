@@ -2,14 +2,15 @@
 {% load django_vite %}
 
 {% block head_extra %}
-  {% vite_asset 'ts/design_map.ts' %}
+  {% vite_asset 'designs/static/designs/map/view.ts' %}
 {% endblock %}
 
 {% block js_footer %}
   {{ block.super }}
-  {% vite_legacy_asset 'ts/design_map-legacy.ts' %}
+  {% vite_legacy_asset 'designs/static/designs/map/view-legacy.ts' %}
 {% endblock %}
 
 {% block content %}
 {{ js_data|json_script:"js_data" }}
+<map-view></map-view>
 {% endblock %}
