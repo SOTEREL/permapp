@@ -3,6 +3,7 @@ module.exports = ({ env }) => {
 
   return {
     plugins: {
+      'tailwindcss/nesting': {},
       tailwindcss: {},
       autoprefixer: isProduction ? {} : false,
       '@hail2u/css-mqpacker': isProduction ? {} : false,

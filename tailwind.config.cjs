@@ -1,16 +1,7 @@
 module.exports = {
-  mode: 'jit',
-  purge: {
-    content: ['./**/*.html', './static/src/**/*.vue'],
-    layers: ['base', 'components', 'utilities'],
-    options: {
-      keyframes: true,
-      fontFace: true,
-    },
-    safelist: [],
-  },
-  darkMode: false,
-  plugins: [require('@tailwindcss/forms')],
+  content: ['./**/*.html', './static/src/**/*.vue', './**/*.svg'],
+  plugins: [],
+  darkMode: 'media',
   theme: {
     extend: {},
   },

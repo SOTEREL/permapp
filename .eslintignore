@@ -1,5 +1,7 @@
 node_modules
-.venv
-static/dist
-collectedstatic
-.eslintcache
+.eslintrc.*
+postcss.config.*
+vite.config.*
+tailwind.config.*
+**/static/*
+!static/*
