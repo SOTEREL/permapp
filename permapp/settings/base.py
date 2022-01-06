@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "martor",
     "admin_auto_filters",
     "django_filters",
+    "categories",
     "categories.editor",
     "inline_actions",
     "django_json_widget",

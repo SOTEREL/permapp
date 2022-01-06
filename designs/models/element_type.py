@@ -1,3 +1,4 @@
+from categories.models import CategoryBase
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from martor.models import MartorField
@@ -11,9 +12,18 @@ def limit_shape_ctype():
     return {"pk__in": [ctype.pk for ctype in MapElementType.list_usable_shape_ctypes()]}
 
 
+class ElementTypeCategory(CategoryBase):
+    class Meta:
+        verbose_name = "element type category"
+        verbose_name_plural = "element type categories"
+
+
 class ElementType(PolymorphicModel):
     name = models.CharField(max_length=50, unique=True)
     description = MartorField(default="", blank=True)
+    categories = models.ManyToManyField(
+        ElementTypeCategory, blank=True, related_name="element_types"
+    )
 
     class Meta:
         ordering = ["name"]

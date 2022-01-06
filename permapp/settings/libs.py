@@ -50,7 +50,21 @@ ADMIN_REORDER = (
         "label": "Authentification",
         "models": ("custom_auth.User", "auth.Group",),
     },
-    "designs",
+    {
+        "app": "designs",
+        "label": "Configuration",
+        "models": (
+            "designs.Configuration",
+            "designs.ElementTypeCategory",
+            "designs.MapElementType",
+            "designs.MapTheme",
+        ),
+    },
+    {
+        "app": "designs",
+        "label": "Designs",
+        "models": ("designs.Design", "designs.MapElement", "designs.MapView",),
+    },
     "tagging",
 )
 

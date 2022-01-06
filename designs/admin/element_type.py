@@ -1,15 +1,21 @@
+from categories.admin import CategoryBaseAdmin
 from django import forms
 from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericTabularInline
 from django.db import models
 from tagging.models import TaggedItem
 
-from ..models import ElementType, MapElementType
+from ..models import ElementType, ElementTypeCategory, MapElementType
 
 
 class ElementTypeTagsInline(GenericTabularInline):
     model = TaggedItem
     autocomplete_fields = ("tag",)
+
+
+@admin.register(ElementTypeCategory)
+class ElementTypeCategoryAdmin(CategoryBaseAdmin):
+    autocomplete_fields = ("parent",)
 
 
 @admin.register(ElementType)
