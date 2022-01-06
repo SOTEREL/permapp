@@ -18,6 +18,10 @@ class ElementType(PolymorphicModel):
     class Meta:
         ordering = ["name"]
         verbose_name_plural = "element types"
+        # tagging_register adds a "tagged" manager that is considered as the default
+        # manager, which is incompatible with polymorphic. So we explicitly set
+        # the default manager
+        default_manager_name = "objects"
 
     def __str__(self):
         return self.name
