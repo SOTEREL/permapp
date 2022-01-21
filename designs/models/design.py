@@ -22,5 +22,8 @@ class Design(models.Model):
         MapTheme, default=get_default_map_theme, null=True, on_delete=models.SET_DEFAULT
     )
 
+    class Meta:
+        ordering = ["name"]
+
     def __str__(self):
         return self.name

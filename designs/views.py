@@ -1,7 +1,8 @@
 from django.views.generic import DetailView, ListView
 
-from .models import Design, MapElement, MapElementType, MapView
+from .models import Design, ElementTypeCategory, MapElement, MapElementType, MapView
 from .serializers import (
+    ElementTypeCategorySerializer,
     MapElementSerializer,
     MapElementTypeSerializer,
     MapViewSerializer,
@@ -29,10 +30,18 @@ class DesignMapView(DetailView):
             "mapElements": {
                 e["id"]: e for e in MapElementSerializer(map_elements, many=True).data
             },
+            "elementTypeCategories": {
+                cat["id"]: cat
+                for cat in ElementTypeCategorySerializer(
+                    ElementTypeCategory.objects.all(), many=True
+                ).data
+            },
             "mapElementTypes": {
                 t["id"]: t
                 for t in MapElementTypeSerializer(
-                    MapElementType.objects.filter(pk__in=map_element_type_pks),
+                    MapElementType.objects.filter(
+                        pk__in=map_element_type_pks
+                    ).prefetch_related("categories"),
                     many=True,
                 ).data
             },

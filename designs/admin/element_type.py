@@ -1,3 +1,4 @@
+from admin_auto_filters.filters import AutocompleteFilter
 from categories.admin import CategoryBaseAdmin
 from django import forms
 from django.contrib import admin
@@ -6,6 +7,11 @@ from django.db import models
 from tagging.models import TaggedItem
 
 from ..models import ElementType, ElementTypeCategory, MapElementType
+
+
+class CategoryFilter(AutocompleteFilter):
+    title = "category"
+    field_name = "categories"
 
 
 class ElementTypeTagsInline(GenericTabularInline):
@@ -21,8 +27,10 @@ class ElementTypeCategoryAdmin(CategoryBaseAdmin):
 @admin.register(ElementType)
 class ElementTypeAdmin(admin.ModelAdmin):
     list_display = ("name", "description")
+    list_filter = (CategoryFilter,)
     search_fields = ("name",)
     inlines = [ElementTypeTagsInline]
+    autocomplete_fields = ("categories",)
 
     def has_module_permission(self, request):
         # Not used for now
@@ -36,7 +44,10 @@ class MapElementTypeAdmin(ElementTypeAdmin):
         "shape_ctype",
         "description",
     )
-    list_filter = ("shape_ctype",)
+    list_filter = (
+        CategoryFilter,
+        "shape_ctype",
+    )
     inlines = [ElementTypeTagsInline]
 
     def get_readonly_fields(self, request, obj=None):
